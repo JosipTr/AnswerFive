@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 
 import '../../core/errors/failures.dart';
+import '../../core/errors/success.dart';
 import '../entities/trivia_user.dart';
 
 abstract class AuthRepository {
@@ -10,4 +11,6 @@ abstract class AuthRepository {
 
   Future<Either<Failure, TriviaUser>> loginWithEmailAndPassword(
       String email, String password);
+
+  Future<Either<Failure, Success>> logout();
 }

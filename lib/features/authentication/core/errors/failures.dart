@@ -14,3 +14,10 @@ class AuthFailure extends Failure {
   @override
   List<Object> get props => [message];
 }
+
+class InputFailure extends Failure {
+  const InputFailure(super.message);
+
+  @override
+  List<Object> get props => [message];
+}

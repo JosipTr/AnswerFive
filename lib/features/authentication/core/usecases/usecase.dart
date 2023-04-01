@@ -13,6 +13,8 @@ class NoParams {
 class EmailAndPasswordParams {
   final String email;
   final String password;
+  final String? confirmedPassword;
 
-  const EmailAndPasswordParams({required this.email, required this.password});
+  const EmailAndPasswordParams(
+      {required this.email, required this.password, this.confirmedPassword});
 }

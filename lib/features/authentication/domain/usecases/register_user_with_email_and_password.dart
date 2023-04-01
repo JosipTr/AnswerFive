@@ -13,7 +13,18 @@ class RegisterUserWithEmailAndPassword
   @override
   Future<Either<Failure, TriviaUser>> call(
       EmailAndPasswordParams params) async {
-    return await _authRepository.registerUserWithEmailAndPassword(
-        params.email, params.password);
+    final email = params.email.trim();
+    final password = params.password.trim();
+    final confirmedPassword = params.password.trim();
+    if (!email.contains('@')) {
+      return const Left(InputFailure('Invalid input'));
+    } else if (password != confirmedPassword) {
+      return const Left(InputFailure('Passwords do not match!'));
+    } else if (password.length < 6) {
+      return const Left(InputFailure('Password is too short!'));
+    } else {
+      return await _authRepository.registerUserWithEmailAndPassword(
+          params.email, params.password);
+    }
   }
 }

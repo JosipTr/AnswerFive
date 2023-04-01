@@ -11,6 +11,8 @@ abstract class AuthLocalDatasource {
       String email, String password);
 
   Future<UserModel> loginWithEmailAndPassword(String email, String password);
+
+  Future<void> logout();
 }
 
 class AuthenticationLocalDatasourceImpl implements AuthLocalDatasource {
@@ -28,7 +30,7 @@ class AuthenticationLocalDatasourceImpl implements AuthLocalDatasource {
       return userModelStream;
     } catch (error) {
       log(error.toString());
-      throw const AuthException();
+      throw const AuthException('Something went wrong!');
     }
   }
 
@@ -44,7 +46,7 @@ class AuthenticationLocalDatasourceImpl implements AuthLocalDatasource {
       return userModel;
     } catch (error) {
       log(error.toString());
-      throw const AuthException();
+      throw const AuthException('Registration failed');
     }
   }
 
@@ -60,7 +62,17 @@ class AuthenticationLocalDatasourceImpl implements AuthLocalDatasource {
       return userModel;
     } catch (error) {
       log(error.toString());
-      throw const AuthException();
+      throw const AuthException('Login failed!');
+    }
+  }
+
+  @override
+  Future<void> logout() async {
+    try {
+      return await _firebaseAuth.signOut();
+    } catch (error) {
+      log(error.toString());
+      throw const AuthException('Logout failed!');
     }
   }
 }
