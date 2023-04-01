@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../core/errors/exceptions.dart';
 
-abstract class AuthenticationLocalDatasource {
+abstract class AuthLocalDatasource {
   Stream<UserModel?> authStateChanges();
   Future<UserModel> registerUserWithEmailAndPassword(
       String email, String password);
@@ -13,8 +13,7 @@ abstract class AuthenticationLocalDatasource {
   Future<UserModel> loginWithEmailAndPassword(String email, String password);
 }
 
-class AuthenticationLocalDatasourceImpl
-    implements AuthenticationLocalDatasource {
+class AuthenticationLocalDatasourceImpl implements AuthLocalDatasource {
   final FirebaseAuth _firebaseAuth;
 
   const AuthenticationLocalDatasourceImpl(this._firebaseAuth);
@@ -29,7 +28,7 @@ class AuthenticationLocalDatasourceImpl
       return userModelStream;
     } catch (error) {
       log(error.toString());
-      throw const AuthenticationException();
+      throw const AuthException();
     }
   }
 
@@ -45,7 +44,7 @@ class AuthenticationLocalDatasourceImpl
       return userModel;
     } catch (error) {
       log(error.toString());
-      throw const AuthenticationException();
+      throw const AuthException();
     }
   }
 
@@ -61,7 +60,7 @@ class AuthenticationLocalDatasourceImpl
       return userModel;
     } catch (error) {
       log(error.toString());
-      throw const AuthenticationException();
+      throw const AuthException();
     }
   }
 }
