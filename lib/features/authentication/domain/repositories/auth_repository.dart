@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 
 import '../../core/errors/failures.dart';
-import '../entities/user.dart';
+import '../entities/trivia_user.dart';
 
 abstract class AuthRepository {
   Stream<TriviaUser> authStateChanges();

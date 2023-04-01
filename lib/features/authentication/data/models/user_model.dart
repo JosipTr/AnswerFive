@@ -1,4 +1,4 @@
-import '../../domain/entities/user.dart';
+import '../../domain/entities/trivia_user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class UserModel extends TriviaUser {
