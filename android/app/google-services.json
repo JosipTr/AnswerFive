@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "794124181844",
+    "project_id": "answerfive-15710",
+    "storage_bucket": "answerfive-15710.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:794124181844:android:ca84efc06d8350d58a68c1",
+        "android_client_info": {
+          "package_name": "com.example.answer_five"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "794124181844-mqu23a8g25me7a04value1flr0dcmlel.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9Nl5YSZ41ggeqt-MiSxINX68kvcFFSZw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "794124181844-mqu23a8g25me7a04value1flr0dcmlel.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "794124181844-m5dph3m9q4fb8t0ikfc2tqpr438115n6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.answerFive"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
