@@ -1,14 +1,14 @@
 import 'package:equatable/equatable.dart';
 
-class User extends Equatable {
+class TriviaUser extends Equatable {
   final String id;
   final String name;
   final String email;
 
-  const User({required this.id, required this.name, required this.email});
+  const TriviaUser({required this.id, required this.name, required this.email});
 
-  User copyWith({String? id, String? name, String? email}) {
-    return User(
+  TriviaUser copyWith({String? id, String? name, String? email}) {
+    return TriviaUser(
         id: id ?? this.id, name: name ?? this.name, email: email ?? this.email);
   }
 
