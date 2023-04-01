@@ -1,7 +1,7 @@
 import 'package:answer_five/features/authentication/core/errors/exceptions.dart';
 import 'package:answer_five/features/authentication/core/errors/failures.dart';
 import 'package:answer_five/features/authentication/data/datasources/auth_remote_data_source.dart';
-import 'package:answer_five/features/authentication/domain/entities/user.dart';
+import 'package:answer_five/features/authentication/domain/entities/trivia_user.dart';
 import 'package:answer_five/features/authentication/domain/repositories/auth_repository.dart';
 import 'package:dartz/dartz.dart';
 
