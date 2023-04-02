@@ -1,3 +1,4 @@
+import 'package:answer_five/features/authentication/core/utils/theme/custom_theme.dart';
 import 'package:answer_five/features/authentication/injector.dart';
 import 'package:answer_five/features/authentication/presentation/pages/auth_page.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -21,10 +22,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: getThemeData(),
       home: const AuthPage(),
     );
   }
