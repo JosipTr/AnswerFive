@@ -7,12 +7,17 @@ import 'package:answer_five/features/authentication/domain/usecases/register_use
 import 'package:answer_five/features/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
-
+import 'package:http/http.dart' as http;
+import '../trivia/data/datasources/remote_data_source.dart';
+import '../trivia/data/repositories/trivia_repository_impl.dart';
+import '../trivia/domain/repositories/trivia_repository.dart';
+import '../trivia/domain/usecases/get_trivia.dart';
+import '../trivia/presentation/bloc/trivia_bloc.dart';
 import 'data/repositories/auth_repository_impl.dart';
 
 final di = GetIt.instance;
 
-Future<void> initAuthDependencies() async {
+Future<void> initDependencies() async {
   final firebaseAuth = FirebaseAuth.instance;
 
   //FirebaseAuth
@@ -33,4 +38,18 @@ Future<void> initAuthDependencies() async {
 
   //Bloc
   di.registerFactory(() => AuthBloc(di(), di(), di(), di()));
+
+  di.registerLazySingleton(() => http.Client());
+
+  //Repository
+  di.registerLazySingleton<TriviaRepository>(() => TriviaRepositoryImpl(di()));
+
+  //UseCases
+  di.registerLazySingleton(() => GetTrivia(di()));
+
+  //Datasources
+  di.registerLazySingleton<RemoteDataSource>(() => RemoteDataSourceImpl(di()));
+
+  //Bloc
+  di.registerFactory(() => TriviaBloc(di()));
 }
