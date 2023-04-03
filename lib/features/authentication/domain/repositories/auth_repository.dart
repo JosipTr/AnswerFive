@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 
-import '../../core/errors/failures.dart';
-import '../../core/errors/success.dart';
+import '../../../../core/errors/failures.dart';
+import '../../../../core/success.dart';
 import '../entities/trivia_user.dart';
 
 abstract class AuthRepository {

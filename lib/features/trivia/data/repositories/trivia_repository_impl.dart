@@ -1,7 +1,8 @@
 import 'package:dartz/dartz.dart';
 
-import '../../core/errors/exceptions/server_exception.dart';
-import '../../core/errors/failures/server_failure.dart';
+import '../../../../core/errors/exceptions.dart';
+import '../../../../core/errors/failures.dart';
+
 import '../../domain/entities/trivia.dart';
 import '../../domain/repositories/trivia_repository.dart';
 import '../datasources/remote_data_source.dart';

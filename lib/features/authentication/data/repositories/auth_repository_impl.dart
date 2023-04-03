@@ -1,6 +1,6 @@
-import 'package:answer_five/features/authentication/core/errors/exceptions.dart';
-import 'package:answer_five/features/authentication/core/errors/failures.dart';
-import 'package:answer_five/features/authentication/core/errors/success.dart';
+import 'package:answer_five/core/errors/exceptions.dart';
+import 'package:answer_five/core/errors/failures.dart';
+import 'package:answer_five/core/success.dart';
 import 'package:answer_five/features/authentication/data/datasources/auth_remote_data_source.dart';
 import 'package:answer_five/features/authentication/domain/entities/trivia_user.dart';
 import 'package:answer_five/features/authentication/domain/repositories/auth_repository.dart';
@@ -49,7 +49,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, Success>> logout() async {
     try {
       await _authLocalDatasource.logout();
-      return const Right(LogoutSuccess('Login Successful!'));
+      return const Right(Success());
     } on AuthException catch (error) {
       return Left(AuthFailure(error.message));
     }

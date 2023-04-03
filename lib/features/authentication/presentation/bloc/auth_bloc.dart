@@ -1,4 +1,4 @@
-import 'package:answer_five/features/authentication/core/usecases/usecase.dart';
+import 'package:answer_five/core/usecases/usecase.dart';
 import 'package:answer_five/features/authentication/domain/usecases/auth_state_changes.dart';
 import 'package:answer_five/features/authentication/domain/usecases/login_with_email_and_password.dart';
 import 'package:answer_five/features/authentication/domain/usecases/register_user_with_email_and_password.dart';
@@ -69,10 +69,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onAuthLogoutPressed(
       AuthLogoutPressed event, Emitter<AuthState> emit) async {
     emit(state.copyWith(authStatus: AuthStatus.loading));
-    final either = await _logout(const NoParams());
-    either.fold(
-        (failure) => emit(state.copyWith(
-            authStatus: AuthStatus.failure, failureMessage: failure.message)),
-        (success) => emit(state.copyWith(successMessage: success.message)));
+    await _logout(const NoParams());
   }
 }

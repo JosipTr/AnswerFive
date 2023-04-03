@@ -1,5 +1,6 @@
-import 'package:answer_five/features/authentication/core/utils/theme/custom_theme.dart';
-import 'package:answer_five/features/authentication/injector.dart';
+import 'package:answer_five/core/locator.dart';
+import 'package:answer_five/core/utils/theme/custom_theme.dart';
+import 'package:answer_five/features/authentication/auth_injector.dart';
 import 'package:answer_five/features/authentication/presentation/pages/auth_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await initDependencies();
+  ServiceLocator.setup();
   runApp(const MyApp());
 }
 
@@ -28,10 +29,10 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthBloc>(
-          create: (_) => di()..add(AuthStarted()),
+          create: (_) => ServiceLocator.get()..add(AuthStarted()),
         ),
         BlocProvider<TriviaBloc>(
-          create: (_) => di(),
+          create: (_) => ServiceLocator.get(),
         ),
       ],
       child: MaterialApp(

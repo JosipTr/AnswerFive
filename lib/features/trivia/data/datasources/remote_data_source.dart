@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
 
-import '../../core/utils/constants/string_constants.dart';
-import '../../core/errors/exceptions/server_exception.dart';
+import '../../../../core/errors/exceptions.dart';
+import '../../../../core/utils/constants/string_constants.dart';
 import '../models/trivia_model.dart';
 
 abstract class RemoteDataSource {

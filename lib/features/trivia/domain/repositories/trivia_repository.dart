@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 
-import '../../core/errors/failures/server_failure.dart';
+import '../../../../core/errors/failures.dart';
 import '../entities/trivia.dart';
 
 abstract class TriviaRepository {

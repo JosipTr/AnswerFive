@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:answer_five/features/authentication/data/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../core/errors/exceptions.dart';
+import '../../../../core/errors/exceptions.dart';
 
 abstract class AuthLocalDatasource {
   Stream<UserModel?> authStateChanges();
@@ -30,7 +30,7 @@ class AuthenticationLocalDatasourceImpl implements AuthLocalDatasource {
       return userModelStream;
     } catch (error) {
       log(error.toString());
-      throw const AuthException('Something went wrong!');
+      throw const AuthException('User does not exist!');
     }
   }
 

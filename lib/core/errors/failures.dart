@@ -21,3 +21,7 @@ class InputFailure extends Failure {
   @override
   List<Object> get props => [message];
 }
+
+class ServerFailure extends Failure {
+  const ServerFailure(super.message);
+}

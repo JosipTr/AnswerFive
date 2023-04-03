@@ -6,7 +6,7 @@ import 'package:answer_five/features/trivia/presentation/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../injector.dart';
+import '../../auth_injector.dart';
 import '../bloc/auth_state.dart';
 
 class AuthPage extends StatelessWidget {
