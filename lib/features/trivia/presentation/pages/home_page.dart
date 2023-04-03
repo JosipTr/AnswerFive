@@ -12,12 +12,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     log('home build');
-    final phoneWidth = MediaQuery.of(context).size.width;
-    final phoneHeight = MediaQuery.of(context).size.height;
-    final appBarHeight = AppBar().preferredSize.height;
-    final appBarWidth = AppBar().preferredSize.width;
     final safe = MediaQuery.of(context).padding.top;
-    log(phoneHeight.toString());
     log(safe.toString());
     return Center(
       child: Column(
@@ -28,14 +23,14 @@ class HomePage extends StatelessWidget {
             width: 350,
             height: 350,
           ),
-          ElevatedButton(onPressed: () {}, child: Text('Single Player')),
-          ElevatedButton(onPressed: () {}, child: Text('Multi Player')),
-          ElevatedButton(onPressed: () {}, child: Text('Settings')),
+          ElevatedButton(onPressed: () {}, child: const Text('Single Player')),
+          ElevatedButton(onPressed: () {}, child: const Text('Multi Player')),
+          ElevatedButton(onPressed: () {}, child: const Text('Settings')),
           ElevatedButton(
               onPressed: () {
                 context.read<AuthBloc>().add(const AuthLogoutPressed());
               },
-              child: Text('Logout')),
+              child: const Text('Logout')),
         ],
       ),
     );

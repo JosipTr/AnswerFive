@@ -1,12 +1,9 @@
 import 'package:answer_five/features/authentication/presentation/bloc/auth_bloc.dart';
-import 'package:answer_five/features/authentication/presentation/bloc/auth_event.dart';
 import 'package:answer_five/features/authentication/presentation/widgets/auth_widget.dart';
-import 'package:answer_five/features/trivia/presentation/bloc/bloc.dart';
 import 'package:answer_five/features/trivia/presentation/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../auth_injector.dart';
 import '../bloc/auth_state.dart';
 
 class AuthPage extends StatelessWidget {
@@ -18,30 +15,28 @@ class AuthPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: GradientBackground(
           child: SafeArea(
-            child: Center(
-              child: BlocConsumer<AuthBloc, AuthState>(
-                listenWhen: (previous, current) =>
-                    previous.authStatus != current.authStatus,
-                listener: (context, state) {
-                  if (state.authStatus == AuthStatus.failure) {
-                    ScaffoldMessenger.of(context)
-                      ..hideCurrentSnackBar()
-                      ..showSnackBar(
-                          SnackBar(content: Text(state.failureMessage!)));
-                  }
-                },
-                builder: (context, state) {
-                  if (state.authStatus == AuthStatus.initial) {
-                    return const AuthWidget();
-                  } else if (state.authStatus == AuthStatus.success) {
-                    return const HomePage();
-                  } else if (state.authStatus == AuthStatus.loading) {
-                    return const CircularProgressIndicator();
-                  } else {
-                    return const AuthWidget();
-                  }
-                },
-              ),
+            child: BlocConsumer<AuthBloc, AuthState>(
+              listenWhen: (previous, current) =>
+                  previous.authStatus != current.authStatus,
+              listener: (context, state) {
+                if (state.authStatus == AuthStatus.failure) {
+                  ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(
+                        SnackBar(content: Text(state.failureMessage!)));
+                }
+              },
+              builder: (context, state) {
+                if (state.authStatus == AuthStatus.initial) {
+                  return const AuthWidget();
+                } else if (state.authStatus == AuthStatus.success) {
+                  return const HomePage();
+                } else if (state.authStatus == AuthStatus.loading) {
+                  return const CircularProgressIndicator();
+                } else {
+                  return const AuthWidget();
+                }
+              },
             ),
           ),
         ),

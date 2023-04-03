@@ -16,13 +16,13 @@ class InitialPage extends StatelessWidget {
           width: 350,
           height: 350,
         ),
-        ElevatedButton(onPressed: () {}, child: Text('Single Player')),
-        ElevatedButton(onPressed: () {}, child: Text('Multi Player')),
+        ElevatedButton(onPressed: () {}, child: const Text('Single Player')),
+        ElevatedButton(onPressed: () {}, child: const Text('Multi Player')),
         ElevatedButton(
             onPressed: () {
               context.read<AuthBloc>().add(const AuthLogoutPressed());
             },
-            child: Text('Logout')),
+            child: const Text('Logout')),
       ],
     );
   }

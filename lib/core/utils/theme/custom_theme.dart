@@ -9,6 +9,14 @@ ThemeData getThemeData() {
     ),
     buttonTheme: const ButtonThemeData(),
     inputDecorationTheme: InputDecorationTheme(
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15),
+        borderSide: const BorderSide(color: Colors.red),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15),
+        borderSide: const BorderSide(color: Colors.red),
+      ),
       labelStyle: const TextStyle(),
       iconColor: Colors.red,
       enabledBorder: OutlineInputBorder(
@@ -17,7 +25,7 @@ ThemeData getThemeData() {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(15),
-        borderSide: const BorderSide(),
+        borderSide: BorderSide(color: Colors.yellow.shade500),
       ),
     ),
   );

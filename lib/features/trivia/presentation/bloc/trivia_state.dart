@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 
 import '../../domain/entities/trivia.dart';
-import '../../domain/entities/trivia_result.dart';
 
 enum TriviaStatus { initial, loading, success, failure }
 
