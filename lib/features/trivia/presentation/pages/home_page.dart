@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:answer_five/core/utils/constants/string_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,17 +12,21 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log('home build');
-    final safe = MediaQuery.of(context).padding.top;
-    log(safe.toString());
+    final phoneHeight = MediaQuery.of(context).size.height;
+    final double imageSize;
+    if (phoneHeight < 800) {
+      imageSize = 350;
+    } else {
+      imageSize = 500;
+    }
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset(
-            "assets/images/answer_five_nobackground.png",
-            width: 350,
-            height: 350,
+            StringConstants.logo,
+            width: imageSize,
+            height: imageSize,
           ),
           ElevatedButton(onPressed: () {}, child: const Text('Single Player')),
           ElevatedButton(onPressed: () {}, child: const Text('Multi Player')),

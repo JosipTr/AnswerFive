@@ -1,3 +1,4 @@
+import 'package:answer_five/core/utils/constants/string_constants.dart';
 import 'package:answer_five/features/authentication/presentation/bloc/auth_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,7 +25,7 @@ class AuthWidget extends StatelessWidget {
           child: Column(
             children: [
               Image.asset(
-                "assets/images/answer_five_nobackground.png",
+                StringConstants.logo,
                 width: imageSize,
                 height: imageSize,
               ),
