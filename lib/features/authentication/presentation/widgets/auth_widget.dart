@@ -10,62 +10,37 @@ class AuthWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (p0, p1) {
-        if (p1.maxHeight < 800) {
-          return CustomScrollView(
-            slivers: [
-              SliverFillRemaining(
-                hasScrollBody: false,
-                child: Column(
-                  children: [
-                    Image.asset(
-                      "assets/images/answer_five_nobackground.png",
-                      width: 350,
-                      height: 350,
-                    ),
-                    BlocBuilder<AuthBloc, AuthState>(
-                      builder: (context, state) {
-                        if (state.authFilter == AuthFilter.registration) {
-                          return const _RegistrationForm();
-                        } else {
-                          return const _LoginForm();
-                        }
-                      },
-                    ),
-                  ],
-                ),
-              )
+    final phoneHeight = MediaQuery.of(context).size.height;
+    final double imageSize;
+    if (phoneHeight < 800) {
+      imageSize = 350;
+    } else {
+      imageSize = 500;
+    }
+    return CustomScrollView(
+      slivers: [
+        SliverFillRemaining(
+          hasScrollBody: false,
+          child: Column(
+            children: [
+              Image.asset(
+                "assets/images/answer_five_nobackground.png",
+                width: imageSize,
+                height: imageSize,
+              ),
+              BlocBuilder<AuthBloc, AuthState>(
+                builder: (context, state) {
+                  if (state.authFilter == AuthFilter.registration) {
+                    return const _RegistrationForm();
+                  } else {
+                    return const _LoginForm();
+                  }
+                },
+              ),
             ],
-          );
-        } else {
-          return CustomScrollView(
-            slivers: [
-              SliverFillRemaining(
-                hasScrollBody: false,
-                child: Column(
-                  children: [
-                    Image.asset(
-                      "assets/images/answer_five_nobackground.png",
-                      width: 500,
-                      height: 500,
-                    ),
-                    BlocBuilder<AuthBloc, AuthState>(
-                      builder: (context, state) {
-                        if (state.authFilter == AuthFilter.registration) {
-                          return const _RegistrationForm();
-                        } else {
-                          return const _LoginForm();
-                        }
-                      },
-                    ),
-                  ],
-                ),
-              )
-            ],
-          );
-        }
-      },
+          ),
+        )
+      ],
     );
   }
 }
