@@ -10,23 +10,62 @@ class AuthWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Image.asset(
-          "assets/images/answer_five_nobackground.png",
-          width: 350,
-          height: 350,
-        ),
-        BlocBuilder<AuthBloc, AuthState>(
-          builder: (context, state) {
-            if (state.authFilter == AuthFilter.registration) {
-              return const _RegistrationForm();
-            } else {
-              return const _LoginForm();
-            }
-          },
-        ),
-      ],
+    return LayoutBuilder(
+      builder: (p0, p1) {
+        if (p1.maxHeight < 800) {
+          return CustomScrollView(
+            slivers: [
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: Column(
+                  children: [
+                    Image.asset(
+                      "assets/images/answer_five_nobackground.png",
+                      width: 350,
+                      height: 350,
+                    ),
+                    BlocBuilder<AuthBloc, AuthState>(
+                      builder: (context, state) {
+                        if (state.authFilter == AuthFilter.registration) {
+                          return const _RegistrationForm();
+                        } else {
+                          return const _LoginForm();
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              )
+            ],
+          );
+        } else {
+          return CustomScrollView(
+            slivers: [
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: Column(
+                  children: [
+                    Image.asset(
+                      "assets/images/answer_five_nobackground.png",
+                      width: 500,
+                      height: 500,
+                    ),
+                    BlocBuilder<AuthBloc, AuthState>(
+                      builder: (context, state) {
+                        if (state.authFilter == AuthFilter.registration) {
+                          return const _RegistrationForm();
+                        } else {
+                          return const _LoginForm();
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              )
+            ],
+          );
+        }
+      },
     );
   }
 }
@@ -69,6 +108,9 @@ class _LoginFormState extends State<_LoginForm> {
               obscureText: true,
               controller: passwordController,
             ),
+          ),
+          const SizedBox(
+            height: 15,
           ),
           ElevatedButton(
             onPressed: () {

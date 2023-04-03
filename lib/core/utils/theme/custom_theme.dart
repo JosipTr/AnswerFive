@@ -63,3 +63,28 @@ Color shadeColor(Color color, double factor) => Color.fromRGBO(
     shadeValue(color.green, factor),
     shadeValue(color.blue, factor),
     1);
+
+class GradientBackground extends StatelessWidget {
+  final Widget child;
+  const GradientBackground({super.key, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    final phoneHeight = MediaQuery.of(context).size.height;
+    return Container(
+      height: phoneHeight,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Color.fromRGBO(255, 222, 89, 1),
+            Color.fromRGBO(255, 102, 196, 1)
+          ],
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          tileMode: TileMode.mirror,
+        ),
+      ),
+      child: child,
+    );
+  }
+}
