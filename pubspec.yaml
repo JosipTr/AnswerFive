@@ -43,6 +43,7 @@ dependencies:
   flutter_bloc: ^8.1.2
   http: ^0.13.5
   form_validator: ^2.1.1
+  data_connection_checker: ^0.3.4
 
 dev_dependencies:
   flutter_test:
