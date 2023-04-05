@@ -2,40 +2,39 @@ import 'package:equatable/equatable.dart';
 
 import '../../domain/entities/trivia_user.dart';
 
-enum AuthStatus { initial, loading, success, failure }
-
 enum AuthFilter { registration, login }
 
-class AuthState extends Equatable {
-  final AuthStatus authStatus;
-  final TriviaUser? triviaUser;
-  final AuthFilter authFilter;
-  final String? successMessage;
-  final String? failureMessage;
+abstract class AuthState extends Equatable {
+  const AuthState();
+}
 
-  const AuthState({
-    this.authStatus = AuthStatus.initial,
-    this.triviaUser,
-    this.authFilter = AuthFilter.login,
-    this.failureMessage,
-    this.successMessage,
-  });
+class AuthInitial extends AuthState {
+  final AuthFilter authFilter;
+  const AuthInitial({required this.authFilter});
 
   @override
-  List<Object?> get props => [authStatus, triviaUser, authFilter];
-  AuthState copyWith({
-    AuthStatus? authStatus,
-    TriviaUser? triviaUser,
-    AuthFilter? authFilter,
-    String? successMessage,
-    String? failureMessage,
-  }) {
-    return AuthState(
-      authStatus: authStatus ?? this.authStatus,
-      triviaUser: triviaUser ?? this.triviaUser,
-      authFilter: authFilter ?? this.authFilter,
-      successMessage: successMessage ?? this.successMessage,
-      failureMessage: failureMessage ?? this.failureMessage,
-    );
-  }
+  List<Object> get props => [authFilter];
+}
+
+class AuthLoading extends AuthState {
+  const AuthLoading();
+
+  @override
+  List<Object> get props => [];
+}
+
+class AuthLoadSuccess extends AuthState {
+  final TriviaUser user;
+  const AuthLoadSuccess({required this.user});
+
+  @override
+  List<Object> get props => [user];
+}
+
+class AuthLoadFailure extends AuthState {
+  final String errorMessage;
+  const AuthLoadFailure({required this.errorMessage});
+
+  @override
+  List<Object> get props => [errorMessage];
 }

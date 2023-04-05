@@ -16,7 +16,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   AuthBloc(this._authStateChanges, this._registerUserWithEmailAndPassword,
       this._loginWithEmailAndPassword, this._logout)
-      : super(const AuthState()) {
+      : super(const AuthInitial(authFilter: AuthFilter.login)) {
     on<AuthStarted>(_onAuthStarted);
     on<AuthRegisterPressed>(_onAuthRegisterPressed);
     on<AuthLoginPressed>(_onAuthLoginPressed);
@@ -28,47 +28,42 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     final streamTriviaUser = _authStateChanges();
     await emit.forEach(
       streamTriviaUser,
-      onData: (triviaUser) => state.copyWith(
-          authStatus: AuthStatus.success, triviaUser: triviaUser),
-      onError: (_, __) => state.copyWith(authStatus: AuthStatus.initial),
+      onData: (triviaUser) => AuthLoadSuccess(user: triviaUser),
+      onError: (_, __) => const AuthInitial(authFilter: AuthFilter.login),
     );
   }
 
   Future<void> _onAuthRegisterPressed(
       AuthRegisterPressed event, Emitter<AuthState> emit) async {
-    emit(state.copyWith(authStatus: AuthStatus.loading));
+    emit(const AuthLoading());
     final either = await _registerUserWithEmailAndPassword(
         EmailAndPasswordParams(
             email: event.email,
             password: event.password,
             confirmedPassword: event.confirmedPassword));
     either.fold(
-        (failure) => emit(state.copyWith(
-            authStatus: AuthStatus.failure, failureMessage: failure.message)),
-        (triviaUser) => emit(state.copyWith(
-            triviaUser: triviaUser, authStatus: AuthStatus.success)));
+        (failure) => emit(AuthLoadFailure(errorMessage: failure.message)),
+        (triviaUser) => emit(AuthLoadSuccess(user: triviaUser)));
   }
 
   Future<void> _onAuthLoginPressed(
       AuthLoginPressed event, Emitter<AuthState> emit) async {
-    emit(state.copyWith(authStatus: AuthStatus.loading));
+    emit(const AuthLoading());
     final either = await _loginWithEmailAndPassword(
         EmailAndPasswordParams(email: event.email, password: event.password));
 
     either.fold(
-        (failure) => emit(state.copyWith(
-            authStatus: AuthStatus.failure, failureMessage: failure.message)),
-        (triviaUser) => emit(state.copyWith(
-            triviaUser: triviaUser, authStatus: AuthStatus.success)));
+        (failure) => emit(AuthLoadFailure(errorMessage: failure.message)),
+        (triviaUser) => emit(AuthLoadSuccess(user: triviaUser)));
   }
 
   void _onAuthPageFiltered(AuthPageFiltered event, Emitter<AuthState> emit) {
-    emit(state.copyWith(authFilter: event.authFilter));
+    emit(AuthInitial(authFilter: event.authFilter));
   }
 
   Future<void> _onAuthLogoutPressed(
       AuthLogoutPressed event, Emitter<AuthState> emit) async {
-    emit(state.copyWith(authStatus: AuthStatus.loading));
+    emit(const AuthLoading());
     await _logout(const NoParams());
   }
 }

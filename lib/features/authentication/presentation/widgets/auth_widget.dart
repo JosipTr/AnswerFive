@@ -30,13 +30,10 @@ class AuthWidget extends StatelessWidget {
                 height: imageSize,
               ),
               BlocBuilder<AuthBloc, AuthState>(
-                builder: (context, state) {
-                  if (state.authFilter == AuthFilter.registration) {
-                    return const _RegistrationForm();
-                  } else {
-                    return const _LoginForm();
-                  }
-                },
+                builder: (context, state) => state is AuthInitial &&
+                        state.authFilter == AuthFilter.registration
+                    ? const _RegistrationForm()
+                    : const _LoginForm(),
               ),
             ],
           ),
@@ -46,21 +43,17 @@ class AuthWidget extends StatelessWidget {
   }
 }
 
-class _LoginForm extends StatefulWidget {
+class _LoginForm extends StatelessWidget {
   const _LoginForm();
 
   @override
-  State<_LoginForm> createState() => _LoginFormState();
-}
-
-class _LoginFormState extends State<_LoginForm> {
-  final _formKey = GlobalKey<FormState>();
-  @override
   Widget build(BuildContext context) {
+    final formKey = GlobalKey<FormState>();
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
+
     return Form(
-      key: _formKey,
+      key: formKey,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -90,7 +83,7 @@ class _LoginFormState extends State<_LoginForm> {
           ),
           ElevatedButton(
             onPressed: () {
-              if (_formKey.currentState!.validate()) {
+              if (formKey.currentState!.validate()) {
                 context.read<AuthBloc>().add(AuthLoginPressed(
                     email: emailController.text,
                     password: passwordController.text));
@@ -112,22 +105,17 @@ class _LoginFormState extends State<_LoginForm> {
   }
 }
 
-class _RegistrationForm extends StatefulWidget {
+class _RegistrationForm extends StatelessWidget {
   const _RegistrationForm();
 
   @override
-  State<_RegistrationForm> createState() => _RegistrationFormState();
-}
-
-class _RegistrationFormState extends State<_RegistrationForm> {
-  final _formKey = GlobalKey<FormState>();
-  @override
   Widget build(BuildContext context) {
+    final formKey = GlobalKey<FormState>();
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
     final confirmPasswordController = TextEditingController();
     return Form(
-      key: _formKey,
+      key: formKey,
       child: Column(
         children: [
           Container(
@@ -171,7 +159,7 @@ class _RegistrationFormState extends State<_RegistrationForm> {
           ),
           ElevatedButton(
             onPressed: () {
-              if (_formKey.currentState!.validate()) {
+              if (formKey.currentState!.validate()) {
                 context.read<AuthBloc>().add(AuthRegisterPressed(
                     email: emailController.text,
                     password: passwordController.text,

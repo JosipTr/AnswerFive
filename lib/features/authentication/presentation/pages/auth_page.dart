@@ -15,11 +15,19 @@ class AuthPage extends StatelessWidget {
     return Scaffold(
       body: GradientBackground(
         child: Center(
-          child: BlocBuilder<AuthBloc, AuthState>(
+          child: BlocConsumer<AuthBloc, AuthState>(
+            listener: (context, state) {
+              if (state is AuthLoadFailure) {
+                final messenger = ScaffoldMessenger.of(context);
+                messenger
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(SnackBar(content: Text(state.errorMessage)));
+              }
+            },
             builder: (context, state) {
-              if (state.authStatus == AuthStatus.success) {
+              if (state is AuthLoadSuccess) {
                 return const HomePage();
-              } else if (state.authStatus == AuthStatus.loading) {
+              } else if (state is AuthLoading) {
                 return const CircularProgressIndicator();
               }
               return const AuthWidget();

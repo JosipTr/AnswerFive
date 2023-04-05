@@ -46,7 +46,7 @@ class AuthenticationLocalDatasourceImpl implements AuthLocalDatasource {
       return userModel;
     } catch (error) {
       log(error.toString());
-      throw const AuthException('Registration failed');
+      throw const AuthException('Registration failed!');
     }
   }
 
