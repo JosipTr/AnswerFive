@@ -1,13 +1,8 @@
-import 'package:equatable/equatable.dart';
-
 import '../utils/constants/string_constants.dart';
 
-class AuthException extends Equatable implements Exception {
+class AuthException implements Exception {
   final String message;
   const AuthException(this.message);
-
-  @override
-  List<Object> get props => [message];
 }
 
 class ServerException implements Exception {
@@ -15,4 +10,11 @@ class ServerException implements Exception {
 
   const ServerException(
       {this.message = StringConstants.serverExceptionMessage});
+}
+
+class NetworkException implements Exception {
+  final String message;
+
+  const NetworkException(
+      {this.message = StringConstants.networkExceptionMessage});
 }

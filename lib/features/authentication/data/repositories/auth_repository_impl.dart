@@ -29,6 +29,8 @@ class AuthRepositoryImpl implements AuthRepository {
       return Right(triviaUser);
     } on AuthException catch (error) {
       return Left(AuthFailure(error.message));
+    } on NetworkException catch (error) {
+      return Left(NetworkFailure(error.message));
     }
   }
 

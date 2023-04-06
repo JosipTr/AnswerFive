@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:answer_five/core/network/network_info.dart';
+import 'package:answer_five/core/utils/constants/string_constants.dart';
 import 'package:answer_five/features/authentication/data/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -17,8 +19,10 @@ abstract class AuthLocalDatasource {
 
 class AuthenticationLocalDatasourceImpl implements AuthLocalDatasource {
   final FirebaseAuth _firebaseAuth;
+  final NetworkInfo _networkInfo;
 
-  const AuthenticationLocalDatasourceImpl(this._firebaseAuth);
+  const AuthenticationLocalDatasourceImpl(
+      this._firebaseAuth, this._networkInfo);
 
   @override
   Stream<UserModel?> authStateChanges() {
@@ -37,42 +41,54 @@ class AuthenticationLocalDatasourceImpl implements AuthLocalDatasource {
   @override
   Future<UserModel> registerUserWithEmailAndPassword(
       String email, String password) async {
-    try {
-      final userCredentials = await _firebaseAuth
-          .createUserWithEmailAndPassword(email: email, password: password);
-      final firebaseUser = userCredentials.user;
-      //Check for null value
-      final userModel = UserModel.fromUser(firebaseUser!);
-      return userModel;
-    } catch (error) {
-      log(error.toString());
-      throw const AuthException('Registration failed!');
+    if (await _networkInfo.isConnected) {
+      try {
+        final userCredentials = await _firebaseAuth
+            .createUserWithEmailAndPassword(email: email, password: password);
+        final firebaseUser = userCredentials.user;
+        //Check for null value
+        final userModel = UserModel.fromUser(firebaseUser!);
+        return userModel;
+      } catch (error) {
+        log(error.toString());
+        throw const AuthException('Registration failed!');
+      }
     }
+    log(StringConstants.networkExceptionMessage);
+    throw const NetworkException();
   }
 
   @override
   Future<UserModel> loginWithEmailAndPassword(
       String email, String password) async {
-    try {
-      final userCredentials = await _firebaseAuth.signInWithEmailAndPassword(
-          email: email, password: password);
-      final firebaseUser = userCredentials.user;
-      //Check for null value
-      final userModel = UserModel.fromUser(firebaseUser!);
-      return userModel;
-    } catch (error) {
-      log(error.toString());
-      throw const AuthException('Login failed!');
+    if (await _networkInfo.isConnected) {
+      try {
+        final userCredentials = await _firebaseAuth.signInWithEmailAndPassword(
+            email: email, password: password);
+        final firebaseUser = userCredentials.user;
+        //Check for null value
+        final userModel = UserModel.fromUser(firebaseUser!);
+        return userModel;
+      } catch (error) {
+        log(error.toString());
+        throw const AuthException('Login failed!');
+      }
     }
+    log(StringConstants.networkExceptionMessage);
+    throw const NetworkException();
   }
 
   @override
   Future<void> logout() async {
-    try {
-      return await _firebaseAuth.signOut();
-    } catch (error) {
-      log(error.toString());
-      throw const AuthException('Logout failed!');
+    if (await _networkInfo.isConnected) {
+      try {
+        return await _firebaseAuth.signOut();
+      } catch (error) {
+        log(error.toString());
+        throw const AuthException('Logout failed!');
+      }
     }
+    log(StringConstants.networkExceptionMessage);
+    throw const NetworkException();
   }
 }

@@ -1,5 +1,6 @@
 class StringConstants {
   static const serverExceptionMessage = 'Server error ocurred';
+  static const networkExceptionMessage = 'You have no Internet connection';
   static const responseCodeMessages = [
     'Code 0: Success Returned results successfully.',
     'Code 1: No Results Could not return results. The API doesn\'t have enough questions for your query. (Ex. Asking for 50 Questions in a Category that only has 20.)',
