@@ -1,5 +1,5 @@
 import 'package:answer_five/features/authentication/auth_injector.dart';
-import 'package:answer_five/features/trivia/trivia_injector.dart';
+import 'package:answer_five/features/single_player/trivia_injector.dart';
 import 'package:get_it/get_it.dart';
 
 class ServiceLocator {

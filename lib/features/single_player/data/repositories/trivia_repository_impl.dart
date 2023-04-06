@@ -19,6 +19,8 @@ class TriviaRepositoryImpl implements TriviaRepository {
       return Right(getTrivia);
     } on ServerException catch (error) {
       return Left(ServerFailure(error.message));
+    } on NetworkException catch (error) {
+      return Left(NetworkFailure(error.message));
     }
   }
 }

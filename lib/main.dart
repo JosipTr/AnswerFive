@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'features/authentication/presentation/bloc/auth_bloc.dart';
 import 'features/authentication/presentation/bloc/auth_event.dart';
-import 'features/trivia/presentation/bloc/trivia_bloc.dart';
+import 'features/single_player/presentation/bloc/trivia_bloc.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
