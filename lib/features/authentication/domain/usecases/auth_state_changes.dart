@@ -1,4 +1,4 @@
-import 'package:answer_five/features/authentication/domain/entities/trivia_user.dart';
+import 'package:answer_five/features/authentication/domain/entities/player.dart';
 import 'package:answer_five/features/authentication/domain/repositories/auth_repository.dart';
 
 class AuthStateChanges {
@@ -6,7 +6,7 @@ class AuthStateChanges {
 
   const AuthStateChanges(this._authRepository);
 
-  Stream<TriviaUser> call() {
+  Stream<Player> call() {
     return _authRepository.authStateChanges();
   }
 }

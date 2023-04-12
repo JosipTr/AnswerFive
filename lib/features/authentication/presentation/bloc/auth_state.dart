@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../../domain/entities/trivia_user.dart';
+import '../../domain/entities/player.dart';
 
 enum AuthFilter { registration, login }
 
@@ -24,7 +24,7 @@ class AuthLoading extends AuthState {
 }
 
 class AuthLoadSuccess extends AuthState {
-  final TriviaUser user;
+  final Player user;
   const AuthLoadSuccess({required this.user});
 
   @override

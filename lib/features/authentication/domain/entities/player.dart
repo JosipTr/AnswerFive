@@ -2,21 +2,21 @@ import 'package:equatable/equatable.dart';
 
 import '../../../single_player/domain/entities/statistic.dart';
 
-class TriviaUser extends Equatable {
+class Player extends Equatable {
   final String id;
   final String name;
   final String email;
   final Statistic statistic;
 
-  const TriviaUser(
+  const Player(
       {required this.statistic,
       required this.id,
       required this.name,
       required this.email});
 
-  TriviaUser copyWith(
+  Player copyWith(
       {String? id, String? name, String? email, Statistic? statistic}) {
-    return TriviaUser(
+    return Player(
       id: id ?? this.id,
       name: name ?? this.name,
       email: email ?? this.email,

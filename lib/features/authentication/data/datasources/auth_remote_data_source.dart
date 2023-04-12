@@ -2,18 +2,18 @@ import 'dart:developer';
 
 import 'package:answer_five/core/network/network_info.dart';
 import 'package:answer_five/core/utils/constants/string_constants.dart';
-import 'package:answer_five/features/authentication/data/models/user_model.dart';
+import 'package:answer_five/features/authentication/data/models/player_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 import '../../../../core/errors/exceptions.dart';
 
 abstract class AuthLocalDatasource {
-  Stream<UserModel?> authStateChanges();
-  Future<UserModel> registerUserWithEmailAndPassword(
+  Stream<PlayerModel?> authStateChanges();
+  Future<PlayerModel> registerUserWithEmailAndPassword(
       String email, String password);
 
-  Future<UserModel> loginWithEmailAndPassword(String email, String password);
+  Future<PlayerModel> loginWithEmailAndPassword(String email, String password);
 
   Future<void> logout();
 }
@@ -27,12 +27,12 @@ class AuthenticationLocalDatasourceImpl implements AuthLocalDatasource {
       this._firebaseAuth, this._networkInfo, this._firebaseDatabase);
 
   @override
-  Stream<UserModel?> authStateChanges() {
+  Stream<PlayerModel?> authStateChanges() {
     try {
       final userStream = _firebaseAuth.authStateChanges();
       //Check for null value
       final userModelStream =
-          userStream.map((user) => UserModel.fromUser(user!));
+          userStream.map((user) => PlayerModel.fromUser(user!));
       return userModelStream;
     } catch (error) {
       log(error.toString());
@@ -41,7 +41,7 @@ class AuthenticationLocalDatasourceImpl implements AuthLocalDatasource {
   }
 
   @override
-  Future<UserModel> registerUserWithEmailAndPassword(
+  Future<PlayerModel> registerUserWithEmailAndPassword(
       String email, String password) async {
     if (await _networkInfo.isConnected) {
       try {
@@ -51,7 +51,7 @@ class AuthenticationLocalDatasourceImpl implements AuthLocalDatasource {
             .createUserWithEmailAndPassword(email: email, password: password);
         final firebaseUser = userCredentials.user;
         //Check for null value
-        final userModel = UserModel.fromUser(firebaseUser!);
+        final userModel = PlayerModel.fromUser(firebaseUser!);
         await playerRef.push().set(userModel.toJson());
         return userModel;
       } catch (error) {
@@ -64,7 +64,7 @@ class AuthenticationLocalDatasourceImpl implements AuthLocalDatasource {
   }
 
   @override
-  Future<UserModel> loginWithEmailAndPassword(
+  Future<PlayerModel> loginWithEmailAndPassword(
       String email, String password) async {
     if (await _networkInfo.isConnected) {
       try {
@@ -72,7 +72,7 @@ class AuthenticationLocalDatasourceImpl implements AuthLocalDatasource {
             email: email, password: password);
         final firebaseUser = userCredentials.user;
         //Check for null value
-        final userModel = UserModel.fromUser(firebaseUser!);
+        final userModel = PlayerModel.fromUser(firebaseUser!);
         return userModel;
       } catch (error) {
         log(error.toString());
