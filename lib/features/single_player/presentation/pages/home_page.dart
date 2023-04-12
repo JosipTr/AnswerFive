@@ -34,7 +34,6 @@ class HomePage extends StatelessWidget {
                 ));
               },
               child: const Text('Single Player')),
-          ElevatedButton(onPressed: () {}, child: const Text('Multi Player')),
           ElevatedButton(onPressed: () {}, child: const Text('Settings')),
           ElevatedButton(
               onPressed: () {
