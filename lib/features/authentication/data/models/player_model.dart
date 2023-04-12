@@ -4,18 +4,18 @@ import '../../domain/entities/player.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class PlayerModel extends Player {
-  const PlayerModel(
-      {required super.id,
-      required super.name,
-      required super.email,
-      required super.statistic});
+  const PlayerModel({
+    required super.id,
+    required super.name,
+    required super.email,
+  });
 
   factory PlayerModel.fromUser(User user) {
     return PlayerModel(
-        id: user.uid,
-        name: user.displayName ?? 'empty',
-        email: user.email ?? 'empty',
-        statistic: const Statistic());
+      id: user.uid,
+      name: user.displayName ?? 'empty',
+      email: user.email ?? 'empty',
+    );
   }
 
   Player toTriviaUser() {
@@ -23,7 +23,6 @@ class PlayerModel extends Player {
       id: id,
       name: name,
       email: email,
-      statistic: statistic,
     );
   }
 
@@ -32,7 +31,6 @@ class PlayerModel extends Player {
       'id': id,
       'name': name,
       'email': email,
-      'statistic': statistic.toJson()
     };
   }
 }

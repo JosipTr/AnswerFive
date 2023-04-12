@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 import '../../../../core/errors/exceptions.dart';
+import '../../../single_player/data/models/statistic_model.dart';
 
 abstract class AuthLocalDatasource {
   Stream<PlayerModel?> authStateChanges();
@@ -46,13 +47,15 @@ class AuthenticationLocalDatasourceImpl implements AuthLocalDatasource {
     if (await _networkInfo.isConnected) {
       try {
         final databaseRef = _firebaseDatabase.ref();
-        final playerRef = databaseRef.child('/players');
+
         final userCredentials = await _firebaseAuth
             .createUserWithEmailAndPassword(email: email, password: password);
         final firebaseUser = userCredentials.user;
         //Check for null value
         final userModel = PlayerModel.fromUser(firebaseUser!);
-        await playerRef.push().set(userModel.toJson());
+        final playerRef = databaseRef.child('/players/${userModel.id}');
+        const newStats = StatisticModel();
+        await playerRef.set(newStats.toJson());
         return userModel;
       } catch (error) {
         log(error.toString());

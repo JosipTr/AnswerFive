@@ -11,14 +11,6 @@ class Statistic extends Equatable {
     this.incorrectAnswers = 0,
   });
 
-  Map<String, dynamic> toJson() {
-    return {
-      'totalQuestions': totalQuestions,
-      'correctAnswers': correctAnswers,
-      'incorrectAnswers': incorrectAnswers,
-    };
-  }
-
   @override
   List<Object> get props => [totalQuestions, correctAnswers, incorrectAnswers];
 }
