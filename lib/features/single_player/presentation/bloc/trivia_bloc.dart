@@ -6,21 +6,19 @@ import './bloc.dart';
 class TriviaBloc extends Bloc<TriviaEvent, TriviaState> {
   final GetTrivia _getTrivia;
 
-  TriviaBloc(this._getTrivia) : super(const TriviaState()) {
+  TriviaBloc(this._getTrivia) : super(const TriviaInitial()) {
     on<GetTriviaEvent>(_onGetTriviaEvent);
     on<TriviaStarted>(_onTriviaStarted);
   }
 
   void _onTriviaStarted(TriviaStarted event, Emitter<TriviaState> emit) async {
-    emit(state.copyWith(triviaStatus: TriviaStatus.initial));
+    emit(const TriviaInitial());
   }
 
   void _onGetTriviaEvent(
       GetTriviaEvent event, Emitter<TriviaState> emit) async {
     final either = await _getTrivia(const NoParams());
-    either.fold(
-        (failure) => emit(state.copyWith(triviaStatus: TriviaStatus.failure)),
-        (trivia) => emit(state.copyWith(
-            trivia: trivia, triviaStatus: TriviaStatus.success)));
+    either.fold((failure) => emit(TriviaLoadFailure(failure.message)),
+        (trivia) => emit(TriviaLoadSuccess(trivia)));
   }
 }

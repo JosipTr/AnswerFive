@@ -1,4 +1,5 @@
 import 'package:answer_five/core/utils/constants/string_constants.dart';
+import 'package:answer_five/features/single_player/presentation/pages/single_player_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,7 +27,13 @@ class HomePage extends StatelessWidget {
             width: imageSize,
             height: imageSize,
           ),
-          ElevatedButton(onPressed: () {}, child: const Text('Single Player')),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const SinglePlayerPage(),
+                ));
+              },
+              child: const Text('Single Player')),
           ElevatedButton(onPressed: () {}, child: const Text('Multi Player')),
           ElevatedButton(onPressed: () {}, child: const Text('Settings')),
           ElevatedButton(

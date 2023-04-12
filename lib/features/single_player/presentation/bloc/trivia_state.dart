@@ -2,18 +2,36 @@ import 'package:equatable/equatable.dart';
 
 import '../../domain/entities/trivia.dart';
 
-enum TriviaStatus { initial, loading, success, failure }
+abstract class TriviaState extends Equatable {
+  const TriviaState();
+}
 
-class TriviaState extends Equatable {
-  final Trivia? trivia;
-  final TriviaStatus triviaStatus;
-  const TriviaState({this.trivia, this.triviaStatus = TriviaStatus.initial});
+class TriviaInitial extends TriviaState {
+  const TriviaInitial();
 
   @override
-  List<Object?> get props => [trivia, triviaStatus];
-  TriviaState copyWith({Trivia? trivia, TriviaStatus? triviaStatus}) {
-    return TriviaState(
-        trivia: trivia ?? this.trivia,
-        triviaStatus: triviaStatus ?? this.triviaStatus);
-  }
+  List<Object> get props => [];
+}
+
+class TriviaLoading extends TriviaState {
+  const TriviaLoading();
+
+  @override
+  List<Object> get props => [];
+}
+
+class TriviaLoadSuccess extends TriviaState {
+  final Trivia trivia;
+  const TriviaLoadSuccess(this.trivia);
+
+  @override
+  List<Object> get props => [trivia];
+}
+
+class TriviaLoadFailure extends TriviaState {
+  final String failureMessage;
+  const TriviaLoadFailure(this.failureMessage);
+
+  @override
+  List<Object> get props => [failureMessage];
 }
