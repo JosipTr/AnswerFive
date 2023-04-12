@@ -45,6 +45,7 @@ dependencies:
   form_validator: ^2.1.1
   data_connection_checker: ^0.3.4
   connectivity_plus: ^3.0.3
+  firebase_database: ^10.1.0
 
 dev_dependencies:
   flutter_test:

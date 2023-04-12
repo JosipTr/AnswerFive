@@ -4,6 +4,7 @@ import 'package:answer_five/core/network/network_info.dart';
 import 'package:answer_five/core/utils/constants/string_constants.dart';
 import 'package:answer_five/features/authentication/data/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 import '../../../../core/errors/exceptions.dart';
 
@@ -20,9 +21,10 @@ abstract class AuthLocalDatasource {
 class AuthenticationLocalDatasourceImpl implements AuthLocalDatasource {
   final FirebaseAuth _firebaseAuth;
   final NetworkInfo _networkInfo;
+  final FirebaseDatabase _firebaseDatabase;
 
   const AuthenticationLocalDatasourceImpl(
-      this._firebaseAuth, this._networkInfo);
+      this._firebaseAuth, this._networkInfo, this._firebaseDatabase);
 
   @override
   Stream<UserModel?> authStateChanges() {
@@ -43,11 +45,14 @@ class AuthenticationLocalDatasourceImpl implements AuthLocalDatasource {
       String email, String password) async {
     if (await _networkInfo.isConnected) {
       try {
+        final databaseRef = _firebaseDatabase.ref();
+        final playerRef = databaseRef.child('/players');
         final userCredentials = await _firebaseAuth
             .createUserWithEmailAndPassword(email: email, password: password);
         final firebaseUser = userCredentials.user;
         //Check for null value
         final userModel = UserModel.fromUser(firebaseUser!);
+        await playerRef.push().set(userModel.toJson());
         return userModel;
       } catch (error) {
         log(error.toString());

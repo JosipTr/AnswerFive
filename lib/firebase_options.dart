@@ -25,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -52,6 +49,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '794124181844',
     projectId: 'answerfive-15710',
     authDomain: 'answerfive-15710.firebaseapp.com',
+    databaseURL: 'https://answerfive-15710-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'answerfive-15710.appspot.com',
     measurementId: 'G-69TX6ZX7ZM',
   );
@@ -61,6 +59,7 @@ class DefaultFirebaseOptions {
     appId: '1:794124181844:android:ca84efc06d8350d58a68c1',
     messagingSenderId: '794124181844',
     projectId: 'answerfive-15710',
+    databaseURL: 'https://answerfive-15710-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'answerfive-15710.appspot.com',
   );
 
@@ -69,6 +68,18 @@ class DefaultFirebaseOptions {
     appId: '1:794124181844:ios:9a4015744d8458cf8a68c1',
     messagingSenderId: '794124181844',
     projectId: 'answerfive-15710',
+    databaseURL: 'https://answerfive-15710-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'answerfive-15710.appspot.com',
+    iosClientId: '794124181844-m5dph3m9q4fb8t0ikfc2tqpr438115n6.apps.googleusercontent.com',
+    iosBundleId: 'com.example.answerFive',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyCJy3lYVZKs7ZWqC1mh1GB6vkU5X7FJbHg',
+    appId: '1:794124181844:ios:9a4015744d8458cf8a68c1',
+    messagingSenderId: '794124181844',
+    projectId: 'answerfive-15710',
+    databaseURL: 'https://answerfive-15710-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'answerfive-15710.appspot.com',
     iosClientId: '794124181844-m5dph3m9q4fb8t0ikfc2tqpr438115n6.apps.googleusercontent.com',
     iosBundleId: 'com.example.answerFive',
