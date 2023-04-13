@@ -1,4 +1,8 @@
 import 'package:answer_five/core/utils/theme/custom_theme.dart';
+import 'package:answer_five/features/authentication/presentation/bloc/auth_bloc.dart';
+import 'package:answer_five/features/authentication/presentation/bloc/auth_state.dart';
+import 'package:answer_five/features/authentication/presentation/bloc/stats_bloc/stats_bloc.dart';
+import 'package:answer_five/features/authentication/presentation/bloc/stats_bloc/stats_event.dart';
 import 'package:answer_five/features/single_player/presentation/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,6 +19,7 @@ class _SinglePlayerPageState extends State<SinglePlayerPage> {
   int flag = 0;
   @override
   Widget build(BuildContext context) {
+    final player = (context.read<AuthBloc>().state as AuthLoadSuccess).user;
     return Scaffold(
       body: GradientBackground(
         child: Center(
@@ -41,6 +46,9 @@ class _SinglePlayerPageState extends State<SinglePlayerPage> {
                                     (states) => Colors.green)
                                 : null),
                         onPressed: () {
+                          context
+                              .read<StatsBloc>()
+                              .add(StatsUpdatePressed(player));
                           setState(() {
                             isCorrect = true;
                           });
@@ -51,6 +59,9 @@ class _SinglePlayerPageState extends State<SinglePlayerPage> {
                           in state.trivia.results.first.incorrectAnswers)
                         ElevatedButton(
                           onPressed: () {
+                            context
+                                .read<StatsBloc>()
+                                .add(StatsUpdatePressed(player));
                             setState(() {
                               isCorrect = true;
                             });

@@ -1,5 +1,6 @@
 import 'package:answer_five/core/locator.dart';
 import 'package:answer_five/core/utils/theme/custom_theme.dart';
+import 'package:answer_five/features/authentication/presentation/bloc/stats_bloc/stats_bloc.dart';
 import 'package:answer_five/features/authentication/presentation/pages/auth_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,9 @@ class MyApp extends StatelessWidget {
           create: (_) => ServiceLocator.get()..add(AuthStarted()),
         ),
         BlocProvider<TriviaBloc>(
+          create: (_) => ServiceLocator.get(),
+        ),
+        BlocProvider<StatsBloc>(
           create: (_) => ServiceLocator.get(),
         ),
       ],

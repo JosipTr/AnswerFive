@@ -1,10 +1,14 @@
 import 'package:answer_five/core/utils/constants/string_constants.dart';
+import 'package:answer_five/features/authentication/presentation/bloc/auth_state.dart';
+import 'package:answer_five/features/authentication/presentation/bloc/stats_bloc/stats_bloc.dart';
 import 'package:answer_five/features/single_player/presentation/pages/single_player_page.dart';
+import 'package:answer_five/features/single_player/presentation/pages/statistic_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../authentication/presentation/bloc/auth_bloc.dart';
 import '../../../authentication/presentation/bloc/auth_event.dart';
+import '../../../authentication/presentation/bloc/stats_bloc/stats_event.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -29,12 +33,22 @@ class HomePage extends StatelessWidget {
           ),
           ElevatedButton(
               onPressed: () {
+                // final state = context.read<AuthBloc>().state as AuthLoadSuccess;
+                // print(state.user.id);
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => const SinglePlayerPage(),
                 ));
               },
               child: const Text('Single Player')),
-          ElevatedButton(onPressed: () {}, child: const Text('Settings')),
+          ElevatedButton(
+              onPressed: () {
+                final state = context.read<AuthBloc>().state as AuthLoadSuccess;
+                context.read<StatsBloc>().add(Started(state.user));
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const StatisticPage(),
+                ));
+              },
+              child: const Text('Settings')),
           ElevatedButton(
               onPressed: () {
                 context.read<AuthBloc>().add(const AuthLogoutPressed());

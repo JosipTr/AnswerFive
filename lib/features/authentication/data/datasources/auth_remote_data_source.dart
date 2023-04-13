@@ -7,7 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 import '../../../../core/errors/exceptions.dart';
-import '../../../single_player/data/models/statistic_model.dart';
+import '../models/statistic_model.dart';
 
 abstract class AuthLocalDatasource {
   Stream<PlayerModel?> authStateChanges();
@@ -31,12 +31,25 @@ class AuthenticationLocalDatasourceImpl implements AuthLocalDatasource {
   Stream<PlayerModel?> authStateChanges() {
     try {
       final userStream = _firebaseAuth.authStateChanges();
-      //Check for null value
-      final userModelStream =
-          userStream.map((user) => PlayerModel.fromUser(user!));
+      final userModelStream = userStream.asyncMap((user) async {
+        if (user == null) {
+          return null;
+        } else {
+          final playerSnapshot = await _firebaseDatabase
+              .ref()
+              .child('/players/${user.uid}')
+              .once();
+          final player = PlayerModel.fromMap(Map<String, dynamic>.from(
+              playerSnapshot.snapshot.value as Map<dynamic, dynamic>));
+
+          return player;
+        }
+      });
+
       return userModelStream;
     } catch (error) {
       log(error.toString());
+
       throw const AuthException('User does not exist!');
     }
   }
@@ -52,11 +65,10 @@ class AuthenticationLocalDatasourceImpl implements AuthLocalDatasource {
             .createUserWithEmailAndPassword(email: email, password: password);
         final firebaseUser = userCredentials.user;
         //Check for null value
-        final userModel = PlayerModel.fromUser(firebaseUser!);
-        final playerRef = databaseRef.child('/players/${userModel.id}');
-        const newStats = StatisticModel();
-        await playerRef.set(newStats.toJson());
-        return userModel;
+        final playerModel = PlayerModel.fromUser(firebaseUser!);
+        final playerRef = databaseRef.child('/players/${firebaseUser.uid}');
+        await playerRef.set(playerModel.toJson());
+        return playerModel;
       } catch (error) {
         log(error.toString());
         throw const AuthException('Registration failed!');
@@ -74,11 +86,17 @@ class AuthenticationLocalDatasourceImpl implements AuthLocalDatasource {
         final userCredentials = await _firebaseAuth.signInWithEmailAndPassword(
             email: email, password: password);
         final firebaseUser = userCredentials.user;
-        //Check for null value
-        final userModel = PlayerModel.fromUser(firebaseUser!);
-        return userModel;
+        final playerSnapshot = await _firebaseDatabase
+            .ref()
+            .child('/players/${firebaseUser!.uid}')
+            .once();
+        final player = PlayerModel.fromMap(Map<String, dynamic>.from(
+            playerSnapshot.snapshot.value as Map<dynamic, dynamic>));
+
+        return player;
       } catch (error) {
         log(error.toString());
+        log("hea");
         throw const AuthException('Login failed!');
       }
     }
@@ -100,3 +118,24 @@ class AuthenticationLocalDatasourceImpl implements AuthLocalDatasource {
     throw const NetworkException();
   }
 }
+
+  //   @override
+  // Stream<PlayerModel?> authStateChanges() {
+  //   try {
+  //     final userStream = _firebaseAuth.authStateChanges();
+  //     //Check for null value
+  //     final userModelStream = userStream.map((user) {
+  //       final playerSnapshot =
+  //           _firebaseDatabase.ref().child('/players/${user!.uid}').once();
+  //       final player = PlayerModel.fromMap(Map<String, dynamic>.from(
+  //           playerSnapshot.then(
+  //                   (value) => value.snapshot.value as Map<dynamic, dynamic>)
+  //               as Map<dynamic, dynamic>));
+  //       return player;
+  //     });
+  //     return userModelStream;
+  //   } catch (error) {
+  //     log(error.toString());
+  //     throw const AuthException('User does not exist!');
+  //   }
+  // }
