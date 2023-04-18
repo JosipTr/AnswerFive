@@ -39,24 +39,23 @@ class _SinglePlayerPageState extends State<SinglePlayerPage> {
                         color: Colors.blue,
                         child: Text(state.trivia.results.first.question),
                       ),
-                      ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor: isCorrect
-                                ? MaterialStateColor.resolveWith(
-                                    (states) => Colors.green)
-                                : null),
-                        onPressed: () {
-                          context
-                              .read<StatsBloc>()
-                              .add(StatsUpdatePressed(player));
-                          setState(() {
-                            isCorrect = true;
-                          });
-                        },
-                        child: Text(state.trivia.results.first.correctAnswer),
-                      ),
-                      for (final question
-                          in state.trivia.results.first.incorrectAnswers)
+                      // ElevatedButton(
+                      //   style: ButtonStyle(
+                      //       backgroundColor: isCorrect
+                      //           ? MaterialStateColor.resolveWith(
+                      //               (states) => Colors.green)
+                      //           : null),
+                      //   onPressed: () {
+                      //     context
+                      //         .read<StatsBloc>()
+                      //         .add(StatsUpdatePressed(player));
+                      //     setState(() {
+                      //       isCorrect = true;
+                      //     });
+                      //   },
+                      //   child: Text(state.trivia.results.first.answers.first),
+                      // ),
+                      for (final question in state.trivia.results.first.answers)
                         ElevatedButton(
                           onPressed: () {
                             context

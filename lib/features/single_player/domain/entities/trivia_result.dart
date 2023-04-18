@@ -5,18 +5,18 @@ class TriviaResult extends Equatable {
   final String type;
   final String difficulty;
   final String question;
+  final List<String> answers;
   final String correctAnswer;
-  final List<String> incorrectAnswers;
 
   const TriviaResult(
       {required this.category,
       required this.type,
       required this.difficulty,
       required this.question,
-      required this.correctAnswer,
-      required this.incorrectAnswers});
+      required this.answers,
+      required this.correctAnswer});
 
   @override
   List<Object> get props =>
-      [category, difficulty, question, correctAnswer, incorrectAnswers];
+      [category, difficulty, question, answers, correctAnswer];
 }

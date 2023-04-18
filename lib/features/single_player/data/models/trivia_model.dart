@@ -2,6 +2,7 @@ import 'dart:developer';
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/utils/constants/string_constants.dart';
 import '../../domain/entities/trivia.dart';
+import '../../domain/entities/trivia_result.dart';
 import 'trivia_result_model.dart';
 
 class TriviaModel extends Trivia {
