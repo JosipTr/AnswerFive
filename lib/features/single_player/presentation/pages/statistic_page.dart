@@ -1,11 +1,9 @@
 import 'package:answer_five/core/utils/theme/custom_theme.dart';
-import 'package:answer_five/features/authentication/presentation/bloc/auth_bloc.dart';
-import 'package:answer_five/features/authentication/presentation/bloc/auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../authentication/presentation/bloc/stats_bloc/stats_bloc.dart';
-import '../../../authentication/presentation/bloc/stats_bloc/stats_state.dart';
+import '../../../statistic/presentation/bloc/stats_bloc.dart';
+import '../../../statistic/presentation/bloc/stats_state.dart';
 
 class StatisticPage extends StatelessWidget {
   const StatisticPage({super.key});

@@ -6,7 +6,7 @@ import 'package:firebase_database/firebase_database.dart';
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/utils/constants/string_constants.dart';
 import '../../domain/entities/statistic.dart';
-import '../models/player_model.dart';
+import '../../../authentication/data/models/player_model.dart';
 import '../models/statistic_model.dart';
 
 abstract class StatsRemoteDataSource {

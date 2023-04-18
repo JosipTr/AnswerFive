@@ -1,14 +1,14 @@
-import 'package:answer_five/features/authentication/data/datasources/stats_remote_data_source.dart';
-import 'package:answer_five/features/authentication/data/models/statistic_model.dart';
-import 'package:answer_five/features/authentication/domain/entities/statistic.dart';
+import 'package:answer_five/features/statistic/data/datasources/stats_remote_data_source.dart';
+import 'package:answer_five/features/statistic/data/models/statistic_model.dart';
+import 'package:answer_five/features/statistic/domain/entities/statistic.dart';
 import 'package:answer_five/core/success.dart';
 import 'package:answer_five/core/errors/failures.dart';
-import 'package:answer_five/features/authentication/domain/repositories/stats_repository.dart';
+import 'package:answer_five/features/statistic/domain/repositories/stats_repository.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/errors/exceptions.dart';
-import '../../domain/entities/player.dart';
-import '../models/player_model.dart';
+import '../../../authentication/domain/entities/player.dart';
+import '../../../authentication/data/models/player_model.dart';
 
 class StatsRepositoryImpl implements StatsRepository {
   final StatsRemoteDataSource _dataSource;

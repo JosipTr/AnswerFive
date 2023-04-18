@@ -7,7 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 import '../../../../core/errors/exceptions.dart';
-import '../models/statistic_model.dart';
+import '../../../statistic/data/models/statistic_model.dart';
 
 abstract class AuthLocalDatasource {
   Stream<PlayerModel?> authStateChanges();

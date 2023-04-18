@@ -1,4 +1,4 @@
-import 'package:answer_five/features/authentication/domain/entities/statistic.dart';
+import 'package:answer_five/features/statistic/domain/entities/statistic.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../features/authentication/domain/entities/player.dart';

@@ -1,9 +1,10 @@
 import 'package:answer_five/core/usecases/usecase.dart';
-import 'package:answer_five/features/authentication/domain/usecases/get_stats.dart';
-import 'package:answer_five/features/authentication/domain/usecases/update_stats.dart';
-import 'package:answer_five/features/authentication/presentation/bloc/stats_bloc/stats_event.dart';
-import 'package:answer_five/features/authentication/presentation/bloc/stats_bloc/stats_state.dart';
+import 'package:answer_five/features/statistic/presentation/bloc/stats_event.dart';
+import 'package:answer_five/features/statistic/presentation/bloc/stats_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../domain/usecases/get_stats.dart';
+import '../../domain/usecases/update_stats.dart';
 
 class StatsBloc extends Bloc<StatsEvent, StatsState> {
   final GetStats _getStats;

@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import 'statistic.dart';
+import '../../../statistic/domain/entities/statistic.dart';
 
 class Player extends Equatable {
   final String id;

@@ -1,6 +1,6 @@
-import 'package:answer_five/features/authentication/domain/entities/statistic.dart';
+import 'package:answer_five/features/statistic/domain/entities/statistic.dart';
 
-import 'statistic_model.dart';
+import '../../../statistic/data/models/statistic_model.dart';
 import '../../domain/entities/player.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

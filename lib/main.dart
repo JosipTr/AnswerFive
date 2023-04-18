@@ -1,6 +1,5 @@
 import 'package:answer_five/core/locator.dart';
 import 'package:answer_five/core/utils/theme/custom_theme.dart';
-import 'package:answer_five/features/authentication/presentation/bloc/stats_bloc/stats_bloc.dart';
 import 'package:answer_five/features/authentication/presentation/pages/auth_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'features/authentication/presentation/bloc/auth_bloc.dart';
 import 'features/authentication/presentation/bloc/auth_event.dart';
 import 'features/single_player/presentation/bloc/trivia_bloc.dart';
+import 'features/statistic/presentation/bloc/stats_bloc.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {

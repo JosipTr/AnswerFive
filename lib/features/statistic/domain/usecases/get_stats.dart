@@ -1,10 +1,10 @@
 import 'package:answer_five/core/errors/failures.dart';
 import 'package:answer_five/core/usecases/usecase.dart';
-import 'package:answer_five/features/authentication/domain/entities/statistic.dart';
-import 'package:answer_five/features/authentication/domain/repositories/stats_repository.dart';
+import 'package:answer_five/features/statistic/domain/entities/statistic.dart';
+import 'package:answer_five/features/statistic/domain/repositories/stats_repository.dart';
 import 'package:dartz/dartz.dart';
 
-import '../entities/player.dart';
+import '../../../authentication/domain/entities/player.dart';
 
 class GetStats extends UseCase<Player, StatsParams> {
   final StatsRepository _repository;

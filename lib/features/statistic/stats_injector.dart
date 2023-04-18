@@ -1,11 +1,13 @@
 import 'package:answer_five/features/authentication/auth_injector.dart';
-import 'package:answer_five/features/authentication/data/datasources/stats_remote_data_source.dart';
-import 'package:answer_five/features/authentication/data/repositories/stats_repository_impl.dart';
-import 'package:answer_five/features/authentication/domain/repositories/stats_repository.dart';
-import 'package:answer_five/features/authentication/domain/usecases/get_stats.dart';
-import 'package:answer_five/features/authentication/domain/usecases/update_stats.dart';
-import 'package:answer_five/features/authentication/presentation/bloc/stats_bloc/stats_bloc.dart';
+import 'package:answer_five/features/statistic/data/datasources/stats_remote_data_source.dart';
+import 'package:answer_five/features/statistic/data/repositories/stats_repository_impl.dart';
+import 'package:answer_five/features/statistic/domain/repositories/stats_repository.dart';
+import 'package:answer_five/features/statistic/presentation/bloc/stats_bloc.dart';
+
 import 'package:get_it/get_it.dart';
+
+import 'domain/usecases/get_stats.dart';
+import 'domain/usecases/update_stats.dart';
 
 final statsInjector = GetIt.instance;
 

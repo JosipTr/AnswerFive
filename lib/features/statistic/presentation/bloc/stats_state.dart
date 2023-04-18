@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../../../domain/entities/player.dart';
-import '../../../domain/entities/statistic.dart';
+import '../../../authentication/domain/entities/player.dart';
 
 abstract class StatsState extends Equatable {
   const StatsState();
