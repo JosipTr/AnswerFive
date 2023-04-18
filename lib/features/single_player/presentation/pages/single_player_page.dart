@@ -16,8 +16,8 @@ class SinglePlayerPage extends StatefulWidget {
 }
 
 class _SinglePlayerPageState extends State<SinglePlayerPage> {
-  bool isCorrect = false;
-  int flag = 0;
+  var flag = 0;
+  var isAnswered = false;
   @override
   Widget build(BuildContext context) {
     final player = (context.read<AuthBloc>().state as AuthLoadSuccess).user;
@@ -27,64 +27,55 @@ class _SinglePlayerPageState extends State<SinglePlayerPage> {
           child: BlocBuilder<TriviaBloc, TriviaState>(
             builder: (context, state) {
               if (state is TriviaLoadSuccess) {
-                if (flag <= 4) {
+                if (flag < 6) {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Image.asset(
-                        "assets/images/answer_five_nobackground.png",
-                        width: 350,
-                        height: 350,
-                      ),
+                      // Image.asset(
+                      //   "assets/images/answer_five_nobackground.png",
+                      //   width: 350,
+                      //   height: 350,
+                      // ),
                       Container(
                         color: Colors.blue,
                         child: Text(state.trivia.question),
                       ),
-                      // ElevatedButton(
-                      //   style: ButtonStyle(
-                      //       backgroundColor: isCorrect
-                      //           ? MaterialStateColor.resolveWith(
-                      //               (states) => Colors.green)
-                      //           : null),
-                      //   onPressed: () {
-                      //     context
-                      //         .read<StatsBloc>()
-                      //         .add(StatsUpdatePressed(player));
-                      //     setState(() {
-                      //       isCorrect = true;
-                      //     });
-                      //   },
-                      //   child: Text(state.trivia.results.first.answers.first),
-                      // ),
-                      for (final question in state.trivia.answers)
+                      for (var i = 0; i < state.trivia.answers.length; i++)
                         ElevatedButton(
-                          onPressed: () {
-                            context
-                                .read<StatsBloc>()
-                                .add(StatsUpdatePressed(player));
-                            setState(() {
-                              isCorrect = true;
-                            });
-                          },
+                          onPressed: isAnswered
+                              ? null
+                              : () {
+                                  setState(() {
+                                    isAnswered = true;
+                                    flag = ++flag;
+                                  });
+                                },
                           style: ButtonStyle(
-                              backgroundColor: isCorrect
-                                  ? MaterialStateColor.resolveWith(
-                                      (states) => Colors.red)
+                              backgroundColor: isAnswered
+                                  ? state.trivia.answers[i] !=
+                                          state.trivia.correctAnswer
+                                      ? MaterialStateColor.resolveWith(
+                                          (states) => Colors.red)
+                                      : MaterialStateColor.resolveWith(
+                                          (states) => Colors.green)
                                   : null),
-                          child: Text(question),
+                          child: Text(state.trivia.answers[i]),
                         ),
-                      isCorrect
+                      isAnswered
                           ? ElevatedButton(
                               onPressed: () {
-                                if (flag <= 4) {
+                                if (flag == 5) {
+                                  context
+                                      .read<TriviaBloc>()
+                                      .add(const TriviaStarted());
+                                } else {
                                   context
                                       .read<TriviaBloc>()
                                       .add(const GetTriviaEvent());
-                                  isCorrect = false;
-                                  flag++;
-                                } else {
-                                  return;
                                 }
+                                setState(() {
+                                  isAnswered = false;
+                                });
                               },
                               child: const Text('Next'))
                           : const SizedBox()
@@ -112,6 +103,8 @@ class _SinglePlayerPageState extends State<SinglePlayerPage> {
                         child: const Text('Get Trivia'))
                   ],
                 );
+              } else if (state is TriviaLoading) {
+                return const CircularProgressIndicator();
               } else {
                 return Image.asset(
                   "assets/images/answer_five_nobackground.png",

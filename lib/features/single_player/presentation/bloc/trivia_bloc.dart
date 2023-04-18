@@ -17,6 +17,7 @@ class TriviaBloc extends Bloc<TriviaEvent, TriviaState> {
 
   void _onGetTriviaEvent(
       GetTriviaEvent event, Emitter<TriviaState> emit) async {
+    emit(const TriviaLoading());
     final either = await _getTrivia(const NoParams());
     either.fold((failure) => emit(TriviaLoadFailure(failure.message)),
         (trivia) => emit(TriviaLoadSuccess(trivia)));
