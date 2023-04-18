@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../../../authentication/domain/entities/player.dart';
+import '../../domain/entities/statistic.dart';
 
 abstract class StatsState extends Equatable {
   const StatsState();
@@ -14,11 +14,11 @@ class StatsInitial extends StatsState {
 }
 
 class StatsLoadSuccess extends StatsState {
-  final Player player;
-  const StatsLoadSuccess(this.player);
+  final Statistic statistic;
+  const StatsLoadSuccess(this.statistic);
 
   @override
-  List<Object> get props => [player];
+  List<Object> get props => [statistic];
 }
 
 class StatsLoadFailure extends StatsState {

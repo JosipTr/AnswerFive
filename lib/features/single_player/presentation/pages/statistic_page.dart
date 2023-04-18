@@ -18,19 +18,19 @@ class StatisticPage extends StatelessWidget {
               if (state is StatsLoadSuccess) {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                        "CorrectAnswers: ${state.player.statistic.correctAnswers}"),
-                    Text(
-                        "IncorrectAnswers: ${state.player.statistic.incorrectAnswers}"),
-                    Text(
-                        "TotalQuestions: ${state.player.statistic.totalQuestions}"),
+                  children: const [
+                    // Text(
+                    //     "CorrectAnswers: ${state.player.statistic.correctAnswers}"),
+                    // Text(
+                    //     "IncorrectAnswers: ${state.player.statistic.incorrectAnswers}"),
+                    // Text(
+                    //     "TotalQuestions: ${state.player.statistic.totalQuestions}"),
                   ],
                 );
               } else if (state is StatsLoadFailure) {
                 return Text(state.message);
               }
-              return Text('blabla');
+              return const Text('blabla');
             },
           ),
         ),

@@ -27,7 +27,6 @@ class AuthPage extends StatelessWidget {
             },
             builder: (context, state) {
               if (state is AuthLoadSuccess) {
-                print(state.user.statistic.correctAnswers);
                 return const HomePage();
               } else if (state is AuthLoading) {
                 return const CircularProgressIndicator();

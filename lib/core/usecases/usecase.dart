@@ -1,7 +1,5 @@
-import 'package:answer_five/features/statistic/domain/entities/statistic.dart';
 import 'package:dartz/dartz.dart';
 
-import '../../features/authentication/domain/entities/player.dart';
 import '../errors/failures.dart';
 
 abstract class UseCase<Type, Params> {
@@ -22,6 +20,6 @@ class EmailAndPasswordParams {
 }
 
 class StatsParams {
-  final Player player;
-  const StatsParams(this.player);
+  final String id;
+  const StatsParams(this.id);
 }

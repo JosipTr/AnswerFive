@@ -79,7 +79,7 @@ class _SinglePlayerPageState extends State<SinglePlayerPage> {
                                 if (flag <= 4) {
                                   context
                                       .read<TriviaBloc>()
-                                      .add(GetTriviaEvent());
+                                      .add(const GetTriviaEvent());
                                   isCorrect = false;
                                   flag++;
                                 } else {
@@ -87,15 +87,15 @@ class _SinglePlayerPageState extends State<SinglePlayerPage> {
                                 }
                               },
                               child: const Text('Next'))
-                          : SizedBox()
+                          : const SizedBox()
                     ],
                   );
                 } else {
                   return ElevatedButton(
                       onPressed: () {
-                        context.read<TriviaBloc>().add(TriviaStarted());
+                        context.read<TriviaBloc>().add(const TriviaStarted());
                       },
-                      child: Text('No more'));
+                      child: const Text('No more'));
                 }
               } else if (state is TriviaInitial) {
                 return Column(

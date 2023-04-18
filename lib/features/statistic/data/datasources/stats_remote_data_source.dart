@@ -1,17 +1,17 @@
 import 'dart:developer';
 
 import 'package:answer_five/core/network/network_info.dart';
+import 'package:answer_five/features/statistic/data/models/statistic_model.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/utils/constants/string_constants.dart';
-import '../../domain/entities/statistic.dart';
-import '../../../authentication/data/models/player_model.dart';
-import '../models/statistic_model.dart';
 
 abstract class StatsRemoteDataSource {
-  Future<PlayerModel> getStats(PlayerModel playerModel);
-  Future<void> updateStats(PlayerModel playerModel);
+  Future<StatisticModel> getStats(String id);
+  Future<void> updateStats(String id);
+
+  Future<void> createStats(String id);
 }
 
 class StatsRemoteDataSourceImpl implements StatsRemoteDataSource {
@@ -20,35 +20,47 @@ class StatsRemoteDataSourceImpl implements StatsRemoteDataSource {
 
   const StatsRemoteDataSourceImpl(this._firebaseDatabase, this._networkInfo);
   @override
-  Future<PlayerModel> getStats(PlayerModel playerModel) async {
+  Future<StatisticModel> getStats(String id) async {
     if (await _networkInfo.isConnected) {
       try {
-        final playerSnapshot = await _firebaseDatabase
-            .ref()
-            .child('/players/${playerModel.id}')
-            .once();
-        final player = PlayerModel.fromMap(Map<String, dynamic>.from(
-            playerSnapshot.snapshot.value as Map<dynamic, dynamic>));
+        final statsSnapshot =
+            await _firebaseDatabase.ref().child('/statistics/$id').once();
+        final stats = StatisticModel.fromJson(Map<String, dynamic>.from(
+            statsSnapshot.snapshot.value as Map<dynamic, dynamic>));
 
-        return player;
+        return stats;
       } catch (error) {
         log(error.toString());
         throw const ServerException();
       }
+    } else {
+      log(StringConstants.networkExceptionMessage);
+      throw const NetworkException();
     }
-    log(StringConstants.networkExceptionMessage);
-    throw const NetworkException();
   }
 
   @override
-  Future<void> updateStats(PlayerModel playerModel) async {
+  Future<void> updateStats(String id) async {
     if (await _networkInfo.isConnected) {
       try {
-        final map = playerModel.toJson();
-        await _firebaseDatabase
-            .ref()
-            .child('/players/${playerModel.id}')
-            .update(map);
+        // final map = statist.toJson();
+        // await _firebaseDatabase.ref().child('/statistics/$id').update(map);
+      } catch (error) {
+        log(error.toString());
+        throw const ServerException();
+      }
+    } else {
+      log(StringConstants.networkExceptionMessage);
+      throw const NetworkException();
+    }
+  }
+
+  @override
+  Future<void> createStats(String id) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final statsRef = _firebaseDatabase.ref().child('/statistics/$id');
+        return await statsRef.set(const StatisticModel().toJson());
       } catch (error) {
         log(error.toString());
         throw const ServerException();

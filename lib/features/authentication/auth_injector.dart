@@ -8,7 +8,6 @@ import 'package:answer_five/features/authentication/domain/usecases/register_use
 import 'package:answer_five/features/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:get_it/get_it.dart';
 import 'data/repositories/auth_repository_impl.dart';
 
@@ -18,9 +17,6 @@ Future<void> initAuthDependencies() async {
   //FirebaseAuth
   authInjector.registerLazySingleton(() => FirebaseAuth.instance);
 
-  //FirebaseDatabase
-  authInjector.registerLazySingleton(() => FirebaseDatabase.instance);
-
   //ConnectivityPlus
   authInjector.registerLazySingleton(() => Connectivity());
 
@@ -29,9 +25,8 @@ Future<void> initAuthDependencies() async {
       () => AuthRepositoryImpl(authInjector()));
 
   //Datasources
-  authInjector.registerLazySingleton<AuthLocalDatasource>(() =>
-      AuthenticationLocalDatasourceImpl(
-          authInjector(), authInjector(), authInjector()));
+  authInjector.registerLazySingleton<AuthLocalDatasource>(
+      () => AuthenticationLocalDatasourceImpl(authInjector(), authInjector()));
 
   //UseCases
   authInjector.registerLazySingleton(() => Logout(authInjector()));

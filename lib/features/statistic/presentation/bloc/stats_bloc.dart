@@ -15,13 +15,13 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
   }
 
   Future<void> _onStarted(Started event, Emitter<StatsState> emit) async {
-    final either = await _getStats(StatsParams(event.player));
+    final either = await _getStats(StatsParams(event.player.id));
     either.fold((l) => emit(StatsLoadFailure(l.message)),
         (r) => emit(StatsLoadSuccess(r)));
   }
 
   Future<void> _onStatsUpdatePressed(
       StatsUpdatePressed event, Emitter<StatsState> emit) async {
-    await _updateStats(StatsParams(event.player));
+    await _updateStats(StatsParams(event.player.id));
   }
 }
