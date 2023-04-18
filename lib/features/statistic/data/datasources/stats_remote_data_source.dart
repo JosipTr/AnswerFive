@@ -9,9 +9,7 @@ import '../../../../core/utils/constants/string_constants.dart';
 
 abstract class StatsRemoteDataSource {
   Future<StatisticModel> getStats(String id);
-  Future<void> updateStats(String id);
-
-  Future<void> createStats(String id);
+  Future<void> updateStats(String id, StatisticModel statisticModel);
 }
 
 class StatsRemoteDataSourceImpl implements StatsRemoteDataSource {
@@ -40,27 +38,11 @@ class StatsRemoteDataSourceImpl implements StatsRemoteDataSource {
   }
 
   @override
-  Future<void> updateStats(String id) async {
+  Future<void> updateStats(String id, StatisticModel statisticModel) async {
     if (await _networkInfo.isConnected) {
       try {
-        // final map = statist.toJson();
-        // await _firebaseDatabase.ref().child('/statistics/$id').update(map);
-      } catch (error) {
-        log(error.toString());
-        throw const ServerException();
-      }
-    } else {
-      log(StringConstants.networkExceptionMessage);
-      throw const NetworkException();
-    }
-  }
-
-  @override
-  Future<void> createStats(String id) async {
-    if (await _networkInfo.isConnected) {
-      try {
-        final statsRef = _firebaseDatabase.ref().child('/statistics/$id');
-        return await statsRef.set(const StatisticModel().toJson());
+        final map = statisticModel.toJson();
+        await _firebaseDatabase.ref().child('/statistics/$id').update(map);
       } catch (error) {
         log(error.toString());
         throw const ServerException();

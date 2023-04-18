@@ -28,3 +28,10 @@ class StatsLoadFailure extends StatsState {
   @override
   List<Object> get props => [message];
 }
+
+class StatsLoading extends StatsState {
+  const StatsLoading();
+
+  @override
+  List<Object> get props => [];
+}

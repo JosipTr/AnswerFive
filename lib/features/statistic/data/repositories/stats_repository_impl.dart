@@ -2,6 +2,7 @@ import 'package:answer_five/features/statistic/data/datasources/stats_remote_dat
 
 import 'package:answer_five/core/success.dart';
 import 'package:answer_five/core/errors/failures.dart';
+import 'package:answer_five/features/statistic/data/models/statistic_model.dart';
 import 'package:answer_five/features/statistic/domain/repositories/stats_repository.dart';
 import 'package:dartz/dartz.dart';
 
@@ -25,21 +26,11 @@ class StatsRepositoryImpl implements StatsRepository {
   }
 
   @override
-  Future<Either<Failure, Success>> updateStats(String id) async {
+  Future<Either<Failure, Success>> updateStats(
+      String id, Statistic statistic) async {
     try {
-      await _dataSource.updateStats(id);
-      return const Right(Success());
-    } on NetworkException catch (error) {
-      return Left(NetworkFailure(error.message));
-    } on ServerException catch (error) {
-      return Left(ServerFailure(error.message));
-    }
-  }
-
-  @override
-  Future<Either<Failure, Success>> createStats(String id) async {
-    try {
-      await _dataSource.updateStats(id);
+      final statisticModel = StatisticModel.fromStatistic(statistic);
+      await _dataSource.updateStats(id, statisticModel);
       return const Right(Success());
     } on NetworkException catch (error) {
       return Left(NetworkFailure(error.message));

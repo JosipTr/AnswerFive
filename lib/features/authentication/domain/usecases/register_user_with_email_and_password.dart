@@ -14,16 +14,8 @@ class RegisterUserWithEmailAndPassword
   Future<Either<Failure, Player>> call(EmailAndPasswordParams params) async {
     final email = params.email.trim();
     final password = params.password.trim();
-    final confirmedPassword = params.password.trim();
-    if (!email.contains('@')) {
-      return const Left(InputFailure('Registration Failed!'));
-    } else if (password.length < 6) {
-      return const Left(InputFailure('Password is too short!'));
-    } else if (password != confirmedPassword) {
-      return const Left(InputFailure('Passwords do not match!'));
-    } else {
-      return await _authRepository.registerUserWithEmailAndPassword(
-          params.email, params.password);
-    }
+
+    return await _authRepository.registerUserWithEmailAndPassword(
+        email, password);
   }
 }

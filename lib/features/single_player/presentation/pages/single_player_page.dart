@@ -2,11 +2,10 @@ import 'package:answer_five/core/utils/theme/custom_theme.dart';
 import 'package:answer_five/features/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:answer_five/features/authentication/presentation/bloc/auth_state.dart';
 import 'package:answer_five/features/single_player/presentation/bloc/bloc.dart';
+import 'package:answer_five/features/statistic/presentation/bloc/stats_bloc.dart';
+import 'package:answer_five/features/statistic/presentation/bloc/stats_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../statistic/presentation/bloc/stats_bloc.dart';
-import '../../../statistic/presentation/bloc/stats_event.dart';
 
 class SinglePlayerPage extends StatefulWidget {
   const SinglePlayerPage({super.key});
@@ -20,7 +19,8 @@ class _SinglePlayerPageState extends State<SinglePlayerPage> {
   var isAnswered = false;
   @override
   Widget build(BuildContext context) {
-    final player = (context.read<AuthBloc>().state as AuthLoadSuccess).user;
+    final playerId =
+        (context.read<AuthBloc>().state as AuthLoadSuccess).user.id;
     return Scaffold(
       body: GradientBackground(
         child: Center(
@@ -45,6 +45,14 @@ class _SinglePlayerPageState extends State<SinglePlayerPage> {
                           onPressed: isAnswered
                               ? null
                               : () {
+                                  if (state.trivia.answers[i] ==
+                                      state.trivia.correctAnswer) {
+                                    context.read<StatsBloc>().add(
+                                        StatsUpdatePressed(playerId, true));
+                                  } else {
+                                    context.read<StatsBloc>().add(
+                                        StatsUpdatePressed(playerId, false));
+                                  }
                                   setState(() {
                                     isAnswered = true;
                                     flag = ++flag;

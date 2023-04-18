@@ -25,8 +25,9 @@ Future<void> initAuthDependencies() async {
       () => AuthRepositoryImpl(authInjector()));
 
   //Datasources
-  authInjector.registerLazySingleton<AuthLocalDatasource>(
-      () => AuthenticationLocalDatasourceImpl(authInjector(), authInjector()));
+  authInjector.registerLazySingleton<AuthLocalDatasource>(() =>
+      AuthenticationLocalDatasourceImpl(
+          authInjector(), authInjector(), authInjector()));
 
   //UseCases
   authInjector.registerLazySingleton(() => Logout(authInjector()));

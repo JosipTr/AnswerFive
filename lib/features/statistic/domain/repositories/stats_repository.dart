@@ -7,7 +7,5 @@ import '../entities/statistic.dart';
 abstract class StatsRepository {
   Future<Either<Failure, Statistic>> getStats(String id);
 
-  Future<Either<Failure, Success>> updateStats(String id);
-
-  Future<Either<Failure, Success>> createStats(String id);
+  Future<Either<Failure, Success>> updateStats(String id, Statistic statistic);
 }

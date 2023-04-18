@@ -1,23 +1,31 @@
 import 'package:equatable/equatable.dart';
 
-import '../../../authentication/domain/entities/player.dart';
-
 abstract class StatsEvent extends Equatable {
   const StatsEvent();
 }
 
 class Started extends StatsEvent {
-  final Player player;
-  const Started(this.player);
+  final String id;
+  const Started(this.id);
 
   @override
-  List<Object> get props => [player];
+  List<Object> get props => [id];
 }
 
 class StatsUpdatePressed extends StatsEvent {
-  final Player player;
-  const StatsUpdatePressed(this.player);
+  final String id;
+  final bool isCorrect;
+  const StatsUpdatePressed(this.id, this.isCorrect);
 
   @override
-  List<Object> get props => [player];
+  List<Object> get props => [id, isCorrect];
+}
+
+class StatsCreated extends StatsEvent {
+  final String id;
+
+  const StatsCreated(this.id);
+
+  @override
+  List<Object> get props => [id];
 }

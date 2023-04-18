@@ -33,8 +33,6 @@ class HomePage extends StatelessWidget {
           ),
           ElevatedButton(
               onPressed: () {
-                // final state = context.read<AuthBloc>().state as AuthLoadSuccess;
-                // print(state.user.id);
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => const SinglePlayerPage(),
                 ));
@@ -43,7 +41,7 @@ class HomePage extends StatelessWidget {
           ElevatedButton(
               onPressed: () {
                 final state = context.read<AuthBloc>().state as AuthLoadSuccess;
-                context.read<StatsBloc>().add(Started(state.user));
+                context.read<StatsBloc>().add(Started(state.user.id));
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => const StatisticPage(),
                 ));

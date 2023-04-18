@@ -1,5 +1,7 @@
 import 'package:answer_five/core/utils/constants/string_constants.dart';
 import 'package:answer_five/features/authentication/presentation/bloc/auth_event.dart';
+import 'package:answer_five/features/statistic/presentation/bloc/stats_bloc.dart';
+import 'package:answer_five/features/statistic/presentation/bloc/stats_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/auth_bloc.dart';
@@ -114,6 +116,7 @@ class _RegistrationForm extends StatelessWidget {
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
     final confirmPasswordController = TextEditingController();
+
     return Form(
       key: formKey,
       child: Column(

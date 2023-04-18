@@ -21,5 +21,6 @@ class EmailAndPasswordParams {
 
 class StatsParams {
   final String id;
-  const StatsParams(this.id);
+  final bool? isCorrect;
+  const StatsParams(this.id, {this.isCorrect});
 }
