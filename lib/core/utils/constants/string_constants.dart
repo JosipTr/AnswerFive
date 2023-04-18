@@ -10,7 +10,6 @@ class StringConstants {
     'There is no Code Response, something else is error'
   ];
   static const url = 'https://opentdb.com/api.php?amount=1';
-  static const urlBase = 'https://opentdb.com/api.php?amount=10&encode=base64';
 
   //Assets
   static const logo = "assets/images/answer_five_nobackground.png";

@@ -2,8 +2,8 @@ import 'package:answer_five/core/utils/theme/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../statistic/presentation/bloc/stats_bloc.dart';
-import '../../../statistic/presentation/bloc/stats_state.dart';
+import '../bloc/stats_bloc.dart';
+import '../bloc/stats_state.dart';
 
 class StatisticPage extends StatelessWidget {
   const StatisticPage({super.key});
@@ -23,6 +23,8 @@ class StatisticPage extends StatelessWidget {
                     Text(
                         "IncorrectAnswers: ${state.statistic.incorrectAnswers}"),
                     Text("TotalQuestions: ${state.statistic.totalQuestions}"),
+                    Text(
+                        "WinRate: ${((state.statistic.correctAnswers / state.statistic.totalQuestions) * 100).toStringAsFixed(2)}%")
                   ],
                 );
               } else if (state is StatsLoadFailure) {

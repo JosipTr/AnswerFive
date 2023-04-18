@@ -1,7 +1,7 @@
 import 'package:answer_five/core/utils/constants/string_constants.dart';
 import 'package:answer_five/features/authentication/presentation/bloc/auth_state.dart';
 import 'package:answer_five/features/single_player/presentation/pages/single_player_page.dart';
-import 'package:answer_five/features/single_player/presentation/pages/statistic_page.dart';
+import 'package:answer_five/features/statistic/presentation/pages/statistic_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
