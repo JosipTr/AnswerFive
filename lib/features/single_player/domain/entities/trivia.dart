@@ -19,4 +19,19 @@ class Trivia extends Equatable {
   @override
   List<Object> get props =>
       [category, difficulty, question, answers, correctAnswer];
+  Trivia copyWith(
+      {String? category,
+      String? type,
+      String? difficulty,
+      String? question,
+      List<String>? answers,
+      String? correctAnswer}) {
+    return Trivia(
+        category: category ?? this.category,
+        type: type ?? this.type,
+        difficulty: difficulty ?? this.difficulty,
+        question: question ?? this.question,
+        answers: answers ?? this.answers,
+        correctAnswer: correctAnswer ?? this.correctAnswer);
+  }
 }
