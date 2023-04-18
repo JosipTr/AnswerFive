@@ -38,7 +38,7 @@ class _SinglePlayerPageState extends State<SinglePlayerPage> {
                       ),
                       Container(
                         color: Colors.blue,
-                        child: Text(state.trivia.results.first.question),
+                        child: Text(state.trivia.question),
                       ),
                       // ElevatedButton(
                       //   style: ButtonStyle(
@@ -56,7 +56,7 @@ class _SinglePlayerPageState extends State<SinglePlayerPage> {
                       //   },
                       //   child: Text(state.trivia.results.first.answers.first),
                       // ),
-                      for (final question in state.trivia.results.first.answers)
+                      for (final question in state.trivia.answers)
                         ElevatedButton(
                           onPressed: () {
                             context

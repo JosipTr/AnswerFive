@@ -1,13 +1,22 @@
 import 'package:equatable/equatable.dart';
 
-import 'trivia_result.dart';
-
 class Trivia extends Equatable {
-  final int responseCode;
-  final List<TriviaResult> results;
+  final String category;
+  final String type;
+  final String difficulty;
+  final String question;
+  final List<String> answers;
+  final String correctAnswer;
 
-  const Trivia({required this.responseCode, required this.results});
+  const Trivia(
+      {required this.category,
+      required this.type,
+      required this.difficulty,
+      required this.question,
+      required this.answers,
+      required this.correctAnswer});
 
   @override
-  List<Object> get props => [responseCode, results];
+  List<Object> get props =>
+      [category, difficulty, question, answers, correctAnswer];
 }

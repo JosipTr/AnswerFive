@@ -2,19 +2,25 @@ import 'dart:developer';
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/utils/constants/string_constants.dart';
 import '../../domain/entities/trivia.dart';
-import 'trivia_result_model.dart';
 
 class TriviaModel extends Trivia {
-  const TriviaModel({required super.responseCode, required super.results});
+  const TriviaModel(
+      {required super.category,
+      required super.type,
+      required super.difficulty,
+      required super.question,
+      required super.answers,
+      required super.correctAnswer});
 
   factory TriviaModel.fromJson(Map<String, dynamic> json) {
     return TriviaModel(
-      responseCode: json['response_code'],
-      results: json['results'] != null
-          ? (json['results'] as List<dynamic>)
-              .map((result) => TriviaResultModel.fromJson(result))
-              .toList()
-          : [],
+      category: json["category"],
+      type: json["type"],
+      difficulty: json["difficulty"],
+      question: json["question"],
+      correctAnswer: json["correct_answer"],
+      answers: List<String>.from(json["incorrect_answers"])
+        ..add(json["correct_answer"]),
     );
   }
 

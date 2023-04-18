@@ -24,9 +24,9 @@ class RemoteDataSourceImpl implements RemoteDataSource {
         final url = Uri.parse(StringConstants.url);
         final response = await _client.get(url);
         if (response.statusCode == 200) {
-          final triviaModel = TriviaModel.fromJson(json.decode(response.body));
-          final responseCode = triviaModel.responseCode;
-          triviaModel.checkResponseCode(responseCode);
+          Map<String, dynamic> jsonMap = (json.decode(response.body));
+          Map<String, dynamic> results = (jsonMap["results"]).first;
+          final triviaModel = TriviaModel.fromJson(results);
           return triviaModel;
         } else {
           throw const ServerException();
