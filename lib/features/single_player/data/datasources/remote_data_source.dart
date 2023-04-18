@@ -1,8 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:answer_five/core/network/network_info.dart';
-import 'package:html/parser.dart';
-import 'package:html_unescape/html_unescape.dart';
+import 'package:html_unescape/html_unescape_small.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../../core/errors/exceptions.dart';
@@ -24,12 +23,19 @@ class RemoteDataSourceImpl implements RemoteDataSource {
     if (await _networkInfo.isConnected) {
       try {
         final url = Uri.parse(StringConstants.url);
-        final response = await _client.get(url);
+        final response = await _client
+            .get(url, headers: {'Content-Type': 'application/json'});
         if (response.statusCode == 200) {
           final unescape = HtmlUnescape();
-          Map<String, dynamic> jsonMap =
-              (json.decode(unescape.convert(response.body)));
+
+          Map<String, dynamic> jsonMap = (json.decode(response.body));
           Map<String, dynamic> results = (jsonMap["results"]).first;
+
+          final question = results["question"];
+          final htmlDecoded = unescape.convert(question);
+          // final modifiedQuestion = htmlDecoded.replaceAll('"', '\\"');
+          results["question"] = htmlDecoded;
+
           final triviaModel = TriviaModel.fromJson(results);
           return triviaModel;
         } else {
