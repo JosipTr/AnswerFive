@@ -32,8 +32,13 @@ class AuthenticationLocalDatasourceImpl implements AuthLocalDatasource {
     try {
       final userStream = _firebaseAuth.authStateChanges();
       //Check for null value
-      final playerModelStream =
-          userStream.map((user) => PlayerModel.fromUser(user!));
+
+      final playerModelStream = userStream.asyncMap((user) async {
+        final statsSnapshot =
+            await _firebaseDatabase.ref().child('/players/${user!.uid}').once();
+        return PlayerModel.fromJson(Map<String, dynamic>.from(
+            statsSnapshot.snapshot.value as Map<dynamic, dynamic>));
+      });
       return playerModelStream;
     } catch (error) {
       log(error.toString());
@@ -49,10 +54,9 @@ class AuthenticationLocalDatasourceImpl implements AuthLocalDatasource {
         final userCredentials = await _firebaseAuth
             .createUserWithEmailAndPassword(email: email, password: password);
         final firebaseUser = userCredentials.user;
-        await firebaseUser!.sendEmailVerification();
-        //Check for null value
-        final playerModel = PlayerModel.fromUser(firebaseUser);
-        _createStats(playerModel.id);
+        final playerModel = PlayerModel.fromUser(firebaseUser!);
+        await firebaseUser.sendEmailVerification();
+        _createStats(playerModel);
         return playerModel;
       } catch (error) {
         log(error.toString());
@@ -71,8 +75,13 @@ class AuthenticationLocalDatasourceImpl implements AuthLocalDatasource {
         final userCredentials = await _firebaseAuth.signInWithEmailAndPassword(
             email: email, password: password);
         final firebaseUser = userCredentials.user;
-        //Check for null value
-        final playerModel = PlayerModel.fromUser(firebaseUser!);
+
+        final statsSnapshot = await _firebaseDatabase
+            .ref()
+            .child('/players/${firebaseUser!.uid}')
+            .once();
+        final playerModel = PlayerModel.fromJson(Map<String, dynamic>.from(
+            statsSnapshot.snapshot.value as Map<dynamic, dynamic>));
         return playerModel;
       } catch (error) {
         log(error.toString());
@@ -98,11 +107,12 @@ class AuthenticationLocalDatasourceImpl implements AuthLocalDatasource {
     throw const NetworkException();
   }
 
-  Future<void> _createStats(String id) async {
+  Future<void> _createStats(PlayerModel playerModel) async {
     if (await _networkInfo.isConnected) {
       try {
-        final statsRef = _firebaseDatabase.ref().child('/statistics/$id');
-        return await statsRef.set(const StatisticModel().toJson());
+        final statsRef =
+            _firebaseDatabase.ref().child('/players/${playerModel.id}');
+        return await statsRef.set(playerModel.toJson());
       } catch (error) {
         log(error.toString());
         throw const ServerException();

@@ -13,20 +13,20 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Stream<Player> authStateChanges() {
-    final userModelStream = _authLocalDatasource.authStateChanges();
-    final triviaUserStream =
-        userModelStream.map((userModel) => userModel!.toTriviaUser());
-    return triviaUserStream;
+    final playerModelStream = _authLocalDatasource.authStateChanges();
+    final playerStream =
+        playerModelStream.map((playerModel) => playerModel!.toPlayer());
+    return playerStream;
   }
 
   @override
   Future<Either<Failure, Player>> loginWithEmailAndPassword(
       String email, String password) async {
     try {
-      final userModel =
+      final playerModel =
           await _authLocalDatasource.loginWithEmailAndPassword(email, password);
-      final triviaUser = userModel.toTriviaUser();
-      return Right(triviaUser);
+      final player = playerModel.toPlayer();
+      return Right(player);
     } on AuthException catch (error) {
       return Left(AuthFailure(error.message));
     } on NetworkException catch (error) {
@@ -38,10 +38,10 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, Player>> registerUserWithEmailAndPassword(
       String email, String password) async {
     try {
-      final userModel = await _authLocalDatasource
+      final playerModel = await _authLocalDatasource
           .registerUserWithEmailAndPassword(email, password);
-      final triviaUser = userModel.toTriviaUser();
-      return Right(triviaUser);
+      final player = playerModel.toPlayer();
+      return Right(player);
     } on AuthException catch (error) {
       return Left(AuthFailure(error.message));
     }

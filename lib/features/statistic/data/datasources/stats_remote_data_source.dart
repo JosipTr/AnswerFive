@@ -21,8 +21,10 @@ class StatsRemoteDataSourceImpl implements StatsRemoteDataSource {
   Future<StatisticModel> getStats(String id) async {
     if (await _networkInfo.isConnected) {
       try {
-        final statsSnapshot =
-            await _firebaseDatabase.ref().child('/statistics/$id').once();
+        final statsSnapshot = await _firebaseDatabase
+            .ref()
+            .child('/players/$id/statistic')
+            .once();
         final stats = StatisticModel.fromJson(Map<String, dynamic>.from(
             statsSnapshot.snapshot.value as Map<dynamic, dynamic>));
 
@@ -42,7 +44,10 @@ class StatsRemoteDataSourceImpl implements StatsRemoteDataSource {
     if (await _networkInfo.isConnected) {
       try {
         final map = statisticModel.toJson();
-        await _firebaseDatabase.ref().child('/statistics/$id').update(map);
+        await _firebaseDatabase
+            .ref()
+            .child('/players/$id/statistic')
+            .update(map);
       } catch (error) {
         log(error.toString());
         throw const ServerException();

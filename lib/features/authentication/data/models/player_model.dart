@@ -1,5 +1,7 @@
-import '../../domain/entities/player.dart';
+import 'package:answer_five/features/statistic/data/models/statistic_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import '../../domain/entities/player.dart';
 
 class PlayerModel extends Player {
   const PlayerModel({
@@ -7,6 +9,7 @@ class PlayerModel extends Player {
     required super.name,
     required super.email,
     required super.emailVerified,
+    required super.statistic,
   });
 
   factory PlayerModel.fromUser(User user) {
@@ -14,7 +17,8 @@ class PlayerModel extends Player {
         id: user.uid,
         name: user.displayName ?? 'empty',
         email: user.email ?? 'empty',
-        emailVerified: user.emailVerified);
+        emailVerified: user.emailVerified,
+        statistic: const StatisticModel());
   }
 
   factory PlayerModel.fromPlayer(Player player) {
@@ -23,23 +27,27 @@ class PlayerModel extends Player {
       name: player.name,
       email: player.email,
       emailVerified: player.emailVerified,
+      statistic: player.statistic,
     );
   }
 
-  factory PlayerModel.fromMap(Map<dynamic, dynamic> map) {
+  factory PlayerModel.fromJson(Map<dynamic, dynamic> json) {
     return PlayerModel(
-        id: map['id'],
-        name: map['name'],
-        email: map['email'],
-        emailVerified: map['emailVerified']);
+      id: json['id'],
+      name: json['name'],
+      email: json['email'],
+      emailVerified: json['emailVerified'],
+      statistic: StatisticModel.fromJson(json['statistic']),
+    );
   }
 
-  Player toTriviaUser() {
+  Player toPlayer() {
     return Player(
       id: id,
       name: name,
       email: email,
       emailVerified: emailVerified,
+      statistic: statistic,
     );
   }
 
@@ -49,6 +57,7 @@ class PlayerModel extends Player {
       'name': name,
       'email': email,
       'emailVerified': emailVerified,
+      'statistic': (statistic as StatisticModel).toJson()
     };
   }
 }
