@@ -6,14 +6,15 @@ class PlayerModel extends Player {
     required super.id,
     required super.name,
     required super.email,
+    required super.emailVerified,
   });
 
   factory PlayerModel.fromUser(User user) {
     return PlayerModel(
-      id: user.uid,
-      name: user.displayName ?? 'empty',
-      email: user.email ?? 'empty',
-    );
+        id: user.uid,
+        name: user.displayName ?? 'empty',
+        email: user.email ?? 'empty',
+        emailVerified: user.emailVerified);
   }
 
   factory PlayerModel.fromPlayer(Player player) {
@@ -21,11 +22,16 @@ class PlayerModel extends Player {
       id: player.id,
       name: player.name,
       email: player.email,
+      emailVerified: player.emailVerified,
     );
   }
 
   factory PlayerModel.fromMap(Map<dynamic, dynamic> map) {
-    return PlayerModel(id: map['id'], name: map['name'], email: map['email']);
+    return PlayerModel(
+        id: map['id'],
+        name: map['name'],
+        email: map['email'],
+        emailVerified: map['emailVerified']);
   }
 
   Player toTriviaUser() {
@@ -33,6 +39,7 @@ class PlayerModel extends Player {
       id: id,
       name: name,
       email: email,
+      emailVerified: emailVerified,
     );
   }
 
@@ -41,6 +48,7 @@ class PlayerModel extends Player {
       'id': id,
       'name': name,
       'email': email,
+      'emailVerified': emailVerified,
     };
   }
 }

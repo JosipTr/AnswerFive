@@ -25,6 +25,18 @@ class SettingsPage extends StatelessWidget {
                 Text('User uid: ${state.user.id}'),
                 Text('Email: ${state.user.email}'),
                 Text('Username: ${state.user.name}'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Email verified: '),
+                    state.user.emailVerified
+                        ? const Icon(Icons.check, color: Colors.green)
+                        : const Icon(
+                            Icons.dangerous,
+                            color: Colors.red,
+                          )
+                  ],
+                ),
               ],
             ),
           ),

@@ -49,8 +49,9 @@ class AuthenticationLocalDatasourceImpl implements AuthLocalDatasource {
         final userCredentials = await _firebaseAuth
             .createUserWithEmailAndPassword(email: email, password: password);
         final firebaseUser = userCredentials.user;
+        await firebaseUser!.sendEmailVerification();
         //Check for null value
-        final playerModel = PlayerModel.fromUser(firebaseUser!);
+        final playerModel = PlayerModel.fromUser(firebaseUser);
         _createStats(playerModel.id);
         return playerModel;
       } catch (error) {
