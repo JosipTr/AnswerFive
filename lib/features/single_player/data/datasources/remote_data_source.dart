@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:answer_five/core/network/network_info.dart';
+import 'package:dartz/dartz_unsafe.dart';
 import 'package:html_unescape/html_unescape_small.dart';
 import 'package:http/http.dart' as http;
 
@@ -27,15 +28,25 @@ class RemoteDataSourceImpl implements RemoteDataSource {
             .get(url, headers: {'Content-Type': 'application/json'});
         if (response.statusCode == 200) {
           final unescape = HtmlUnescape();
-
-          Map<String, dynamic> jsonMap = (json.decode(response.body));
-          Map<String, dynamic> results = (jsonMap["results"]).first;
+          Map<String, dynamic> results =
+              ((json.decode(response.body))["results"].first);
+          // Map<String, dynamic> results = (jsonMap["results"]).first;
 
           final question = results["question"];
-          final htmlDecoded = unescape.convert(question);
-          // final modifiedQuestion = htmlDecoded.replaceAll('"', '\\"');
+          final correctAnswer = results["correct_answer"];
+          var incorrectAnswers = results["incorrect_answers"];
+
+          var htmlDecoded = unescape.convert(question);
           results["question"] = htmlDecoded;
 
+          htmlDecoded = unescape.convert(correctAnswer);
+          results["correct_answer"] = htmlDecoded;
+          print(incorrectAnswers);
+
+          incorrectAnswers =
+              incorrectAnswers.map((answer) => unescape.convert(answer));
+
+          print(incorrectAnswers);
           final triviaModel = TriviaModel.fromJson(results);
           return triviaModel;
         } else {
