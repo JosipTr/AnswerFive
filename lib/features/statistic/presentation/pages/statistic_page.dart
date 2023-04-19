@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/stats_bloc.dart';
 import '../bloc/stats_state.dart';
+import '../widgets/statistic_widget.dart';
 
 class StatisticPage extends StatelessWidget {
   const StatisticPage({super.key});
@@ -16,17 +17,7 @@ class StatisticPage extends StatelessWidget {
           child: BlocBuilder<StatsBloc, StatsState>(
             builder: (context, state) {
               if (state is StatsLoadSuccess) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("CorrectAnswers: ${state.statistic.correctAnswers}"),
-                    Text(
-                        "IncorrectAnswers: ${state.statistic.incorrectAnswers}"),
-                    Text("TotalQuestions: ${state.statistic.totalQuestions}"),
-                    Text(
-                        "WinRate: ${((state.statistic.correctAnswers / state.statistic.totalQuestions) * 100).toStringAsFixed(2)}%")
-                  ],
-                );
+                return const StatsticWidget();
               } else if (state is StatsLoadFailure) {
                 return Text(state.message);
               } else if (state is StatsLoading) {
