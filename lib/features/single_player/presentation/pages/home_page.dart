@@ -1,5 +1,6 @@
 import 'package:answer_five/core/utils/constants/string_constants.dart';
 import 'package:answer_five/features/authentication/presentation/bloc/auth_state.dart';
+import 'package:answer_five/features/single_player/presentation/pages/settings_page.dart';
 import 'package:answer_five/features/single_player/presentation/pages/single_player_page.dart';
 import 'package:answer_five/features/statistic/presentation/pages/statistic_page.dart';
 import 'package:flutter/material.dart';
@@ -44,6 +45,13 @@ class HomePage extends StatelessWidget {
                 context.read<StatsBloc>().add(Started(state.user.id));
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => const StatisticPage(),
+                ));
+              },
+              child: const Text('Statistics')),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const SettingsPage(),
                 ));
               },
               child: const Text('Settings')),

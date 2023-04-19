@@ -77,9 +77,10 @@ class AuthenticationLocalDatasourceImpl implements AuthLocalDatasource {
         log(error.toString());
         throw const AuthException('Login failed!');
       }
+    } else {
+      log(StringConstants.networkExceptionMessage);
+      throw const NetworkException();
     }
-    log(StringConstants.networkExceptionMessage);
-    throw const NetworkException();
   }
 
   @override
