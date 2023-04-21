@@ -1,5 +1,5 @@
-import 'package:answer_five/features/authentication/domain/entities/player.dart';
 import 'package:answer_five/features/authentication/domain/repositories/auth_repository.dart';
+import '../entities/player.dart';
 
 class AuthStateChanges {
   final AuthRepository _authRepository;

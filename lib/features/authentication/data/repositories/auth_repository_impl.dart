@@ -2,9 +2,11 @@ import 'package:answer_five/core/errors/exceptions.dart';
 import 'package:answer_five/core/errors/failures.dart';
 import 'package:answer_five/core/success.dart';
 import 'package:answer_five/features/authentication/data/datasources/auth_remote_data_source.dart';
-import 'package:answer_five/features/authentication/domain/entities/player.dart';
 import 'package:answer_five/features/authentication/domain/repositories/auth_repository.dart';
 import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import '../../domain/entities/player.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthLocalDatasource _authLocalDatasource;
@@ -13,20 +15,16 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Stream<Player> authStateChanges() {
-    final playerModelStream = _authLocalDatasource.authStateChanges();
-    final playerStream =
-        playerModelStream.map((playerModel) => playerModel!.toPlayer());
-    return playerStream;
+    final playerModel = _authLocalDatasource.authStateChanges();
+    return playerModel.asyncMap((playerModel) => playerModel.toPlayer());
   }
 
   @override
-  Future<Either<Failure, Player>> loginWithEmailAndPassword(
+  Future<Either<Failure, Success>> loginWithEmailAndPassword(
       String email, String password) async {
     try {
-      final playerModel =
-          await _authLocalDatasource.loginWithEmailAndPassword(email, password);
-      final player = playerModel.toPlayer();
-      return Right(player);
+      await _authLocalDatasource.loginWithEmailAndPassword(email, password);
+      return const Right(Success());
     } on AuthException catch (error) {
       return Left(AuthFailure(error.message));
     } on NetworkException catch (error) {
@@ -35,13 +33,12 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, Player>> registerUserWithEmailAndPassword(
+  Future<Either<Failure, Success>> registerUserWithEmailAndPassword(
       String email, String password) async {
     try {
-      final playerModel = await _authLocalDatasource
-          .registerUserWithEmailAndPassword(email, password);
-      final player = playerModel.toPlayer();
-      return Right(player);
+      await _authLocalDatasource.registerUserWithEmailAndPassword(
+          email, password);
+      return const Right(Success());
     } on AuthException catch (error) {
       return Left(AuthFailure(error.message));
     }

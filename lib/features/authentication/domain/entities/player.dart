@@ -5,14 +5,12 @@ class Player extends Equatable {
   final String id;
   final String name;
   final String email;
-  final bool emailVerified;
   final Statistic statistic;
 
   const Player(
       {required this.id,
       required this.name,
       required this.email,
-      required this.emailVerified,
       required this.statistic});
 
   Player copyWith(
@@ -25,11 +23,10 @@ class Player extends Equatable {
       id: id ?? this.id,
       name: name ?? this.name,
       email: email ?? this.email,
-      emailVerified: emailVerified ?? this.emailVerified,
       statistic: statistic ?? this.statistic,
     );
   }
 
   @override
-  List<Object> get props => [id, name, email, emailVerified, statistic];
+  List<Object> get props => [id, name, email, statistic];
 }

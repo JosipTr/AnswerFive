@@ -25,10 +25,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   void _onAuthStarted(AuthStarted event, Emitter<AuthState> emit) async {
-    final streamTriviaUser = _authStateChanges();
+    final playerStream = _authStateChanges();
     await emit.forEach(
-      streamTriviaUser,
-      onData: (triviaUser) => AuthLoadSuccess(user: triviaUser),
+      playerStream,
+      onData: (player) => AuthLoadSuccess(player: player),
       onError: (_, __) => const AuthInitial(authFilter: AuthFilter.login),
     );
   }
@@ -36,25 +36,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onAuthRegisterPressed(
       AuthRegisterPressed event, Emitter<AuthState> emit) async {
     emit(const AuthLoading());
-    final either = await _registerUserWithEmailAndPassword(
-        EmailAndPasswordParams(
-            email: event.email,
-            password: event.password,
-            confirmedPassword: event.confirmedPassword));
-    either.fold(
-        (failure) => emit(AuthLoadFailure(errorMessage: failure.message)),
-        (triviaUser) => emit(AuthLoadSuccess(user: triviaUser)));
+    await _registerUserWithEmailAndPassword(EmailAndPasswordParams(
+        email: event.email,
+        password: event.password,
+        confirmedPassword: event.confirmedPassword));
   }
 
   Future<void> _onAuthLoginPressed(
       AuthLoginPressed event, Emitter<AuthState> emit) async {
     emit(const AuthLoading());
-    final either = await _loginWithEmailAndPassword(
+    await _loginWithEmailAndPassword(
         EmailAndPasswordParams(email: event.email, password: event.password));
-
-    either.fold(
-        (failure) => emit(AuthLoadFailure(errorMessage: failure.message)),
-        (triviaUser) => emit(AuthLoadSuccess(user: triviaUser)));
   }
 
   void _onAuthPageFiltered(AuthPageFiltered event, Emitter<AuthState> emit) {

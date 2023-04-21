@@ -1,7 +1,5 @@
 import 'package:answer_five/core/utils/constants/string_constants.dart';
 import 'package:answer_five/features/authentication/presentation/bloc/auth_state.dart';
-import 'package:answer_five/features/single_player/presentation/pages/settings_page.dart';
-import 'package:answer_five/features/single_player/presentation/pages/single_player_page.dart';
 import 'package:answer_five/features/statistic/presentation/pages/statistic_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,26 +33,10 @@ class HomePage extends StatelessWidget {
           ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const SinglePlayerPage(),
-                ));
-              },
-              child: const Text('Single Player')),
-          ElevatedButton(
-              onPressed: () {
-                final state = context.read<AuthBloc>().state as AuthLoadSuccess;
-                context.read<StatsBloc>().add(Started(state.user.id));
-                Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => const StatisticPage(),
                 ));
               },
               child: const Text('Statistics')),
-          ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const SettingsPage(),
-                ));
-              },
-              child: const Text('Settings')),
           ElevatedButton(
               onPressed: () {
                 context.read<AuthBloc>().add(const AuthLogoutPressed());

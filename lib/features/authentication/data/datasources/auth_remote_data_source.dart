@@ -7,14 +7,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 import '../../../../core/errors/exceptions.dart';
-import '../../../statistic/data/models/statistic_model.dart';
 
 abstract class AuthLocalDatasource {
-  Stream<PlayerModel?> authStateChanges();
-  Future<PlayerModel> registerUserWithEmailAndPassword(
-      String email, String password);
+  Stream<PlayerModel> authStateChanges();
+  Future<void> registerUserWithEmailAndPassword(String email, String password);
 
-  Future<PlayerModel> loginWithEmailAndPassword(String email, String password);
+  Future<void> loginWithEmailAndPassword(String email, String password);
 
   Future<void> logout();
 }
@@ -28,36 +26,20 @@ class AuthenticationLocalDatasourceImpl implements AuthLocalDatasource {
       this._firebaseAuth, this._networkInfo, this._firebaseDatabase);
 
   @override
-  Stream<PlayerModel?> authStateChanges() {
-    try {
-      final userStream = _firebaseAuth.authStateChanges();
-      //Check for null value
-
-      final playerModelStream = userStream.asyncMap((user) async {
-        final statsSnapshot =
-            await _firebaseDatabase.ref().child('/players/${user!.uid}').once();
-        return PlayerModel.fromJson(Map<String, dynamic>.from(
-            statsSnapshot.snapshot.value as Map<dynamic, dynamic>));
-      });
-      return playerModelStream;
-    } catch (error) {
-      log(error.toString());
-      throw const AuthException('User does not exist!');
-    }
+  Stream<PlayerModel> authStateChanges() {
+    final stream = _firebaseAuth.authStateChanges();
+    return stream.asyncMap((user) => PlayerModel.fromUser(user!));
   }
 
   @override
-  Future<PlayerModel> registerUserWithEmailAndPassword(
+  Future<void> registerUserWithEmailAndPassword(
       String email, String password) async {
     if (await _networkInfo.isConnected) {
       try {
-        final userCredentials = await _firebaseAuth
-            .createUserWithEmailAndPassword(email: email, password: password);
-        final firebaseUser = userCredentials.user;
-        final playerModel = PlayerModel.fromUser(firebaseUser!);
-        await firebaseUser.sendEmailVerification();
-        _createStats(playerModel);
-        return playerModel;
+        await _firebaseAuth.createUserWithEmailAndPassword(
+            email: email, password: password);
+        await _savePlayer();
+        return;
       } catch (error) {
         log(error.toString());
         throw const AuthException('Registration failed!');
@@ -68,21 +50,11 @@ class AuthenticationLocalDatasourceImpl implements AuthLocalDatasource {
   }
 
   @override
-  Future<PlayerModel> loginWithEmailAndPassword(
-      String email, String password) async {
+  Future<void> loginWithEmailAndPassword(String email, String password) async {
     if (await _networkInfo.isConnected) {
       try {
-        final userCredentials = await _firebaseAuth.signInWithEmailAndPassword(
+        await _firebaseAuth.signInWithEmailAndPassword(
             email: email, password: password);
-        final firebaseUser = userCredentials.user;
-
-        final statsSnapshot = await _firebaseDatabase
-            .ref()
-            .child('/players/${firebaseUser!.uid}')
-            .once();
-        final playerModel = PlayerModel.fromJson(Map<String, dynamic>.from(
-            statsSnapshot.snapshot.value as Map<dynamic, dynamic>));
-        return playerModel;
       } catch (error) {
         log(error.toString());
         throw const AuthException('Login failed!');
@@ -102,25 +74,18 @@ class AuthenticationLocalDatasourceImpl implements AuthLocalDatasource {
         log(error.toString());
         throw const AuthException('Logout failed!');
       }
-    }
-    log(StringConstants.networkExceptionMessage);
-    throw const NetworkException();
-  }
-
-  Future<void> _createStats(PlayerModel playerModel) async {
-    if (await _networkInfo.isConnected) {
-      try {
-        final statsRef =
-            _firebaseDatabase.ref().child('/players/${playerModel.id}');
-        return await statsRef.set(playerModel.toJson());
-      } catch (error) {
-        log(error.toString());
-        throw const ServerException();
-      }
     } else {
       log(StringConstants.networkExceptionMessage);
       throw const NetworkException();
     }
+  }
+
+  Future<void> _savePlayer() async {
+    final playerModel = PlayerModel.fromUser(_firebaseAuth.currentUser!);
+    return await _firebaseDatabase
+        .ref()
+        .child('/players/${playerModel.id}')
+        .set(playerModel.toJson());
   }
 }
 

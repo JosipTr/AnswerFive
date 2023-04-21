@@ -24,11 +24,11 @@ class AuthLoading extends AuthState {
 }
 
 class AuthLoadSuccess extends AuthState {
-  final Player user;
-  const AuthLoadSuccess({required this.user});
+  final Player player;
+  const AuthLoadSuccess({required this.player});
 
   @override
-  List<Object> get props => [user];
+  List<Object> get props => [player];
 }
 
 class AuthLoadFailure extends AuthState {
