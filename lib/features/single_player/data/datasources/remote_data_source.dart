@@ -40,12 +40,10 @@ class RemoteDataSourceImpl implements RemoteDataSource {
 
           htmlDecoded = unescape.convert(correctAnswer);
           results["correct_answer"] = htmlDecoded;
-          print(incorrectAnswers);
 
           incorrectAnswers =
               incorrectAnswers.map((answer) => unescape.convert(answer));
 
-          print(incorrectAnswers);
           final triviaModel = TriviaModel.fromJson(results);
           return triviaModel;
         } else {

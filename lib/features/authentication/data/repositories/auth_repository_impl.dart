@@ -4,7 +4,6 @@ import 'package:answer_five/core/success.dart';
 import 'package:answer_five/features/authentication/data/datasources/auth_remote_data_source.dart';
 import 'package:answer_five/features/authentication/domain/repositories/auth_repository.dart';
 import 'package:dartz/dartz.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../domain/entities/player.dart';
 

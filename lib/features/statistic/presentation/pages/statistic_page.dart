@@ -1,30 +1,28 @@
 import 'package:answer_five/core/utils/theme/custom_theme.dart';
+import 'package:answer_five/features/home/presentation/bloc/home_bloc.dart';
+import 'package:answer_five/features/home/presentation/bloc/home_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../bloc/stats_bloc.dart';
-import '../bloc/stats_state.dart';
-import '../widgets/statistic_widget.dart';
 
 class StatisticPage extends StatelessWidget {
   const StatisticPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final state = context.read<HomeBloc>().state as HomeLoadSuccess;
     return Scaffold(
       body: GradientBackground(
         child: Center(
-          child: BlocBuilder<StatsBloc, StatsState>(
-            builder: (context, state) {
-              if (state is StatsLoadSuccess) {
-                return const StatsticWidget();
-              } else if (state is StatsLoadFailure) {
-                return Text(state.message);
-              } else if (state is StatsLoading) {
-                return const CircularProgressIndicator();
-              }
-              return const Text('blabla');
-            },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Text("CorrectAnswers: ${state.player.statistic.correctAnswers}"),
+              Text(
+                  "IncorrectAnswers: ${state.player.statistic.incorrectAnswers}"),
+              Text("TotalQuestions: ${state.player.statistic.totalQuestions}"),
+              Text(
+                  "WinRate: ${((state.player.statistic.correctAnswers / state.player.statistic.totalQuestions) * 100).toStringAsFixed(2)}%")
+            ],
           ),
         ),
       ),
