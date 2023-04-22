@@ -25,7 +25,7 @@ class TriviaRepositoryImpl implements TriviaRepository {
   }
 
   @override
-  Future<Either<Failure, int>> checkIfPlayedToday() async {
+  Future<Either<Failure, int>> checkTodayQuestionNumber() async {
     try {
       final questionNumber = await _remoteDataSource.checkIfPlayedToday();
       return Right(questionNumber);
