@@ -20,8 +20,9 @@ Future<void> initTriviaDependencies() async {
   triviaInjector.registerLazySingleton(() => GetTrivia(triviaInjector()));
 
   //Datasources
-  triviaInjector.registerLazySingleton<RemoteDataSource>(
-      () => RemoteDataSourceImpl(triviaInjector(), triviaInjector()));
+  triviaInjector.registerLazySingleton<RemoteDataSource>(() =>
+      RemoteDataSourceImpl(triviaInjector(), triviaInjector(), triviaInjector(),
+          triviaInjector()));
 
   //Bloc
   triviaInjector.registerFactory(() => TriviaBloc(triviaInjector()));

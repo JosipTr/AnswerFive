@@ -2,13 +2,17 @@ import '../../domain/entities/statistic.dart';
 
 class StatisticModel extends Statistic {
   const StatisticModel(
-      {super.correctAnswers, super.incorrectAnswers, super.totalQuestions});
+      {super.correctAnswers,
+      super.incorrectAnswers,
+      super.totalQuestions,
+      super.todayQuestionNumber});
 
   factory StatisticModel.fromJson(Map<dynamic, dynamic> json) {
     return StatisticModel(
       correctAnswers: json['correctAnswers'],
       incorrectAnswers: json['incorrectAnswers'],
       totalQuestions: json['totalQuestions'],
+      todayQuestionNumber: json['todayQuestionNumber'],
     );
   }
 
@@ -17,6 +21,7 @@ class StatisticModel extends Statistic {
       correctAnswers: statistic.correctAnswers,
       incorrectAnswers: statistic.incorrectAnswers,
       totalQuestions: statistic.totalQuestions,
+      todayQuestionNumber: statistic.todayQuestionNumber,
     );
   }
 
@@ -25,6 +30,7 @@ class StatisticModel extends Statistic {
       correctAnswers: statisticModel.correctAnswers,
       incorrectAnswers: statisticModel.incorrectAnswers,
       totalQuestions: statisticModel.totalQuestions,
+      todayQuestionNumber: statisticModel.todayQuestionNumber,
     );
   }
 
@@ -33,6 +39,7 @@ class StatisticModel extends Statistic {
       'totalQuestions': totalQuestions,
       'correctAnswers': correctAnswers,
       'incorrectAnswers': incorrectAnswers,
+      'todayQuestionNumber': todayQuestionNumber,
     };
   }
 }

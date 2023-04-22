@@ -5,4 +5,6 @@ import '../entities/trivia.dart';
 
 abstract class TriviaRepository {
   Future<Either<Failure, Trivia>> getTrivia();
+
+  Future<Either<Failure, int>> checkIfPlayedToday();
 }

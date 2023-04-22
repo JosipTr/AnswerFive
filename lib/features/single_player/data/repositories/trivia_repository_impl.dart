@@ -23,4 +23,16 @@ class TriviaRepositoryImpl implements TriviaRepository {
       return Left(NetworkFailure(error.message));
     }
   }
+
+  @override
+  Future<Either<Failure, int>> checkIfPlayedToday() async {
+    try {
+      final questionNumber = await _remoteDataSource.checkIfPlayedToday();
+      return Right(questionNumber);
+    } on ServerException catch (error) {
+      return Left(ServerFailure(error.message));
+    } on NetworkException catch (error) {
+      return Left(NetworkFailure(error.message));
+    }
+  }
 }

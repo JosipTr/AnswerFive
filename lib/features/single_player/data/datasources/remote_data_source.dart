@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:answer_five/core/network/network_info.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:html_unescape/html_unescape_small.dart';
 import 'package:http/http.dart' as http;
 
@@ -10,13 +12,18 @@ import '../models/trivia_model.dart';
 
 abstract class RemoteDataSource {
   Future<TriviaModel> getTrivia();
+
+  Future<int> checkIfPlayedToday();
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
   final http.Client _client;
   final NetworkInfo _networkInfo;
+  final FirebaseDatabase _firebaseDatabase;
+  final FirebaseAuth _firebaseAuth;
 
-  const RemoteDataSourceImpl(this._client, this._networkInfo);
+  const RemoteDataSourceImpl(this._client, this._networkInfo,
+      this._firebaseDatabase, this._firebaseAuth);
 
   @override
   Future<TriviaModel> getTrivia() async {
@@ -53,6 +60,28 @@ class RemoteDataSourceImpl implements RemoteDataSource {
         throw const ServerException();
       }
     } else {
+      throw const NetworkException();
+    }
+  }
+
+  @override
+  Future<int> checkIfPlayedToday() async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final s = await _firebaseDatabase
+            .ref()
+            .child(
+                "players/${_firebaseAuth.currentUser!.uid}/statistic/todayQuestionNumber")
+            .once();
+        final questionNumber = s.snapshot.value as int;
+        print(questionNumber);
+        return questionNumber;
+      } catch (error) {
+        log(error.toString());
+        throw const ServerException();
+      }
+    } else {
+      log(StringConstants.networkExceptionMessage);
       throw const NetworkException();
     }
   }
