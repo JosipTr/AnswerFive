@@ -14,6 +14,8 @@ abstract class RemoteDataSource {
   Future<TriviaModel> getTrivia();
 
   Future<int> checkIfPlayedToday();
+
+  Future<String> checkLastActive();
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
@@ -76,6 +78,27 @@ class RemoteDataSourceImpl implements RemoteDataSource {
         final questionNumber = s.snapshot.value as int;
         print(questionNumber);
         return questionNumber;
+      } catch (error) {
+        log(error.toString());
+        throw const ServerException();
+      }
+    } else {
+      log(StringConstants.networkExceptionMessage);
+      throw const NetworkException();
+    }
+  }
+
+  @override
+  Future<String> checkLastActive() async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final s = await _firebaseDatabase
+            .ref()
+            .child("players/${_firebaseAuth.currentUser!.uid}/lastActive")
+            .once();
+        final date = s.snapshot.value as String;
+        print(date);
+        return date;
       } catch (error) {
         log(error.toString());
         throw const ServerException();

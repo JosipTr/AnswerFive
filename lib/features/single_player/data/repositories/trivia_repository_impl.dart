@@ -35,4 +35,16 @@ class TriviaRepositoryImpl implements TriviaRepository {
       return Left(NetworkFailure(error.message));
     }
   }
+
+  @override
+  Future<Either<Failure, String>> checkLastActive() async {
+    try {
+      final date = await _remoteDataSource.checkLastActive();
+      return Right(date);
+    } on ServerException catch (error) {
+      return Left(ServerFailure(error.message));
+    } on NetworkException catch (error) {
+      return Left(NetworkFailure(error.message));
+    }
+  }
 }

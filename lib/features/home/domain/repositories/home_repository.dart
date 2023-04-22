@@ -9,4 +9,8 @@ abstract class HomeRepository {
   Stream<Player> getPlayer();
 
   Future<Either<Failure, Success>> updatePlayerStats(Statistic statistic);
+
+  Future<Either<Failure, Success>> updateLastActive(String date);
+
+  Future<Either<Failure, Success>> updateTodayQuestionNumber();
 }

@@ -18,7 +18,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Future<void> _onHomeStarted(
       HomeStarted event, Emitter<HomeState> emit) async {
     emit(const HomeLoading());
-    final stream = _getPlayer();
+    final stream = await _getPlayer();
     return emit.forEach(
       stream,
       onData: (player) => HomeLoadSuccess(player),

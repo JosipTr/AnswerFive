@@ -7,4 +7,6 @@ abstract class TriviaRepository {
   Future<Either<Failure, Trivia>> getTrivia();
 
   Future<Either<Failure, int>> checkTodayQuestionNumber();
+
+  Future<Either<Failure, String>> checkLastActive();
 }

@@ -8,6 +8,7 @@ class PlayerModel extends Player {
     required super.id,
     required super.name,
     required super.email,
+    required super.lastActive,
     required super.statistic,
   });
 
@@ -16,6 +17,7 @@ class PlayerModel extends Player {
         id: user.uid,
         name: user.displayName ?? 'empty',
         email: user.email ?? 'empty',
+        lastActive: DateTime.now().toString(),
         statistic: const StatisticModel());
   }
 
@@ -24,6 +26,7 @@ class PlayerModel extends Player {
       id: player.id,
       name: player.name,
       email: player.email,
+      lastActive: player.lastActive,
       statistic: player.statistic,
     );
   }
@@ -33,6 +36,7 @@ class PlayerModel extends Player {
       id: json['id'],
       name: json['name'],
       email: json['email'],
+      lastActive: json['lastActive'],
       statistic: StatisticModel.fromJson(json['statistic']),
     );
   }
@@ -42,6 +46,7 @@ class PlayerModel extends Player {
       id: id,
       name: name,
       email: email,
+      lastActive: lastActive,
       statistic: statistic,
     );
   }
@@ -51,6 +56,7 @@ class PlayerModel extends Player {
       'id': id,
       'name': name,
       'email': email,
+      'lastActive': lastActive,
       'statistic': (statistic as StatisticModel).toJson()
     };
   }

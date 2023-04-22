@@ -15,7 +15,7 @@ class GetTrivia implements UseCase<Trivia, NoParams> {
   Future<Either<Failure, Trivia>> call(NoParams params) async {
     final eitherCheck = await _repository.checkTodayQuestionNumber();
 
-    return eitherCheck.fold((l) => const Left(InputFailure('OOps')), (r) async {
+    return eitherCheck.fold((l) => Left(l), (r) async {
       if (r < 5) {
         {
           final either = await _repository.getTrivia();
