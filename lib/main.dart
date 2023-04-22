@@ -9,7 +9,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'features/authentication/presentation/bloc/auth_bloc.dart';
 import 'features/authentication/presentation/bloc/auth_event.dart';
 import 'features/home/presentation/bloc/home_bloc.dart';
-import 'features/home/presentation/bloc/home_event.dart';
 import 'features/single_player/presentation/bloc/trivia_bloc.dart';
 import 'features/statistic/presentation/bloc/stats_bloc.dart';
 import 'firebase_options.dart';
@@ -41,9 +40,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<StatsBloc>(
           create: (_) => ServiceLocator.get(),
         ),
-        BlocProvider<HomeBloc>(
-            create: (context) =>
-                ServiceLocator.get()..add(const HomeStarted())),
+        BlocProvider<HomeBloc>(create: (context) => ServiceLocator.get()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

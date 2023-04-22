@@ -11,7 +11,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       (event, emit) {
         emit(const HomeLoading());
         final stream = _getPlayer();
-        emit.forEach(
+        return emit.forEach(
           stream,
           onData: (player) => HomeLoadSuccess(player),
           onError: (_, __) => const HomeLoadFailure("Something went wrong!"),

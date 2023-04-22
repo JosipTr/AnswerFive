@@ -36,17 +36,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onAuthRegisterPressed(
       AuthRegisterPressed event, Emitter<AuthState> emit) async {
     emit(const AuthLoading());
-    await _registerUserWithEmailAndPassword(EmailAndPasswordParams(
-        email: event.email,
-        password: event.password,
-        confirmedPassword: event.confirmedPassword));
+    final either = await _registerUserWithEmailAndPassword(
+        EmailAndPasswordParams(
+            email: event.email,
+            password: event.password,
+            confirmedPassword: event.confirmedPassword));
+    either.fold(
+        (failure) => emit(AuthLoadFailure(errorMessage: failure.message)),
+        (success) => null);
   }
 
   Future<void> _onAuthLoginPressed(
       AuthLoginPressed event, Emitter<AuthState> emit) async {
     emit(const AuthLoading());
-    await _loginWithEmailAndPassword(
+    final either = await _loginWithEmailAndPassword(
         EmailAndPasswordParams(email: event.email, password: event.password));
+    either.fold(
+        (failure) => emit(AuthLoadFailure(errorMessage: failure.message)),
+        (success) => null);
   }
 
   void _onAuthPageFiltered(AuthPageFiltered event, Emitter<AuthState> emit) {

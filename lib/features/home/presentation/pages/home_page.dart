@@ -1,10 +1,9 @@
-import 'package:answer_five/core/utils/theme/custom_theme.dart';
+import 'package:answer_five/features/home/presentation/bloc/home_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/home_bloc.dart';
 import '../bloc/home_state.dart';
-import '../widgets/home_initial_widget.dart';
 import '../widgets/home_widget.dart';
 
 class HomePage extends StatelessWidget {
@@ -12,6 +11,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<HomeBloc>().add(const HomeStarted());
     final phoneHeight = MediaQuery.of(context).size.height;
     final double imageSize;
     if (phoneHeight < 800) {
@@ -28,12 +28,12 @@ class HomePage extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          if (state is HomeLoadSuccess) {
-            return HomeWidget(imageSize: imageSize);
-          } else if (state is HomeInitial) {
-            return const HomeInitialWidget();
+          if (state is HomeLoading) {
+            return const CircularProgressIndicator();
           } else {
-            return const GradientBackground(child: Text(''));
+            return HomeWidget(
+              imageSize: imageSize,
+            );
           }
         },
       ),
