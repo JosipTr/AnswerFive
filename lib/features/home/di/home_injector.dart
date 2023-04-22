@@ -1,5 +1,6 @@
 import 'package:answer_five/features/home/data/datasources/home_remote_datasource.dart';
 import 'package:answer_five/features/home/domain/usecases/get_player.dart';
+import 'package:answer_five/features/home/domain/usecases/update_player_stats.dart';
 import 'package:get_it/get_it.dart';
 
 import '../data/repositories/home_repository_impl.dart';
@@ -17,12 +18,13 @@ Future<void> initHomeDependencies() async {
       () => HomeRepositoryImpl(homeInjector()));
 
   //Datasources
-  homeInjector.registerLazySingleton<HomeRemoteDatasource>(
-      () => HomeRemoteDatasourceImpl(homeInjector(), homeInjector()));
+  homeInjector.registerLazySingleton<HomeRemoteDatasource>(() =>
+      HomeRemoteDatasourceImpl(homeInjector(), homeInjector(), homeInjector()));
 
   //Usecases
   homeInjector.registerLazySingleton(() => GetPlayer(homeInjector()));
+  homeInjector.registerLazySingleton(() => UpdatePlayerStats(homeInjector()));
 
   //Bloc
-  homeInjector.registerFactory(() => HomeBloc(homeInjector()));
+  homeInjector.registerFactory(() => HomeBloc(homeInjector(), homeInjector()));
 }

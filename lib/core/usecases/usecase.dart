@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 
+import '../../features/statistic/domain/entities/statistic.dart';
 import '../errors/failures.dart';
 
 abstract class UseCase<Type, Params> {
@@ -17,6 +18,13 @@ class EmailAndPasswordParams {
 
   const EmailAndPasswordParams(
       {required this.email, required this.password, this.confirmedPassword});
+}
+
+class UpdatePlayerStatsParams {
+  final Statistic statistic;
+  final bool isCorrect;
+
+  const UpdatePlayerStatsParams(this.statistic, this.isCorrect);
 }
 
 class StatsParams {
