@@ -1,4 +1,4 @@
-import 'package:answer_five/features/authentication/auth_injector.dart';
+import 'package:answer_five/features/authentication/di/auth_injector.dart';
 import 'package:answer_five/features/statistic/data/datasources/stats_remote_data_source.dart';
 import 'package:answer_five/features/statistic/data/repositories/stats_repository_impl.dart';
 import 'package:answer_five/features/statistic/domain/repositories/stats_repository.dart';

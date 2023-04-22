@@ -9,7 +9,7 @@ import 'package:answer_five/features/authentication/presentation/bloc/auth_bloc.
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
-import 'data/repositories/auth_repository_impl.dart';
+import '../data/repositories/auth_repository_impl.dart';
 
 final authInjector = GetIt.instance;
 

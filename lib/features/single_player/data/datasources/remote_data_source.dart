@@ -29,7 +29,6 @@ class RemoteDataSourceImpl implements RemoteDataSource {
           final unescape = HtmlUnescape();
           Map<String, dynamic> results =
               ((json.decode(response.body))["results"].first);
-          // Map<String, dynamic> results = (jsonMap["results"]).first;
 
           final question = results["question"];
           final correctAnswer = results["correct_answer"];
@@ -53,7 +52,8 @@ class RemoteDataSourceImpl implements RemoteDataSource {
         log(error.toString());
         throw const ServerException();
       }
+    } else {
+      throw const NetworkException();
     }
-    throw const NetworkException();
   }
 }

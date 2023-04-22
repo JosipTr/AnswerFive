@@ -1,5 +1,5 @@
-import 'package:answer_five/features/authentication/auth_injector.dart';
-import 'package:answer_five/features/single_player/trivia_injector.dart';
+import 'package:answer_five/features/authentication/di/auth_injector.dart';
+import 'package:answer_five/features/single_player/di/trivia_injector.dart';
 import 'package:get_it/get_it.dart';
 
 import '../features/home/di/home_injector.dart';
