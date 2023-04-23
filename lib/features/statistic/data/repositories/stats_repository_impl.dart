@@ -7,6 +7,7 @@ import 'package:answer_five/features/statistic/domain/repositories/stats_reposit
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/errors/exceptions.dart';
+import '../../../authentication/domain/entities/player.dart';
 import '../../domain/entities/statistic.dart';
 
 class StatsRepositoryImpl implements StatsRepository {
@@ -14,10 +15,15 @@ class StatsRepositoryImpl implements StatsRepository {
 
   const StatsRepositoryImpl(this._dataSource);
   @override
-  Future<Either<Failure, Statistic>> getStats(String id) async {
+  Future<Either<Failure, List<Player>>> getStats() async {
     try {
-      final stats = await _dataSource.getStats(id);
-      return Right(stats);
+      final stats = await _dataSource.getStats();
+      final players = stats
+          .map(
+            (playerModel) => playerModel.toPlayer(),
+          )
+          .toList();
+      return Right(players);
     } on NetworkException catch (error) {
       return Left(NetworkFailure(error.message));
     } on ServerException catch (error) {

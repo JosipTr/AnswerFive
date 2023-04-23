@@ -4,12 +4,14 @@ import 'package:answer_five/features/statistic/domain/entities/statistic.dart';
 import 'package:answer_five/features/statistic/domain/repositories/stats_repository.dart';
 import 'package:dartz/dartz.dart';
 
-class GetStats extends UseCase<Statistic, StatsParams> {
+import '../../../authentication/domain/entities/player.dart';
+
+class GetStats extends UseCase<List<Player>, NoParams> {
   final StatsRepository _repository;
 
   GetStats(this._repository);
   @override
-  Future<Either<Failure, Statistic>> call(StatsParams params) async {
-    return await _repository.getStats(params.id);
+  Future<Either<Failure, List<Player>>> call(NoParams params) async {
+    return await _repository.getStats();
   }
 }

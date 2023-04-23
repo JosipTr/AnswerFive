@@ -5,11 +5,9 @@ abstract class StatsEvent extends Equatable {
 }
 
 class Started extends StatsEvent {
-  final String id;
-  const Started(this.id);
-
+  const Started();
   @override
-  List<Object> get props => [id];
+  List<Object> get props => [];
 }
 
 class StatsUpdatePressed extends StatsEvent {

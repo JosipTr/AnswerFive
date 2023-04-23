@@ -19,7 +19,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
 
   Future<void> _onStarted(Started event, Emitter<StatsState> emit) async {
     emit(const StatsLoading());
-    final either = await _getStats(StatsParams(event.id));
+    final either = await _getStats(const NoParams());
     either.fold((l) => emit(StatsLoadFailure(l.message)),
         (r) => emit(StatsLoadSuccess(r)));
   }
