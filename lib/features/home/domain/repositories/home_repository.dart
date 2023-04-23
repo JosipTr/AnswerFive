@@ -10,7 +10,7 @@ abstract class HomeRepository {
 
   Future<Either<Failure, Success>> updatePlayerStats(Statistic statistic);
 
-  Future<Either<Failure, Success>> updateLastActive(String date);
+  Stream<void> updateLastActive(String date);
 
   Future<Either<Failure, Success>> updateTodayQuestionNumber();
 }

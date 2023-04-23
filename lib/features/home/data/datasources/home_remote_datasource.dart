@@ -14,7 +14,7 @@ abstract class HomeRemoteDatasource {
 
   Future<void> updatePlayerStats(StatisticModel statisticModel);
 
-  Future<void> updateLastActive(String date);
+  Stream<void> updateLastActive(String date);
 
   Future<void> updateTodayQuestionNumber();
 }
@@ -56,13 +56,19 @@ class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
   }
 
   @override
-  Future<void> updateLastActive(String date) async {
+  Stream<void> updateLastActive(String date) async* {
     if (await _networkInfo.isConnected) {
       try {
-        return await _firebaseDatabase
+        yield* _firebaseDatabase
             .ref()
             .child("players/${_firebaseAuth.currentUser!.uid}")
-            .update({'lastActive': date});
+            .onValue
+            .asyncExpand((event) async* {
+          await _firebaseDatabase
+              .ref()
+              .child("players/${_firebaseAuth.currentUser!.uid}")
+              .update({'lastActive': date});
+        });
       } catch (error) {
         log(error.toString());
         throw const ServerException();
@@ -85,16 +91,9 @@ class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
             .once();
         final lastActive = event.snapshot.value as String;
         final lastActiveDate = DateTime.parse(lastActive);
-        print(lastActiveDate.day);
-        print(lastActiveDate.month);
-        print(lastActiveDate.year);
-        print(date.day);
-        print(date.month);
-        print(date.year);
         if (lastActiveDate.day < date.day &&
             lastActiveDate.month <= date.month &&
             lastActiveDate.year <= date.year) {
-          print("hej");
           return await _firebaseDatabase
               .ref()
               .child("players/${_firebaseAuth.currentUser!.uid}/statistic/")

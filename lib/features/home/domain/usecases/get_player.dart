@@ -6,9 +6,9 @@ class GetPlayer {
 
   const GetPlayer(this._homeRepository);
 
-  Future<Stream<Player>> call() async {
-    await _homeRepository.updateTodayQuestionNumber();
-    await _homeRepository.updateLastActive((DateTime.now().toString()));
+  Stream<Player> call() {
+    // await _homeRepository.updateTodayQuestionNumber();
+    // await _homeRepository.updateLastActive((DateTime.now().toString()));
     return _homeRepository.getPlayer();
   }
 }

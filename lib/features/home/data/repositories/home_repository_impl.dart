@@ -34,15 +34,8 @@ class HomeRepositoryImpl implements HomeRepository {
   }
 
   @override
-  Future<Either<Failure, Success>> updateLastActive(String date) async {
-    try {
-      await _datasource.updateLastActive(date);
-      return const Right(Success());
-    } on ServerException catch (error) {
-      return Left(ServerFailure(error.message));
-    } on NetworkException catch (error) {
-      return Left(NetworkFailure(error.message));
-    }
+  Stream<void> updateLastActive(String date) async* {
+    yield* _datasource.updateLastActive(date);
   }
 
   @override
