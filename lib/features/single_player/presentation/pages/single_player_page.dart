@@ -11,13 +11,6 @@ class SinglePlayerPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final phoneHeight = MediaQuery.of(context).size.height;
-    final double imageSize;
-    if (phoneHeight < 800) {
-      imageSize = 350;
-    } else {
-      imageSize = 500;
-    }
     return Scaffold(
       body: SingleChildScrollView(
         child: GradientBackground(
