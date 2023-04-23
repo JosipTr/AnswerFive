@@ -1,7 +1,9 @@
+import 'package:answer_five/features/home/presentation/bloc/home_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/utils/constants/string_constants.dart';
+import '../../../home/presentation/bloc/home_bloc.dart';
 import '../bloc/bloc.dart';
 
 class TriviaInitialWidget extends StatelessWidget {
@@ -9,6 +11,11 @@ class TriviaInitialWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final todayQuestionNumber =
+        (context.read<HomeBloc>().state as HomeLoadSuccess)
+            .player
+            .statistic
+            .todayQuestionNumber;
     final phoneHeight = MediaQuery.of(context).size.height;
     final double imageSize;
     if (phoneHeight < 800) {
@@ -24,12 +31,17 @@ class TriviaInitialWidget extends StatelessWidget {
           width: imageSize,
           height: imageSize,
         ),
-        ElevatedButton(
-          onPressed: () {
-            context.read<TriviaBloc>().add(const GetTriviaEvent());
-          },
-          child: const Text('Get Trivia'),
-        ),
+        todayQuestionNumber < 5
+            ? ElevatedButton(
+                onPressed: () {
+                  context.read<TriviaBloc>().add(const GetTriviaEvent());
+                },
+                child: const Text('Get Trivia'),
+              )
+            : const Text(
+                "Already played today.\nCome back tomorrow.",
+                style: TextStyle(fontSize: 25),
+              ),
         ElevatedButton(
           onPressed: () {
             Navigator.of(context).pop();
