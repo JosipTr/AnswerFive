@@ -1,3 +1,4 @@
+import 'package:answer_five/core/success.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/errors/exceptions.dart';
@@ -25,9 +26,9 @@ class TriviaRepositoryImpl implements TriviaRepository {
   }
 
   @override
-  Future<Either<Failure, int>> checkTodayQuestionNumber() async {
+  Future<Either<Failure, int>> getTodayQuestionNumber() async {
     try {
-      final questionNumber = await _remoteDataSource.checkIfPlayedToday();
+      final questionNumber = await _remoteDataSource.getTodayQuestionNumber();
       return Right(questionNumber);
     } on ServerException catch (error) {
       return Left(ServerFailure(error.message));
@@ -37,10 +38,10 @@ class TriviaRepositoryImpl implements TriviaRepository {
   }
 
   @override
-  Future<Either<Failure, String>> checkLastActive() async {
+  Future<Either<Failure, Success>> updateTodayQuestionNumber() async {
     try {
-      final date = await _remoteDataSource.checkLastActive();
-      return Right(date);
+      await _remoteDataSource.updateTodayQuestionNumber();
+      return const Right(Success());
     } on ServerException catch (error) {
       return Left(ServerFailure(error.message));
     } on NetworkException catch (error) {

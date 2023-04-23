@@ -13,9 +13,9 @@ import '../models/trivia_model.dart';
 abstract class RemoteDataSource {
   Future<TriviaModel> getTrivia();
 
-  Future<int> checkIfPlayedToday();
+  Future<int> getTodayQuestionNumber();
 
-  Future<String> checkLastActive();
+  Future<void> updateTodayQuestionNumber();
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
@@ -67,16 +67,15 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   }
 
   @override
-  Future<int> checkIfPlayedToday() async {
+  Future<int> getTodayQuestionNumber() async {
     if (await _networkInfo.isConnected) {
       try {
-        final s = await _firebaseDatabase
+        final databaseEvent = await _firebaseDatabase
             .ref()
             .child(
                 "players/${_firebaseAuth.currentUser!.uid}/statistic/todayQuestionNumber")
             .once();
-        final questionNumber = s.snapshot.value as int;
-        print(questionNumber);
+        final questionNumber = databaseEvent.snapshot.value as int;
         return questionNumber;
       } catch (error) {
         log(error.toString());
@@ -89,16 +88,20 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   }
 
   @override
-  Future<String> checkLastActive() async {
+  Future<void> updateTodayQuestionNumber() async {
     if (await _networkInfo.isConnected) {
       try {
-        final s = await _firebaseDatabase
+        final databaseEvent = await _firebaseDatabase
             .ref()
-            .child("players/${_firebaseAuth.currentUser!.uid}/lastActive")
+            .child(
+                "players/${_firebaseAuth.currentUser!.uid}/statistic/todayQuestionNumber")
             .once();
-        final date = s.snapshot.value as String;
-        print(date);
-        return date;
+        var questionNumber = databaseEvent.snapshot.value as int;
+        questionNumber = questionNumber + 1;
+        return await _firebaseDatabase
+            .ref()
+            .child("players/${_firebaseAuth.currentUser!.uid}/statistic/")
+            .update({'todayQuestionNumber': questionNumber});
       } catch (error) {
         log(error.toString());
         throw const ServerException();

@@ -9,6 +9,7 @@ class TriviaBloc extends Bloc<TriviaEvent, TriviaState> {
   TriviaBloc(this._getTrivia) : super(const TriviaInitial()) {
     on<GetTriviaEvent>(_onGetTriviaEvent);
     on<TriviaStarted>(_onTriviaStarted);
+    on<TriviaBackButtonPressed>(_onTriviaBackButtonPressed);
   }
 
   void _onTriviaStarted(TriviaStarted event, Emitter<TriviaState> emit) async {
@@ -23,5 +24,11 @@ class TriviaBloc extends Bloc<TriviaEvent, TriviaState> {
       emit(TriviaLoadFailure(failure.message));
       emit(const TriviaInitial());
     }, (trivia) => emit(TriviaLoadSuccess(trivia)));
+  }
+
+  void _onTriviaBackButtonPressed(
+      TriviaBackButtonPressed event, Emitter<TriviaState> emit) {
+    emit(const TriviaLoading());
+    emit(const TriviaInitial());
   }
 }

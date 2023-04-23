@@ -11,19 +11,25 @@ class TriviaWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Text(
-            state.trivia.question,
-            style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 20),
-          TriviaAnswers(state: state)
-        ],
+    return WillPopScope(
+      onWillPop: () async {
+        context.read<TriviaBloc>().add(const TriviaBackButtonPressed());
+        return false;
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(
+              state.trivia.question,
+              style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 20),
+            TriviaAnswers(state: state)
+          ],
+        ),
       ),
     );
   }

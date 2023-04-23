@@ -13,11 +13,13 @@ class GetTrivia implements UseCase<Trivia, NoParams> {
 
   @override
   Future<Either<Failure, Trivia>> call(NoParams params) async {
-    final eitherCheck = await _repository.checkTodayQuestionNumber();
+    final eitherCheck = await _repository.getTodayQuestionNumber();
 
     return eitherCheck.fold((l) => Left(l), (r) async {
       if (r < 5) {
         {
+          await _repository.updateTodayQuestionNumber();
+
           final either = await _repository.getTrivia();
           either.fold((failure) => null, (trivia) {
             trivia.answers.shuffle();

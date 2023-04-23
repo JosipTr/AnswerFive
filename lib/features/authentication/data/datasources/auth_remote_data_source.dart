@@ -29,7 +29,6 @@ class AuthenticationLocalDatasourceImpl implements AuthLocalDatasource {
   Stream<PlayerModel> authStateChanges() {
     final stream = _firebaseAuth.authStateChanges();
     return stream.asyncMap((user) {
-      print(user);
       return PlayerModel.fromUser(user!);
     });
   }

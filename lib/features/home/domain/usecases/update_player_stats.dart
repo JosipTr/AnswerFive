@@ -12,21 +12,20 @@ class UpdatePlayerStats implements UseCase<Success, UpdatePlayerStatsParams> {
   @override
   Future<Either<Failure, Success>> call(UpdatePlayerStatsParams params) async {
     final totalQuestions = params.statistic.totalQuestions + 1;
-    final todayQuestionNumber = params.statistic.todayQuestionNumber + 1;
     if (params.isCorrect) {
       final correctAnswer = params.statistic.correctAnswers + 1;
 
       final statistic = params.statistic.copyWith(
-          correctAnswers: correctAnswer,
-          totalQuestions: totalQuestions,
-          todayQuestionNumber: todayQuestionNumber);
+        correctAnswers: correctAnswer,
+        totalQuestions: totalQuestions,
+      );
       return await _homeRepository.updatePlayerStats(statistic);
     } else {
       final incorrectAnswer = params.statistic.incorrectAnswers + 1;
       final statistic = params.statistic.copyWith(
-          incorrectAnswers: incorrectAnswer,
-          totalQuestions: totalQuestions,
-          todayQuestionNumber: todayQuestionNumber);
+        incorrectAnswers: incorrectAnswer,
+        totalQuestions: totalQuestions,
+      );
       return await _homeRepository.updatePlayerStats(statistic);
     }
   }
