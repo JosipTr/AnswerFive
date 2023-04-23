@@ -64,6 +64,7 @@ class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
             .child("players/${_firebaseAuth.currentUser!.uid}")
             .onValue
             .asyncExpand((event) async* {
+          await updateTodayQuestionNumber();
           await _firebaseDatabase
               .ref()
               .child("players/${_firebaseAuth.currentUser!.uid}")
@@ -84,7 +85,6 @@ class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
     if (await _networkInfo.isConnected) {
       try {
         final date = DateTime.now();
-
         final event = await _firebaseDatabase
             .ref()
             .child("players/${_firebaseAuth.currentUser!.uid}/lastActive")

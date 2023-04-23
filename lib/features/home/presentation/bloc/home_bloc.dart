@@ -17,10 +17,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<HomePlayerStatsUpdated>(_onHomePlayerStatsUpdated);
   }
 
-  Future<void> _onHomeStarted(HomeStarted event, Emitter<HomeState> emit) {
+  Future<void> _onHomeStarted(
+      HomeStarted event, Emitter<HomeState> emit) async {
     emit(const HomeLoading());
     final playerStream = _getPlayer();
-    _updateLastActive().listen((_) {});
+    final lastActive = _updateLastActive();
+    lastActive.listen((_) {});
 
     return emit.forEach(
       playerStream,
