@@ -15,7 +15,7 @@ class PlayerModel extends Player {
   factory PlayerModel.fromUser(User user) {
     return PlayerModel(
         id: user.uid,
-        name: user.displayName ?? 'empty',
+        name: user.displayName ?? 'user#${user.uid.substring(0, 3)}',
         email: user.email ?? 'empty',
         lastActive: DateTime.now().toString(),
         statistic: const StatisticModel());
