@@ -3,6 +3,7 @@ import 'dart:math';
 
 ThemeData getThemeData() {
   return ThemeData(
+    fontFamily: 'Finger Paint',
     primarySwatch: _generateMaterialColor(Colors.yellow.shade700),
     textSelectionTheme: const TextSelectionThemeData(
       cursorColor: Colors.black,
@@ -27,6 +28,16 @@ ThemeData getThemeData() {
         borderRadius: BorderRadius.circular(15),
         borderSide: BorderSide(color: Colors.yellow.shade500),
       ),
+    ),
+    cardTheme: CardTheme(
+      elevation: 15,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+    ),
+    textTheme: TextTheme(
+      titleLarge: TextStyle(fontSize: 35),
+      titleMedium: TextStyle(fontSize: 15),
     ),
   );
 }
@@ -76,8 +87,8 @@ class GradientBackground extends StatelessWidget {
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [
+            Color.fromRGBO(255, 102, 196, 1),
             Color.fromRGBO(255, 222, 89, 1),
-            Color.fromRGBO(255, 102, 196, 1)
           ],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
