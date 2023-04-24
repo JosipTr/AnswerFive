@@ -16,13 +16,14 @@ class AuthWidget extends StatelessWidget {
     if (phoneHeight < 800) {
       imageSize = 350;
     } else {
-      imageSize = 500;
+      imageSize = 400;
     }
     return CustomScrollView(
       slivers: [
         SliverFillRemaining(
           hasScrollBody: false,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Image.asset(
                 StringConstants.logo,
@@ -132,7 +133,7 @@ class _RegistrationForm extends StatelessWidget {
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(right: 50, left: 50, top: 5),
+            margin: const EdgeInsets.only(right: 50, left: 50, top: 15),
             child: TextFormField(
               validator: ValidationBuilder().minLength(6).build(),
               decoration: const InputDecoration(label: Icon(Icons.lock)),
@@ -141,7 +142,7 @@ class _RegistrationForm extends StatelessWidget {
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(right: 50, left: 50, top: 5),
+            margin: const EdgeInsets.only(right: 50, left: 50, top: 15),
             child: TextFormField(
               validator: (value) {
                 if (passwordController.text != value) {
@@ -157,6 +158,9 @@ class _RegistrationForm extends StatelessWidget {
               ),
               controller: confirmPasswordController,
             ),
+          ),
+          const SizedBox(
+            height: 15,
           ),
           ElevatedButton(
             onPressed: () {
