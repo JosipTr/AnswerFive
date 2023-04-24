@@ -36,14 +36,11 @@ ThemeData getThemeData() {
       ),
     ),
     textTheme: const TextTheme(
-      titleLarge: TextStyle(fontSize: 35),
-      titleMedium: TextStyle(
-        fontSize: 25,
-      ),
-      titleSmall: TextStyle(
-        fontSize: 15,
-      ),
-    ),
+        titleLarge: TextStyle(fontSize: 35),
+        titleMedium: TextStyle(
+          fontSize: 15,
+        ),
+        titleSmall: TextStyle(fontSize: 10)),
     elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
             elevation: MaterialStateProperty.all(5),

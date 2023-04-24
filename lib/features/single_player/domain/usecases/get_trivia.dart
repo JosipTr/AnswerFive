@@ -19,14 +19,14 @@ class GetTrivia implements UseCase<Trivia, NoParams> {
       if (r < 5) {
         {
           final either = await _repository.getTrivia();
-          either.fold((failure) => null, (trivia) async {
+          return either.fold((failure) => Left(failure), (trivia) async {
             await _repository.updateTodayQuestionNumber();
             trivia.answers.shuffle();
+            return Right(trivia);
           });
-          return either;
         }
       } else {
-        return const Left(InputFailure('Already played today'));
+        return const Left(InputFailure('No more questions left!'));
       }
     });
   }

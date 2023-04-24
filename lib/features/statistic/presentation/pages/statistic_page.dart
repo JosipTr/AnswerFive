@@ -55,10 +55,15 @@ class StatisticPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(
-                  height: 35,
+                Text(
+                  'Rankings',
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
-                Expanded(
+                const SizedBox(
+                  height: 25,
+                ),
+                SizedBox(
+                  height: height * 0.3,
                   child: BlocBuilder<StatsBloc, StatsState>(
                     builder: (context, state) {
                       if (state is StatsLoadSuccess) {
@@ -66,13 +71,6 @@ class StatisticPage extends StatelessWidget {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Text(
-                                'Rankings',
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              const SizedBox(
-                                height: 25,
-                              ),
                               for (var i = 0; i < state.players.length; i++)
                                 Card(
                                   color:
@@ -90,39 +88,22 @@ class StatisticPage extends StatelessWidget {
                                           child: Text(
                                             state.players[i].name,
                                             textAlign: TextAlign.center,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleSmall,
                                           ),
                                         ),
                                         Text(
                                           'Questions:\n${state.players[i].statistic.totalQuestions}'
                                               .toString(),
                                           textAlign: TextAlign.center,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall,
                                         ),
                                         Text(
                                           'Points:\n${state.players[i].statistic.correctAnswers * 3}'
                                               .toString(),
                                           textAlign: TextAlign.center,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall,
-                                        ),
+                                        )
                                       ],
                                     ),
                                   ),
                                 ),
-                              const SizedBox(
-                                height: 35,
-                              ),
-                              ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text('Back'))
                             ],
                           ),
                         );
@@ -135,6 +116,14 @@ class StatisticPage extends StatelessWidget {
                     },
                   ),
                 ),
+                const SizedBox(
+                  height: 25,
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('Back'))
               ],
             ),
           ),
