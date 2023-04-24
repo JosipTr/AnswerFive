@@ -19,24 +19,22 @@ class HomePage extends StatelessWidget {
     } else {
       imageSize = 500;
     }
-    return SingleChildScrollView(
-      child: BlocConsumer<HomeBloc, HomeState>(
-        listener: (context, state) {
-          if (state is HomeLoadFailure) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text(state.message)));
-          }
-        },
-        builder: (context, state) {
-          if (state is HomeLoading) {
-            return const CircularProgressIndicator();
-          } else {
-            return HomeWidget(
-              imageSize: imageSize,
-            );
-          }
-        },
-      ),
+    return BlocConsumer<HomeBloc, HomeState>(
+      listener: (context, state) {
+        if (state is HomeLoadFailure) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(state.message)));
+        }
+      },
+      builder: (context, state) {
+        if (state is HomeLoading) {
+          return const CircularProgressIndicator();
+        } else {
+          return HomeWidget(
+            imageSize: imageSize,
+          );
+        }
+      },
     );
   }
 }

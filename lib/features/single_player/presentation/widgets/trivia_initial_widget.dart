@@ -2,7 +2,6 @@ import 'package:answer_five/features/home/presentation/bloc/home_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/utils/constants/string_constants.dart';
 import '../../../home/presentation/bloc/home_bloc.dart';
 import '../bloc/bloc.dart';
 
@@ -11,43 +10,31 @@ class TriviaInitialWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final stats =
-        (context.read<HomeBloc>().state as HomeLoadSuccess).player.statistic;
     final todayQuestionNumber =
         (context.read<HomeBloc>().state as HomeLoadSuccess)
             .player
             .statistic
             .todayQuestionNumber;
-    final phoneHeight = MediaQuery.of(context).size.height;
-    final double imageSize;
-    if (phoneHeight < 800) {
-      imageSize = 350;
-    } else {
-      imageSize = 400;
-    }
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Image.asset(
-          StringConstants.logo,
-          width: imageSize,
-          height: imageSize,
-        ),
-        Text(
-          'Questions answered today:\n${stats.todayQuestionNumber}',
-          style: Theme.of(context).textTheme.titleMedium,
-          textAlign: TextAlign.center,
-        ),
+        todayQuestionNumber < 5
+            ? Text(
+                'Questions answered today:\n$todayQuestionNumber',
+                style: Theme.of(context).textTheme.bodyLarge,
+                textAlign: TextAlign.center,
+              )
+            : const SizedBox(),
         todayQuestionNumber < 5
             ? ElevatedButton(
                 onPressed: () {
                   context.read<TriviaBloc>().add(const GetTriviaEvent());
                 },
-                child: const Text('Get Trivia'),
+                child: const Text('Start'),
               )
-            : const Text(
+            : Text(
                 "Already played today.\nCome back tomorrow.",
-                style: TextStyle(fontSize: 25),
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
         ElevatedButton(
           onPressed: () {

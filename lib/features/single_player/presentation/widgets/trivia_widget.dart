@@ -19,14 +19,13 @@ class TriviaWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Text(
               state.trivia.question,
-              style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.bodyLarge,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 150),
             TriviaAnswers(state: state)
           ],
         ),
@@ -52,44 +51,47 @@ class _TriviaAnswersState extends State<TriviaAnswers> {
     return Column(
       children: [
         for (var i = 0; i < widget.state.trivia.answers.length; i++)
-          isAnswered
-              ? ElevatedButton(
-                  onPressed: null,
-                  style: ButtonStyle(
-                      backgroundColor: widget.state.trivia.answers[i] ==
-                              widget.state.trivia.correctAnswer
-                          ? MaterialStateColor.resolveWith(
-                              (states) => Colors.green)
-                          : MaterialStateColor.resolveWith(
-                              (states) => Colors.red)),
-                  child: Text(
-                    widget.state.trivia.answers[i],
-                    style: const TextStyle(fontSize: 15),
-                    textAlign: TextAlign.center,
-                  ),
-                )
-              : ElevatedButton(
-                  onPressed: () {
-                    if (widget.state.trivia.answers[i] ==
-                        widget.state.trivia.correctAnswer) {
-                      context
-                          .read<HomeBloc>()
-                          .add(HomePlayerStatsUpdated(stats, true));
-                    } else {
-                      context
-                          .read<HomeBloc>()
-                          .add(HomePlayerStatsUpdated(stats, false));
-                    }
-                    setState(() {
-                      isAnswered = true;
-                    });
-                  },
-                  child: Text(
-                    widget.state.trivia.answers[i],
-                    style: const TextStyle(fontSize: 15),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
+          Column(
+            children: [
+              isAnswered
+                  ? ElevatedButton(
+                      onPressed: null,
+                      style: ButtonStyle(
+                          backgroundColor: widget.state.trivia.answers[i] ==
+                                  widget.state.trivia.correctAnswer
+                              ? MaterialStateColor.resolveWith(
+                                  (states) => Colors.green)
+                              : MaterialStateColor.resolveWith(
+                                  (states) => Colors.red)),
+                      child: Text(
+                        widget.state.trivia.answers[i],
+                        textAlign: TextAlign.center,
+                      ),
+                    )
+                  : ElevatedButton(
+                      onPressed: () {
+                        if (widget.state.trivia.answers[i] ==
+                            widget.state.trivia.correctAnswer) {
+                          context
+                              .read<HomeBloc>()
+                              .add(HomePlayerStatsUpdated(stats, true));
+                        } else {
+                          context
+                              .read<HomeBloc>()
+                              .add(HomePlayerStatsUpdated(stats, false));
+                        }
+                        setState(() {
+                          isAnswered = true;
+                        });
+                      },
+                      child: Text(
+                        widget.state.trivia.answers[i],
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+              const SizedBox(height: 35),
+            ],
+          ),
         isAnswered
             ? ElevatedButton(
                 onPressed: () {

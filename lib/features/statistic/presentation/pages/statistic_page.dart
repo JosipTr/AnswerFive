@@ -1,11 +1,9 @@
 import 'package:answer_five/core/utils/theme/custom_theme.dart';
 import 'package:answer_five/features/home/presentation/bloc/home_bloc.dart';
 import 'package:answer_five/features/home/presentation/bloc/home_state.dart';
+import 'package:answer_five/features/statistic/presentation/widgets/statistic_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../bloc/stats_bloc.dart';
-import '../bloc/stats_state.dart';
 
 class StatisticPage extends StatelessWidget {
   const StatisticPage({super.key});
@@ -20,7 +18,7 @@ class StatisticPage extends StatelessWidget {
           padding: const EdgeInsets.all(30.0),
           child: Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   "Statistics",
@@ -57,68 +55,9 @@ class StatisticPage extends StatelessWidget {
                 ),
                 Text(
                   'Rankings',
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
-                const SizedBox(
-                  height: 25,
-                ),
-                SizedBox(
-                  height: height * 0.3,
-                  child: BlocBuilder<StatsBloc, StatsState>(
-                    builder: (context, state) {
-                      if (state is StatsLoadSuccess) {
-                        return SingleChildScrollView(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              for (var i = 0; i < state.players.length; i++)
-                                Card(
-                                  color:
-                                      homeState.player.id == state.players[i].id
-                                          ? Colors.yellow.shade200
-                                          : Colors.white,
-                                  child: ListTile(
-                                    title: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text('${i + 1}.'),
-                                        SizedBox(
-                                          width: 70,
-                                          child: Text(
-                                            state.players[i].name,
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                        Text(
-                                          'Questions:\n${state.players[i].statistic.totalQuestions}'
-                                              .toString(),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        Text(
-                                          'Points:\n${state.players[i].statistic.correctAnswers * 3}'
-                                              .toString(),
-                                          textAlign: TextAlign.center,
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                            ],
-                          ),
-                        );
-                      } else if (state is StatsLoading) {
-                        return const Center(child: CircularProgressIndicator());
-                      } else {
-                        return const GradientBackground(
-                            child: Text('Empty rankings'));
-                      }
-                    },
-                  ),
-                ),
-                const SizedBox(
-                  height: 25,
-                ),
+                StatisticWidget(homeState: homeState, height: height),
                 ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).pop();
