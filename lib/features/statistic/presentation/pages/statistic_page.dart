@@ -46,12 +46,17 @@ class StatisticPage extends StatelessWidget {
                         children: [
                           Text(
                               "Questions: ${homeState.player.statistic.totalQuestions}"),
-                          Text(
-                              "WinRate: ${((homeState.player.statistic.correctAnswers / homeState.player.statistic.totalQuestions) * 100).toStringAsFixed(2)}%")
+                          homeState.player.statistic.totalQuestions != 0
+                              ? Text(
+                                  "WinRate: ${((homeState.player.statistic.correctAnswers / homeState.player.statistic.totalQuestions) * 100).toStringAsFixed(2)}%")
+                              : const Text('WinRate: 0%')
                         ],
                       )
                     ],
                   ),
+                ),
+                const SizedBox(
+                  height: 35,
                 ),
                 Expanded(
                   child: BlocBuilder<StatsBloc, StatsState>(
@@ -61,9 +66,12 @@ class StatisticPage extends StatelessWidget {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              const Text(
+                              Text(
                                 'Rankings',
-                                style: TextStyle(fontSize: 20),
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              const SizedBox(
+                                height: 25,
                               ),
                               for (var i = 0; i < state.players.length; i++)
                                 Card(
@@ -76,25 +84,53 @@ class StatisticPage extends StatelessWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
+                                        Text('${i + 1}.'),
+                                        SizedBox(
+                                          width: 70,
+                                          child: Text(
+                                            state.players[i].name,
+                                            textAlign: TextAlign.center,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall,
+                                          ),
+                                        ),
                                         Text(
-                                            '${i + 1}. ${state.players[i].name}'),
+                                          'Questions:\n${state.players[i].statistic.totalQuestions}'
+                                              .toString(),
+                                          textAlign: TextAlign.center,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall,
+                                        ),
                                         Text(
-                                            'Questions: ${state.players[i].statistic.totalQuestions}'
-                                                .toString()),
-                                        Text(
-                                            'Points: ${state.players[i].statistic.correctAnswers * 3}'
-                                                .toString()),
+                                          'Points:\n${state.players[i].statistic.correctAnswers * 3}'
+                                              .toString(),
+                                          textAlign: TextAlign.center,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall,
+                                        ),
                                       ],
                                     ),
                                   ),
-                                )
+                                ),
+                              const SizedBox(
+                                height: 35,
+                              ),
+                              ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text('Back'))
                             ],
                           ),
                         );
                       } else if (state is StatsLoading) {
                         return const Center(child: CircularProgressIndicator());
                       } else {
-                        return const Text("no");
+                        return const GradientBackground(
+                            child: Text('Empty rankings'));
                       }
                     },
                   ),

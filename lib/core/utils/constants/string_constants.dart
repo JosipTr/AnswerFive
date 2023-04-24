@@ -9,7 +9,7 @@ class StringConstants {
     'Code 4: Token Empty Session Token has returned all possible questions for the specified query. Resetting the Token is necessary.',
     'There is no Code Response, something else is error'
   ];
-  static const url = 'https://opentdb.com/api.php?amount=1';
+  static const url = 'https://opentdb.com/api.php?amount=1&difficulty=easy';
 
   //Assets
   static const logo = "assets/images/answer_five_nobackground.png";

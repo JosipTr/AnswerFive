@@ -18,10 +18,9 @@ class GetTrivia implements UseCase<Trivia, NoParams> {
     return eitherCheck.fold((l) => Left(l), (r) async {
       if (r < 5) {
         {
-          await _repository.updateTodayQuestionNumber();
-
           final either = await _repository.getTrivia();
-          either.fold((failure) => null, (trivia) {
+          either.fold((failure) => null, (trivia) async {
+            await _repository.updateTodayQuestionNumber();
             trivia.answers.shuffle();
           });
           return either;

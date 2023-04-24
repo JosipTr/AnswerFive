@@ -4,7 +4,7 @@ import 'dart:math';
 ThemeData getThemeData() {
   return ThemeData(
     fontFamily: 'Finger Paint',
-    primarySwatch: _generateMaterialColor(Colors.yellow.shade700),
+    primarySwatch: _generateMaterialColor(Colors.yellow.shade600),
     textSelectionTheme: const TextSelectionThemeData(
       cursorColor: Colors.black,
     ),
@@ -35,10 +35,19 @@ ThemeData getThemeData() {
         borderRadius: BorderRadius.circular(15.0),
       ),
     ),
-    textTheme: TextTheme(
+    textTheme: const TextTheme(
       titleLarge: TextStyle(fontSize: 35),
-      titleMedium: TextStyle(fontSize: 15),
+      titleMedium: TextStyle(
+        fontSize: 25,
+      ),
+      titleSmall: TextStyle(
+        fontSize: 15,
+      ),
     ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+            elevation: MaterialStateProperty.all(5),
+            animationDuration: Duration.zero)),
   );
 }
 

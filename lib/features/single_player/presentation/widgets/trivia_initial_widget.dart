@@ -11,6 +11,8 @@ class TriviaInitialWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final stats =
+        (context.read<HomeBloc>().state as HomeLoadSuccess).player.statistic;
     final todayQuestionNumber =
         (context.read<HomeBloc>().state as HomeLoadSuccess)
             .player
@@ -30,6 +32,11 @@ class TriviaInitialWidget extends StatelessWidget {
           StringConstants.logo,
           width: imageSize,
           height: imageSize,
+        ),
+        Text(
+          'Questions answered today:\n${stats.todayQuestionNumber}',
+          style: Theme.of(context).textTheme.titleMedium,
+          textAlign: TextAlign.center,
         ),
         todayQuestionNumber < 5
             ? ElevatedButton(

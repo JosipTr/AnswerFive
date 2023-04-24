@@ -37,16 +37,9 @@ class HomeWidget extends StatelessWidget {
             child: const Text('Single Player')),
         ElevatedButton(
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const StatisticPage(),
-              ));
-            },
-            child: const Text('Statistics')),
-        ElevatedButton(
-            onPressed: () {
               context.read<StatsBloc>().add(const Started());
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const StatisticWidget(),
+                builder: (context) => const StatisticPage(),
               ));
             },
             child: const Text('Statistics')),
