@@ -41,7 +41,7 @@ class StatisticWidget extends StatelessWidget {
                 ],
               );
             } else {
-              return Text("no");
+              return const Text("no");
             }
           },
         ),

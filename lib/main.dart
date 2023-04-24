@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
           create: (_) => ServiceLocator.get(),
         ),
         BlocProvider<StatsBloc>(
-          create: (_) => ServiceLocator.get()..add(Started()),
+          create: (_) => ServiceLocator.get()..add(const Started()),
         ),
         BlocProvider<HomeBloc>(create: (context) => ServiceLocator.get()),
       ],

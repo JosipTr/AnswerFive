@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:answer_five/core/network/network_info.dart';
 import 'package:answer_five/features/statistic/data/models/statistic_model.dart';
-import 'package:dartz/dartz_unsafe.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 import '../../../../core/errors/exceptions.dart';
@@ -35,8 +34,6 @@ class StatsRemoteDataSourceImpl implements StatsRemoteDataSource {
               event.snapshot.value as Map<dynamic, dynamic>));
           playerIds.add(statistic);
         }
-
-        print(playerIds);
         return playerIds;
       } catch (error) {
         log(error.toString());

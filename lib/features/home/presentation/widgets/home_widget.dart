@@ -44,9 +44,9 @@ class HomeWidget extends StatelessWidget {
             child: const Text('Statistics')),
         ElevatedButton(
             onPressed: () {
-              context.read<StatsBloc>().add(Started());
+              context.read<StatsBloc>().add(const Started());
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => StatisticWidget(),
+                builder: (context) => const StatisticWidget(),
               ));
             },
             child: const Text('Statistics')),
