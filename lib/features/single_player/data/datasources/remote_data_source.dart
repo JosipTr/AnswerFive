@@ -52,6 +52,8 @@ class RemoteDataSourceImpl implements RemoteDataSource {
           incorrectAnswers =
               incorrectAnswers.map((answer) => unescape.convert(answer));
 
+          results["incorrect_answers"] = incorrectAnswers;
+
           final triviaModel = TriviaModel.fromJson(results);
           return triviaModel;
         } else {
