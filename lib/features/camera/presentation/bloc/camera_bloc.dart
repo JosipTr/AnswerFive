@@ -1,31 +1,23 @@
 import 'dart:developer';
 
-import 'package:answer_five/features/camera/domain/repositories/camera_repository.dart';
+import 'package:answer_five/core/usecases/usecase.dart';
+import 'package:answer_five/features/camera/domain/usecases/initialize_camera.dart';
 import 'package:answer_five/features/camera/presentation/bloc/camera_state.dart';
-import 'package:camera/camera.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'camera_event.dart';
 
 class CameraBloc extends Bloc<CameraEvent, CameraState> {
-  final CameraRepository _cameraRepository;
+  final InitializeCamera _initializeCamera;
 
-  late CameraController _controller;
+  CameraBloc(this._initializeCamera) : super(const CameraInitial()) {
+    on<CameraInitialized>(_onCameraInitialized);
+  }
+  Future<void> _onCameraInitialized(
+      CameraInitialized event, Emitter<CameraState> emit) async {
+    final either = await _initializeCamera(const NoParams());
 
-  CameraBloc(this._cameraRepository) : super(const CameraInitial()) {
-    on<CameraStarted>(
-      (event, emit) async {
-        try {
-          _controller = _cameraRepository.getCameraController();
-          await _controller.initialize();
-          log(_controller.toString());
-          emit(CameraReady(_controller));
-        } on CameraException catch (error) {
-          await _cameraRepository.getCameraController().dispose();
-          log(error.toString());
-          emit(CameraFailure(error.toString()));
-        }
-      },
-    );
+    either.fold((failure) => emit(CameraFailure(failure.message)),
+        (controller) => emit(CameraReady(controller)));
   }
 }

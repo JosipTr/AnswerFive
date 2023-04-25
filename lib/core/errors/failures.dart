@@ -35,3 +35,9 @@ class NetworkFailure extends Failure {
   @override
   List<Object> get props => [message];
 }
+
+class CameraFailure extends Failure {
+  const CameraFailure(super.message);
+  @override
+  List<Object> get props => [message];
+}

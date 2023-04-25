@@ -1,11 +1,9 @@
-import 'package:answer_five/features/camera/data/datasources/camera_local_datasource.dart';
 import 'package:camera/camera.dart';
+import 'package:dartz/dartz.dart';
 
-class CameraRepository {
-  final CameraLocalDatasource _datasource;
+import '../../../../core/errors/failures.dart';
+import '../../../../core/success.dart';
 
-  const CameraRepository(this._datasource);
-  CameraController getCameraController() {
-    return _datasource.getCameraController();
-  }
+abstract class CameraRepository {
+  Future<Either<Failure, CameraController>> initializeCamera();
 }

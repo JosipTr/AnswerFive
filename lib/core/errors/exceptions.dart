@@ -18,3 +18,9 @@ class NetworkException implements Exception {
   const NetworkException(
       {this.message = StringConstants.networkExceptionMessage});
 }
+
+class CameraExc implements Exception {
+  final String message;
+
+  const CameraExc({this.message = "CameraFailure"});
+}

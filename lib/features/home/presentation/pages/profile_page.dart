@@ -37,7 +37,7 @@ class ProfilePage extends StatelessWidget {
                               onPressed: () {
                                 context
                                     .read<CameraBloc>()
-                                    .add(const CameraStarted());
+                                    .add(const CameraInitialized());
                               },
                               icon: const Icon(Icons.camera_alt)),
                         ),
