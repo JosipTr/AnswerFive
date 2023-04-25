@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:answer_five/core/utils/theme/custom_theme.dart';
 import 'package:answer_five/features/camera/presentation/bloc/camera_bloc.dart';
 import 'package:answer_five/features/camera/presentation/bloc/camera_event.dart';
 import 'package:camera/camera.dart';
@@ -24,24 +27,39 @@ class CameraPage extends StatelessWidget {
           Navigator.of(context).pop();
           return false;
         },
-        child: BlocConsumer<CameraBloc, CameraState>(
-          listener: (context, state) {
-            if (state is CameraCaptureFailure) {
-              ScaffoldMessenger.of(context)
-                ..removeCurrentSnackBar()
-                ..showSnackBar(SnackBar(content: Text(state.message)));
-            }
-          },
-          builder: (context, state) {
-            if (state is CameraReady) {
-              return SizedBox(
-                  height: height, child: CameraPreview(state.controller));
-            } else if (state is CameraFailure) {
-              return Text(state.message);
-            } else {
-              return const CircularProgressIndicator();
-            }
-          },
+        child: GradientBackground(
+          child: Center(
+            child: BlocConsumer<CameraBloc, CameraState>(
+              listener: (context, state) {
+                if (state is CameraCaptureSuccess) {
+                  Navigator.of(context).pop();
+                } else if (state is CameraCaptureFailure) {
+                  ScaffoldMessenger.of(context)
+                    ..removeCurrentSnackBar()
+                    ..showSnackBar(SnackBar(content: Text(state.message)));
+                }
+              },
+              builder: (context, state) {
+                if (state is CameraReady) {
+                  return SizedBox(
+                      height: height, child: CameraPreview(state.controller));
+                } else if (state is CameraFailure) {
+                  return Text(state.message);
+                }
+                // else if (state is CameraCaptureSuccess) {
+                //   return SizedBox(
+                //       height: height,
+                //       child: Image.file(
+                //         File(state.path),
+                //         height: height,
+                //       ));
+                // }
+                else {
+                  return const CircularProgressIndicator();
+                }
+              },
+            ),
+          ),
         ),
       ),
     );

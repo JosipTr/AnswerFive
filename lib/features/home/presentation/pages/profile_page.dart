@@ -29,25 +29,22 @@ class ProfilePage extends StatelessWidget {
                     builder: (context, state) {
                       if (state is CameraCaptureSuccess) {
                         return CircleAvatar(
-                          radius: 100,
-                          child: Image.file(
+                          backgroundImage: FileImage(
                             File(state.path),
                           ),
+                          radius: 100,
                         );
                       } else {
-                        return CircleAvatar(
+                        return const CircleAvatar(
                           radius: 100,
-                          child: Image.file(
-                            File(
-                                '/data/user/0/com.example.answer_five/cache/CAP7151937361972998092.jpg'),
-                          ),
+                          child: Text('Image'),
                         );
                       }
                     },
                   ),
                   Positioned(
-                    bottom: 0,
-                    right: 25,
+                    bottom: -15,
+                    right: 5,
                     child: IconButton(
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
