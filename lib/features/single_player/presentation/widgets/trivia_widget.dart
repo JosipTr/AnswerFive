@@ -26,7 +26,14 @@ class TriviaWidget extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyLarge,
               textAlign: TextAlign.center,
             ),
-            TriviaAnswers(state: state)
+            BlocBuilder<TriviaBloc, TriviaState>(
+              builder: (context, state) => state is TriviaLoadSuccess &&
+                      state.triviaFilter == TriviaFilter.answered
+                  ? _TriviaAnswered(
+                      state: state,
+                    )
+                  : _TriviaAnswers(state: state as TriviaLoadSuccess),
+            )
           ],
         ),
       ),
@@ -34,72 +41,80 @@ class TriviaWidget extends StatelessWidget {
   }
 }
 
-class TriviaAnswers extends StatefulWidget {
+class _TriviaAnswered extends StatelessWidget {
   final TriviaLoadSuccess state;
-  const TriviaAnswers({super.key, required this.state});
+  const _TriviaAnswered({required this.state});
 
   @override
-  State<TriviaAnswers> createState() => _TriviaAnswersState();
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        for (var i = 0; i < state.trivia.answers.length; i++)
+          Column(
+            children: [
+              ElevatedButton(
+                onPressed: null,
+                style: ButtonStyle(
+                    backgroundColor:
+                        state.trivia.answers[i] == state.trivia.correctAnswer
+                            ? MaterialStateColor.resolveWith(
+                                (states) => Colors.green)
+                            : MaterialStateColor.resolveWith(
+                                (states) => Colors.red)),
+                child: Text(
+                  state.trivia.answers[i],
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              const SizedBox(height: 35),
+            ],
+          ),
+        ElevatedButton(
+          onPressed: () {
+            context.read<TriviaBloc>().add(const GetTriviaEvent());
+          },
+          child: const Text('Next Question'),
+        )
+      ],
+    );
+  }
 }
 
-class _TriviaAnswersState extends State<TriviaAnswers> {
-  var isAnswered = false;
+class _TriviaAnswers extends StatelessWidget {
+  final TriviaLoadSuccess state;
+  const _TriviaAnswers({required this.state});
+
   @override
   Widget build(BuildContext context) {
     final stats =
         (context.read<HomeBloc>().state as HomeLoadSuccess).player.statistic;
     return Column(
       children: [
-        for (var i = 0; i < widget.state.trivia.answers.length; i++)
+        for (var i = 0; i < state.trivia.answers.length; i++)
           Column(
             children: [
-              isAnswered
-                  ? ElevatedButton(
-                      onPressed: null,
-                      style: ButtonStyle(
-                          backgroundColor: widget.state.trivia.answers[i] ==
-                                  widget.state.trivia.correctAnswer
-                              ? MaterialStateColor.resolveWith(
-                                  (states) => Colors.green)
-                              : MaterialStateColor.resolveWith(
-                                  (states) => Colors.red)),
-                      child: Text(
-                        widget.state.trivia.answers[i],
-                        textAlign: TextAlign.center,
-                      ),
-                    )
-                  : ElevatedButton(
-                      onPressed: () {
-                        if (widget.state.trivia.answers[i] ==
-                            widget.state.trivia.correctAnswer) {
-                          context
-                              .read<HomeBloc>()
-                              .add(HomePlayerStatsUpdated(stats, true));
-                        } else {
-                          context
-                              .read<HomeBloc>()
-                              .add(HomePlayerStatsUpdated(stats, false));
-                        }
-                        setState(() {
-                          isAnswered = true;
-                        });
-                      },
-                      child: Text(
-                        widget.state.trivia.answers[i],
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
+              ElevatedButton(
+                onPressed: () {
+                  if (state.trivia.answers[i] == state.trivia.correctAnswer) {
+                    context
+                        .read<HomeBloc>()
+                        .add(HomePlayerStatsUpdated(stats, true));
+                  } else {
+                    context
+                        .read<HomeBloc>()
+                        .add(HomePlayerStatsUpdated(stats, false));
+                  }
+                  context.read<TriviaBloc>().add(
+                      TriviaPageFiltered(state.trivia, TriviaFilter.answered));
+                },
+                child: Text(
+                  state.trivia.answers[i],
+                  textAlign: TextAlign.center,
+                ),
+              ),
               const SizedBox(height: 35),
             ],
           ),
-        isAnswered
-            ? ElevatedButton(
-                onPressed: () {
-                  context.read<TriviaBloc>().add(const GetTriviaEvent());
-                },
-                child: const Text('Next Question'),
-              )
-            : const SizedBox()
       ],
     );
   }

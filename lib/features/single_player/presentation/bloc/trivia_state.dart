@@ -2,6 +2,8 @@ import 'package:equatable/equatable.dart';
 
 import '../../domain/entities/trivia.dart';
 
+enum TriviaFilter { initial, answered }
+
 abstract class TriviaState extends Equatable {
   const TriviaState();
 }
@@ -21,11 +23,12 @@ class TriviaLoading extends TriviaState {
 }
 
 class TriviaLoadSuccess extends TriviaState {
+  final TriviaFilter triviaFilter;
   final Trivia trivia;
-  const TriviaLoadSuccess(this.trivia);
+  const TriviaLoadSuccess(this.trivia, this.triviaFilter);
 
   @override
-  List<Object> get props => [trivia];
+  List<Object> get props => [trivia, triviaFilter];
 }
 
 class TriviaLoadFailure extends TriviaState {

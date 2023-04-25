@@ -1,4 +1,7 @@
+import 'package:answer_five/features/single_player/presentation/bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+
+import '../../domain/entities/trivia.dart';
 
 abstract class TriviaEvent extends Equatable {
   const TriviaEvent();
@@ -23,4 +26,14 @@ class TriviaBackButtonPressed extends TriviaEvent {
 
   @override
   List<Object?> get props => [];
+}
+
+class TriviaPageFiltered extends TriviaEvent {
+  final Trivia trivia;
+  final TriviaFilter filter;
+
+  const TriviaPageFiltered(this.trivia, this.filter);
+
+  @override
+  List<Object?> get props => [trivia, filter];
 }
