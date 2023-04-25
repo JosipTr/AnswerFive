@@ -27,3 +27,26 @@ class CameraFailure extends CameraState {
   @override
   List<Object> get props => [message];
 }
+
+class CameraCaptureInProgress extends CameraState {
+  const CameraCaptureInProgress();
+
+  @override
+  List<Object> get props => [];
+}
+
+class CameraCaptureSuccess extends CameraState {
+  final String path;
+  const CameraCaptureSuccess(this.path);
+
+  @override
+  List<Object> get props => [path];
+}
+
+class CameraCaptureFailure extends CameraState {
+  final String message;
+  const CameraCaptureFailure(this.message);
+
+  @override
+  List<Object> get props => [message];
+}

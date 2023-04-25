@@ -11,8 +11,15 @@ class CameraInitialized extends CameraEvent {
   List<Object> get props => [];
 }
 
-class CameraStarted extends CameraEvent {
-  const CameraStarted();
+class CameraStopped extends CameraEvent {
+  const CameraStopped();
+
+  @override
+  List<Object> get props => [];
+}
+
+class CameraCaptured extends CameraEvent {
+  const CameraCaptured();
 
   @override
   List<Object> get props => [];

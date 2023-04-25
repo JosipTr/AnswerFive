@@ -19,4 +19,14 @@ class CameraRepositoryImpl implements CameraRepository {
       return Left(CameraFailure(error.message));
     }
   }
+
+  @override
+  Future<Either<Failure, XFile>> takePicture() async {
+    try {
+      final xFile = await _datasource.takePicture();
+      return Right(xFile);
+    } on CameraExc catch (error) {
+      return Left(CameraFailure(error.message));
+    }
+  }
 }
