@@ -1,3 +1,4 @@
+import 'package:answer_five/features/home/presentation/pages/profile_page.dart';
 import 'package:answer_five/features/single_player/presentation/pages/single_player_page.dart';
 import 'package:answer_five/features/statistic/presentation/bloc/stats_bloc.dart';
 import 'package:answer_five/features/statistic/presentation/bloc/stats_event.dart';
@@ -47,6 +48,16 @@ class HomeWidget extends StatelessWidget {
                   ));
                 },
                 child: const Text('Statistics')),
+            const SizedBox(
+              height: 15,
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const ProfilePage(),
+                  ));
+                },
+                child: const Text('Profile')),
             const SizedBox(
               height: 15,
             ),

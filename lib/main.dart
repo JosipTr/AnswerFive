@@ -1,6 +1,7 @@
 import 'package:answer_five/core/locator.dart';
 import 'package:answer_five/core/utils/theme/custom_theme.dart';
 import 'package:answer_five/features/authentication/presentation/pages/auth_page.dart';
+import 'package:answer_five/features/camera/presentation/bloc/camera_bloc.dart';
 import 'package:answer_five/features/statistic/presentation/bloc/stats_event.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +42,12 @@ class MyApp extends StatelessWidget {
         BlocProvider<StatsBloc>(
           create: (_) => ServiceLocator.get()..add(const Started()),
         ),
-        BlocProvider<HomeBloc>(create: (context) => ServiceLocator.get()),
+        BlocProvider<HomeBloc>(
+          create: (context) => ServiceLocator.get(),
+        ),
+        BlocProvider<CameraBloc>(
+          create: (_) => ServiceLocator.get(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
