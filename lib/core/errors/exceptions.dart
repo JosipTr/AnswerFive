@@ -19,8 +19,8 @@ class NetworkException implements Exception {
       {this.message = StringConstants.networkExceptionMessage});
 }
 
-class CameraExc implements Exception {
+class PickerException implements Exception {
   final String message;
 
-  const CameraExc({this.message = "CameraFailure"});
+  const PickerException({this.message = "Somethin went wrong!"});
 }
