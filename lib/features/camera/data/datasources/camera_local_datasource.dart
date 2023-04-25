@@ -11,6 +11,6 @@ class CameraLocalDatasourceImpl implements CameraLocalDatasource {
 
   @override
   CameraController getCameraController() {
-    return CameraController(_camera, ResolutionPreset.medium);
+    return CameraController(_camera, ResolutionPreset.max);
   }
 }

@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class CameraState extends Equatable {
@@ -12,8 +13,17 @@ class CameraInitial extends CameraState {
 }
 
 class CameraReady extends CameraState {
-  const CameraReady();
+  final CameraController controller;
+  const CameraReady(this.controller);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [controller];
+}
+
+class CameraFailure extends CameraState {
+  final String message;
+  const CameraFailure(this.message);
+
+  @override
+  List<Object> get props => [message];
 }
