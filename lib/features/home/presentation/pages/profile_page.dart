@@ -5,6 +5,7 @@ import 'package:answer_five/features/home/presentation/bloc/home_state.dart';
 import 'package:answer_five/features/picker/presentation/bloc/picker_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../picker/presentation/bloc/picker_bloc.dart';
 import '../../../picker/presentation/bloc/picker_state.dart';
@@ -46,9 +47,32 @@ class ProfilePage extends StatelessWidget {
                     right: 5,
                     child: IconButton(
                         onPressed: () {
-                          context
-                              .read<PickerBloc>()
-                              .add(const PickerImagePicked());
+                          showDialog<ImageSource>(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                      content: const Text(
+                                        "Choose image source",
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      actions: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            ElevatedButton(
+                                              child: const Text("Camera"),
+                                              onPressed: () => Navigator.pop(
+                                                  context, ImageSource.camera),
+                                            ),
+                                            ElevatedButton(
+                                                child: const Text("Gallery"),
+                                                onPressed: () => context
+                                                    .read<PickerBloc>()
+                                                    .add(
+                                                        const PickerImagePicked())),
+                                          ],
+                                        ),
+                                      ]));
                         },
                         icon: const Icon(Icons.camera_alt)),
                   ),
