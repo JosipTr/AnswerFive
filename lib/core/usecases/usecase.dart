@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../features/statistic/domain/entities/statistic.dart';
 import '../errors/failures.dart';
@@ -31,4 +32,9 @@ class StatsParams {
   final String id;
   final bool? isCorrect;
   const StatsParams(this.id, {this.isCorrect});
+}
+
+class UploadImageParams {
+  final XFile xFile;
+  const UploadImageParams(this.xFile);
 }

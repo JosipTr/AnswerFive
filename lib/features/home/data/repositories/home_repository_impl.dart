@@ -7,6 +7,7 @@ import 'package:answer_five/features/home/domain/repositories/home_repository.da
 import 'package:answer_five/features/statistic/data/models/statistic_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:answer_five/features/statistic/domain/entities/statistic.dart';
+import 'package:image_picker/image_picker.dart';
 
 class HomeRepositoryImpl implements HomeRepository {
   final HomeRemoteDatasource _datasource;
@@ -42,6 +43,18 @@ class HomeRepositoryImpl implements HomeRepository {
   Future<Either<Failure, Success>> updateTodayQuestionNumber() async {
     try {
       await _datasource.updateTodayQuestionNumber();
+      return const Right(Success());
+    } on ServerException catch (error) {
+      return Left(ServerFailure(error.message));
+    } on NetworkException catch (error) {
+      return Left(NetworkFailure(error.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Success>> uploadImage(XFile xFile) async {
+    try {
+      await _datasource.uploadImage(xFile);
       return const Right(Success());
     } on ServerException catch (error) {
       return Left(ServerFailure(error.message));

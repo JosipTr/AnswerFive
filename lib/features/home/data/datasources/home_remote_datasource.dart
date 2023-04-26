@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:answer_five/core/errors/exceptions.dart';
 import 'package:answer_five/core/network/network_info.dart';
@@ -6,6 +7,8 @@ import 'package:answer_five/core/utils/constants/string_constants.dart';
 import 'package:answer_five/features/statistic/data/models/statistic_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../authentication/data/models/player_model.dart';
 
@@ -17,15 +20,18 @@ abstract class HomeRemoteDatasource {
   Stream<void> updateLastActive(String date);
 
   Future<void> updateTodayQuestionNumber();
+
+  Future<void> uploadImage(XFile xFile);
 }
 
 class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
   final FirebaseAuth _firebaseAuth;
   final FirebaseDatabase _firebaseDatabase;
   final NetworkInfo _networkInfo;
+  final FirebaseStorage _firebaseStorage;
 
-  const HomeRemoteDatasourceImpl(
-      this._firebaseAuth, this._firebaseDatabase, this._networkInfo);
+  const HomeRemoteDatasourceImpl(this._firebaseAuth, this._firebaseDatabase,
+      this._networkInfo, this._firebaseStorage);
 
   @override
   Stream<PlayerModel> getPlayer() {
@@ -101,6 +107,25 @@ class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
         }
       } catch (error) {
         log(error.toString());
+        throw const ServerException();
+      }
+    } else {
+      log(StringConstants.networkExceptionMessage);
+      throw const NetworkException();
+    }
+  }
+
+  @override
+  Future<void> uploadImage(XFile xFile) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final file = File(xFile.path);
+        await _firebaseStorage
+            .ref()
+            .child('images/${_firebaseAuth.currentUser!.uid}/${xFile.name}')
+            .putFile(file);
+      } catch (error, stackTrace) {
+        log(error: error, stackTrace: stackTrace, error.toString());
         throw const ServerException();
       }
     } else {

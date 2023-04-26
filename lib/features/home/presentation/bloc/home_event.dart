@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../statistic/domain/entities/statistic.dart';
 
@@ -21,4 +22,13 @@ class HomePlayerStatsUpdated extends HomeEvent {
 
   @override
   List<Object> get props => [statistic];
+}
+
+class HomeImageUploaded extends HomeEvent {
+  final XFile xFile;
+
+  const HomeImageUploaded(this.xFile);
+
+  @override
+  List<Object> get props => [xFile];
 }

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:answer_five/core/utils/theme/custom_theme.dart';
+import 'package:answer_five/features/home/presentation/bloc/home_event.dart';
 import 'package:answer_five/features/home/presentation/bloc/home_state.dart';
 import 'package:answer_five/features/picker/presentation/bloc/picker_event.dart';
 import 'package:flutter/material.dart';
@@ -26,14 +27,43 @@ class ProfilePage extends StatelessWidget {
             children: [
               Stack(
                 children: [
-                  BlocBuilder<PickerBloc, PickerState>(
-                    builder: (context, state) {
+                  BlocListener<PickerBloc, PickerState>(
+                    listener: (context, state) {
                       if (state is PickerLoadSuccess) {
-                        return CircleAvatar(
-                          backgroundImage: FileImage(File(state.xFile!.path)),
-                          radius: 100,
-                        );
+                        showDialog<ImageSource>(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                                    content: const Text(
+                                      "Do you want to save this picture",
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    actions: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          ElevatedButton(
+                                              child: const Text("Yes"),
+                                              onPressed: () {
+                                                context.read<HomeBloc>().add(
+                                                    HomeImageUploaded(
+                                                        state.xFile!));
+                                                Navigator.of(context).pop();
+                                              }),
+                                          ElevatedButton(
+                                              child: const Text("No"),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              }),
+                                        ],
+                                      ),
+                                    ]));
                       }
+                    },
+                    child: const SizedBox(),
+                  ),
+                  BlocBuilder<HomeBloc, HomeState>(
+                    builder: (context, state) {
                       return const CircleAvatar(
                         radius: 100,
                         child: FlutterLogo(
