@@ -8,7 +8,6 @@ import 'package:answer_five/features/home/presentation/bloc/home_state.dart';
 import 'package:answer_five/features/picker/presentation/bloc/picker_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:form_validator/form_validator.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../picker/presentation/bloc/picker_bloc.dart';
