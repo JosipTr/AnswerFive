@@ -20,4 +20,14 @@ class PickerRepositoryImpl implements PickerRepository {
       return Left(PickerFailure(error.message));
     }
   }
+
+  @override
+  Future<Either<Failure, XFile?>> getCameraPicture() async {
+    try {
+      final xFile = await _pickerLocalDatasource.getCameraPicture();
+      return Right(xFile);
+    } on PickerException catch (error) {
+      return Left(PickerFailure(error.message));
+    }
+  }
 }

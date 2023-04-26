@@ -5,4 +5,6 @@ import '../../../../core/errors/failures.dart';
 
 abstract class PickerRepository {
   Future<Either<Failure, XFile?>> getGalleryPicture();
+
+  Future<Either<Failure, XFile?>> getCameraPicture();
 }

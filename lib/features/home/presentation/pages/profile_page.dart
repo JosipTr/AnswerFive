@@ -60,16 +60,19 @@ class ProfilePage extends StatelessWidget {
                                               MainAxisAlignment.spaceEvenly,
                                           children: [
                                             ElevatedButton(
-                                              child: const Text("Camera"),
-                                              onPressed: () => Navigator.pop(
-                                                  context, ImageSource.camera),
-                                            ),
+                                                child: const Text("Camera"),
+                                                onPressed: () {
+                                                  context.read<PickerBloc>().add(
+                                                      const PickerCameraPicked());
+                                                  Navigator.of(context).pop();
+                                                }),
                                             ElevatedButton(
                                                 child: const Text("Gallery"),
-                                                onPressed: () => context
-                                                    .read<PickerBloc>()
-                                                    .add(
-                                                        const PickerImagePicked())),
+                                                onPressed: () {
+                                                  context.read<PickerBloc>().add(
+                                                      const PickerImagePicked());
+                                                  Navigator.of(context).pop();
+                                                }),
                                           ],
                                         ),
                                       ]));
