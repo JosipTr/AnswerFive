@@ -32,32 +32,82 @@ class ProfilePage extends StatelessWidget {
                       if (state is PickerLoadSuccess) {
                         showDialog<ImageSource>(
                             context: context,
-                            builder: (context) => AlertDialog(
-                                    content: const Text(
-                                      "Do you want to save this picture",
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    actions: [
-                                      Row(
+                            builder: (context) => Dialog.fullscreen(
+                                  child: GradientBackground(
+                                    child: Center(
+                                      child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          ElevatedButton(
-                                              child: const Text("Yes"),
-                                              onPressed: () {
-                                                context.read<HomeBloc>().add(
-                                                    HomeImageUploaded(
-                                                        state.xFile!));
-                                                Navigator.of(context).pop();
-                                              }),
-                                          ElevatedButton(
-                                              child: const Text("No"),
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              }),
+                                          CircleAvatar(
+                                            backgroundImage: FileImage(
+                                              File(state.xFile!.path),
+                                            ),
+                                            radius: 100,
+                                          ),
+                                          Card(
+                                            elevation: 15,
+                                            child: Column(children: [
+                                              const Text(
+                                                "Do you want to save this picture",
+                                                textAlign: TextAlign.center,
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceEvenly,
+                                                children: [
+                                                  ElevatedButton(
+                                                      child: const Text("Yes"),
+                                                      onPressed: () {
+                                                        context
+                                                            .read<HomeBloc>()
+                                                            .add(HomeImageUploaded(
+                                                                state.xFile!));
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      }),
+                                                  ElevatedButton(
+                                                      child: const Text("No"),
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      }),
+                                                ],
+                                              ),
+                                            ]),
+                                          )
                                         ],
                                       ),
-                                    ]));
+                                    ),
+
+                                    // content: const Text(
+                                    //   "Do you want to save this picture",
+                                    //   textAlign: TextAlign.center,
+                                    // ),
+                                    // actions: [
+                                    //   Row(
+                                    //     mainAxisAlignment:
+                                    //         MainAxisAlignment.spaceEvenly,
+                                    //     children: [
+                                    //       ElevatedButton(
+                                    //           child: const Text("Yes"),
+                                    //           onPressed: () {
+                                    //             context.read<HomeBloc>().add(
+                                    //                 HomeImageUploaded(
+                                    //                     state.xFile!));
+                                    //             Navigator.of(context).pop();
+                                    //           }),
+                                    //       ElevatedButton(
+                                    //           child: const Text("No"),
+                                    //           onPressed: () {
+                                    //             Navigator.of(context).pop();
+                                    //           }),
+                                    //     ],
+                                    //   ),
+                                    // ],
+                                  ),
+                                ));
                       }
                     },
                     child: const SizedBox(),
