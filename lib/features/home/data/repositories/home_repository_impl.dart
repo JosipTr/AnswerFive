@@ -50,16 +50,4 @@ class HomeRepositoryImpl implements HomeRepository {
       return Left(NetworkFailure(error.message));
     }
   }
-
-  @override
-  Future<Either<Failure, Success>> uploadImage(XFile xFile) async {
-    try {
-      await _datasource.uploadImage(xFile);
-      return const Right(Success());
-    } on ServerException catch (error) {
-      return Left(ServerFailure(error.message));
-    } on NetworkException catch (error) {
-      return Left(NetworkFailure(error.message));
-    }
-  }
 }

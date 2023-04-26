@@ -2,7 +2,6 @@ import 'package:answer_five/features/home/data/datasources/home_remote_datasourc
 import 'package:answer_five/features/home/domain/usecases/get_player.dart';
 import 'package:answer_five/features/home/domain/usecases/update_last_active.dart';
 import 'package:answer_five/features/home/domain/usecases/update_player_stats.dart';
-import 'package:answer_five/features/home/domain/usecases/upload_image.dart';
 
 import 'package:get_it/get_it.dart';
 
@@ -26,9 +25,11 @@ Future<void> initHomeDependencies() async {
   homeInjector.registerLazySingleton(() => GetPlayer(homeInjector()));
   homeInjector.registerLazySingleton(() => UpdatePlayerStats(homeInjector()));
   homeInjector.registerLazySingleton(() => UpdateLastActive(homeInjector()));
-  homeInjector.registerLazySingleton(() => UploadImage(homeInjector()));
 
   //Bloc
-  homeInjector.registerFactory(() =>
-      HomeBloc(homeInjector(), homeInjector(), homeInjector(), homeInjector()));
+  homeInjector.registerFactory(() => HomeBloc(
+        homeInjector(),
+        homeInjector(),
+        homeInjector(),
+      ));
 }
