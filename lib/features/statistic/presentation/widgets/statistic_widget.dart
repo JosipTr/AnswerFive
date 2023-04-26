@@ -36,6 +36,10 @@ class StatisticWidget extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text('${i + 1}.'),
+                            CircleAvatar(
+                              backgroundImage:
+                                  NetworkImage(state.players[i].photoUrl),
+                            ),
                             SizedBox(
                               width: 70,
                               child: Text(
