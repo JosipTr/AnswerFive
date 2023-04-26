@@ -39,7 +39,7 @@ class StatisticWidget extends StatelessWidget {
                             SizedBox(
                               width: 70,
                               child: Text(
-                                state.players[i].name,
+                                state.players[i].username,
                                 textAlign: TextAlign.center,
                               ),
                             ),

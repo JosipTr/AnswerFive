@@ -6,6 +6,7 @@ import 'package:answer_five/features/authentication/domain/usecases/login_with_e
 import 'package:answer_five/features/authentication/domain/usecases/logout.dart';
 import 'package:answer_five/features/authentication/domain/usecases/register_user_with_email_and_password.dart';
 import 'package:answer_five/features/authentication/domain/usecases/update_photo_url.dart';
+import 'package:answer_five/features/authentication/domain/usecases/update_username.dart';
 import 'package:answer_five/features/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -39,6 +40,7 @@ Future<void> initAuthDependencies() async {
           authInjector(), authInjector(), authInjector(), authInjector()));
 
   //UseCases
+  authInjector.registerLazySingleton(() => UpdateUsername(authInjector()));
   authInjector.registerLazySingleton(() => UpdatePhotoURL(authInjector()));
   authInjector.registerLazySingleton(() => Logout(authInjector()));
   authInjector.registerLazySingleton(() => AuthStateChanges(authInjector()));
@@ -49,7 +51,7 @@ Future<void> initAuthDependencies() async {
 
   //Bloc
   authInjector.registerFactory(() => AuthBloc(authInjector(), authInjector(),
-      authInjector(), authInjector(), authInjector()));
+      authInjector(), authInjector(), authInjector(), authInjector()));
 
   //Core
   authInjector.registerLazySingleton<NetworkInfo>(

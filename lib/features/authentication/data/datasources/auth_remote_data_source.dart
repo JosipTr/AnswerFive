@@ -19,6 +19,8 @@ abstract class AuthLocalDatasource {
 
   Future<void> updatePhotoURL(UpdatePhotoUrlParams params);
 
+  Future<void> updateUsername(String username);
+
   Future<void> logout();
 }
 
@@ -115,6 +117,26 @@ class AuthenticationLocalDatasourceImpl implements AuthLocalDatasource {
             .update({'photoUrl': url.toString()});
 
         return await _firebaseAuth.currentUser!.updatePhotoURL(url);
+      } catch (error, stackTrace) {
+        log(error: error, stackTrace: stackTrace, error.toString());
+        throw const ServerException();
+      }
+    } else {
+      log(StringConstants.networkExceptionMessage);
+      throw const NetworkException();
+    }
+  }
+
+  @override
+  Future<void> updateUsername(String username) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        await _firebaseDatabase
+            .ref()
+            .child("players/${_firebaseAuth.currentUser!.uid}/")
+            .update({'username': username});
+
+        return await _firebaseAuth.currentUser!.updateDisplayName(username);
       } catch (error, stackTrace) {
         log(error: error, stackTrace: stackTrace, error.toString());
         throw const ServerException();

@@ -64,4 +64,14 @@ class AuthRepositoryImpl implements AuthRepository {
       return Left(AuthFailure(error.message));
     }
   }
+
+  @override
+  Future<Either<Failure, Success>> updateUsername(String username) async {
+    try {
+      await _authLocalDatasource.updateUsername(username);
+      return const Right(Success());
+    } on AuthException catch (error) {
+      return Left(AuthFailure(error.message));
+    }
+  }
 }

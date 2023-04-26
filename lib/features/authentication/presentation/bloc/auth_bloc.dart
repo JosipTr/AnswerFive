@@ -3,6 +3,7 @@ import 'package:answer_five/features/authentication/domain/usecases/auth_state_c
 import 'package:answer_five/features/authentication/domain/usecases/login_with_email_and_password.dart';
 import 'package:answer_five/features/authentication/domain/usecases/register_user_with_email_and_password.dart';
 import 'package:answer_five/features/authentication/domain/usecases/update_photo_url.dart';
+import 'package:answer_five/features/authentication/domain/usecases/update_username.dart';
 import 'package:answer_five/features/authentication/presentation/bloc/auth_event.dart';
 import 'package:answer_five/features/authentication/presentation/bloc/auth_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,9 +16,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LoginWithEmailAndPassword _loginWithEmailAndPassword;
   final Logout _logout;
   final UpdatePhotoURL _updatePhotoURL;
+  final UpdateUsername _updateUsername;
 
-  AuthBloc(this._authStateChanges, this._registerUserWithEmailAndPassword,
-      this._loginWithEmailAndPassword, this._logout, this._updatePhotoURL)
+  AuthBloc(
+      this._authStateChanges,
+      this._registerUserWithEmailAndPassword,
+      this._loginWithEmailAndPassword,
+      this._logout,
+      this._updatePhotoURL,
+      this._updateUsername)
       : super(const AuthInitial(authFilter: AuthFilter.login)) {
     on<AuthStarted>(_onAuthStarted);
     on<AuthRegisterPressed>(_onAuthRegisterPressed);
@@ -25,6 +32,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthPageFiltered>(_onAuthPageFiltered);
     on<AuthLogoutPressed>(_onAuthLogoutPressed);
     on<AuthPhotoUrlUpdated>(_onAuthPhotoUrlUpdated);
+    on<AuthUsernameUpdated>(_onAuthUsernameUpdated);
   }
 
   void _onAuthStarted(AuthStarted event, Emitter<AuthState> emit) async {
@@ -73,5 +81,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       AuthPhotoUrlUpdated event, Emitter<AuthState> emit) async {
     await _updatePhotoURL(
         UpdatePhotoUrlParams(path: event.path, name: event.name));
+  }
+
+  Future<void> _onAuthUsernameUpdated(
+      AuthUsernameUpdated event, Emitter<AuthState> emit) async {
+    await _updateUsername(event.username);
   }
 }

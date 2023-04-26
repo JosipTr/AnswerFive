@@ -16,4 +16,6 @@ abstract class AuthRepository {
   Future<Either<Failure, Success>> logout();
 
   Future<Either<Failure, Success>> updatePhotoURL(UpdatePhotoUrlParams params);
+
+  Future<Either<Failure, Success>> updateUsername(String username);
 }

@@ -7,7 +7,7 @@ import '../../domain/entities/player.dart';
 class PlayerModel extends Player {
   const PlayerModel({
     required super.id,
-    required super.name,
+    required super.username,
     required super.email,
     required super.lastActive,
     required super.photoUrl,
@@ -17,7 +17,7 @@ class PlayerModel extends Player {
   factory PlayerModel.fromUser(User user) {
     return PlayerModel(
         id: user.uid,
-        name: user.displayName ?? 'user#${user.uid.substring(0, 3)}',
+        username: user.displayName ?? 'user#${user.uid.substring(0, 3)}',
         email: user.email ?? 'empty',
         lastActive: DateTime.now().toString(),
         photoUrl: user.photoURL ?? StringConstants.photoUrlDefault,
@@ -27,7 +27,7 @@ class PlayerModel extends Player {
   factory PlayerModel.fromPlayer(Player player) {
     return PlayerModel(
       id: player.id,
-      name: player.name,
+      username: player.username,
       email: player.email,
       lastActive: player.lastActive,
       photoUrl: player.photoUrl,
@@ -38,7 +38,7 @@ class PlayerModel extends Player {
   factory PlayerModel.fromJson(Map<dynamic, dynamic> json) {
     return PlayerModel(
       id: json['id'],
-      name: json['name'],
+      username: json['username'],
       email: json['email'],
       lastActive: json['lastActive'],
       photoUrl: json['photoUrl'],
@@ -49,7 +49,7 @@ class PlayerModel extends Player {
   Player toPlayer() {
     return Player(
       id: id,
-      name: name,
+      username: username,
       email: email,
       lastActive: lastActive,
       photoUrl: photoUrl,
@@ -60,7 +60,7 @@ class PlayerModel extends Player {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'name': name,
+      'username': username,
       'email': email,
       'lastActive': lastActive,
       'photoUrl': photoUrl,

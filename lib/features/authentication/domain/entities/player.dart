@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 
 class Player extends Equatable {
   final String id;
-  final String name;
+  final String username;
   final String email;
   final String lastActive;
   final String photoUrl;
@@ -11,7 +11,7 @@ class Player extends Equatable {
 
   const Player({
     required this.id,
-    required this.name,
+    required this.username,
     required this.email,
     required this.lastActive,
     required this.photoUrl,
@@ -28,7 +28,7 @@ class Player extends Equatable {
   }) {
     return Player(
       id: id ?? this.id,
-      name: name ?? this.name,
+      username: name ?? this.username,
       email: email ?? this.email,
       lastActive: lastActive ?? this.lastActive,
       photoUrl: photoUrl ?? this.photoUrl,
@@ -37,5 +37,6 @@ class Player extends Equatable {
   }
 
   @override
-  List<Object> get props => [id, name, email, lastActive, photoUrl, statistic];
+  List<Object> get props =>
+      [id, username, email, lastActive, photoUrl, statistic];
 }
