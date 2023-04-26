@@ -46,3 +46,10 @@ class AuthPageFiltered extends AuthEvent {
 class AuthLogoutPressed extends AuthEvent {
   const AuthLogoutPressed();
 }
+
+class AuthPhotoUrlUpdated extends AuthEvent {
+  final String path;
+  final String name;
+
+  const AuthPhotoUrlUpdated({required this.path, required this.name});
+}

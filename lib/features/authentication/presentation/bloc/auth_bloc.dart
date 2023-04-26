@@ -2,6 +2,7 @@ import 'package:answer_five/core/usecases/usecase.dart';
 import 'package:answer_five/features/authentication/domain/usecases/auth_state_changes.dart';
 import 'package:answer_five/features/authentication/domain/usecases/login_with_email_and_password.dart';
 import 'package:answer_five/features/authentication/domain/usecases/register_user_with_email_and_password.dart';
+import 'package:answer_five/features/authentication/domain/usecases/update_photo_url.dart';
 import 'package:answer_five/features/authentication/presentation/bloc/auth_event.dart';
 import 'package:answer_five/features/authentication/presentation/bloc/auth_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,15 +14,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final RegisterUserWithEmailAndPassword _registerUserWithEmailAndPassword;
   final LoginWithEmailAndPassword _loginWithEmailAndPassword;
   final Logout _logout;
+  final UpdatePhotoURL _updatePhotoURL;
 
   AuthBloc(this._authStateChanges, this._registerUserWithEmailAndPassword,
-      this._loginWithEmailAndPassword, this._logout)
+      this._loginWithEmailAndPassword, this._logout, this._updatePhotoURL)
       : super(const AuthInitial(authFilter: AuthFilter.login)) {
     on<AuthStarted>(_onAuthStarted);
     on<AuthRegisterPressed>(_onAuthRegisterPressed);
     on<AuthLoginPressed>(_onAuthLoginPressed);
     on<AuthPageFiltered>(_onAuthPageFiltered);
     on<AuthLogoutPressed>(_onAuthLogoutPressed);
+    on<AuthPhotoUrlUpdated>(_onAuthPhotoUrlUpdated);
   }
 
   void _onAuthStarted(AuthStarted event, Emitter<AuthState> emit) async {
@@ -64,5 +67,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       AuthLogoutPressed event, Emitter<AuthState> emit) async {
     emit(const AuthLoading());
     await _logout(const NoParams());
+  }
+
+  Future<void> _onAuthPhotoUrlUpdated(
+      AuthPhotoUrlUpdated event, Emitter<AuthState> emit) async {
+    await _updatePhotoURL(
+        UpdatePhotoUrlParams(path: event.path, name: event.name));
   }
 }

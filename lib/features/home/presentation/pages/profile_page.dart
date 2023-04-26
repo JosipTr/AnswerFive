@@ -1,7 +1,9 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:answer_five/core/utils/theme/custom_theme.dart';
-import 'package:answer_five/features/home/presentation/bloc/home_event.dart';
+import 'package:answer_five/features/authentication/presentation/bloc/auth_bloc.dart';
+import 'package:answer_five/features/authentication/presentation/bloc/auth_event.dart';
 import 'package:answer_five/features/home/presentation/bloc/home_state.dart';
 import 'package:answer_five/features/picker/presentation/bloc/picker_event.dart';
 import 'package:flutter/material.dart';
@@ -60,10 +62,17 @@ class ProfilePage extends StatelessWidget {
                                                   ElevatedButton(
                                                       child: const Text("Yes"),
                                                       onPressed: () {
+                                                        log(state.xFile!.path);
                                                         context
-                                                            .read<HomeBloc>()
-                                                            .add(HomeImageUploaded(
-                                                                state.xFile!));
+                                                            .read<AuthBloc>()
+                                                            .add(
+                                                                AuthPhotoUrlUpdated(
+                                                                    name: state
+                                                                        .xFile!
+                                                                        .name,
+                                                                    path: state
+                                                                        .xFile!
+                                                                        .path));
                                                         Navigator.of(context)
                                                             .pop();
                                                       }),

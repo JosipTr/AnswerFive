@@ -1,3 +1,4 @@
+import 'package:answer_five/core/usecases/usecase.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/errors/failures.dart';
@@ -13,4 +14,6 @@ abstract class AuthRepository {
       String email, String password);
 
   Future<Either<Failure, Success>> logout();
+
+  Future<Either<Failure, Success>> updatePhotoURL(UpdatePhotoUrlParams params);
 }

@@ -1,6 +1,7 @@
 import 'package:answer_five/core/errors/exceptions.dart';
 import 'package:answer_five/core/errors/failures.dart';
 import 'package:answer_five/core/success.dart';
+import 'package:answer_five/core/usecases/usecase.dart';
 import 'package:answer_five/features/authentication/data/datasources/auth_remote_data_source.dart';
 import 'package:answer_five/features/authentication/domain/repositories/auth_repository.dart';
 import 'package:dartz/dartz.dart';
@@ -47,6 +48,17 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, Success>> logout() async {
     try {
       await _authLocalDatasource.logout();
+      return const Right(Success());
+    } on AuthException catch (error) {
+      return Left(AuthFailure(error.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Success>> updatePhotoURL(
+      UpdatePhotoUrlParams params) async {
+    try {
+      await _authLocalDatasource.updatePhotoURL(params);
       return const Right(Success());
     } on AuthException catch (error) {
       return Left(AuthFailure(error.message));

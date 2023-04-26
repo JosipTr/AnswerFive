@@ -3,7 +3,7 @@ import 'package:answer_five/features/home/domain/usecases/get_player.dart';
 import 'package:answer_five/features/home/domain/usecases/update_last_active.dart';
 import 'package:answer_five/features/home/domain/usecases/update_player_stats.dart';
 import 'package:answer_five/features/home/domain/usecases/upload_image.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+
 import 'package:get_it/get_it.dart';
 
 import '../data/repositories/home_repository_impl.dart';
@@ -13,9 +13,6 @@ import '../presentation/bloc/home_bloc.dart';
 final homeInjector = GetIt.instance;
 
 Future<void> initHomeDependencies() async {
-  //FirebaseStorage
-  homeInjector.registerLazySingleton(() => FirebaseStorage.instance);
-
   //Repositories
   homeInjector.registerLazySingleton<HomeRepository>(
       () => HomeRepositoryImpl(homeInjector()));

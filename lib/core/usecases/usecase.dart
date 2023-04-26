@@ -38,3 +38,10 @@ class UploadImageParams {
   final XFile xFile;
   const UploadImageParams(this.xFile);
 }
+
+class UpdatePhotoUrlParams {
+  final String path;
+  final String name;
+
+  UpdatePhotoUrlParams({required this.path, required this.name});
+}
