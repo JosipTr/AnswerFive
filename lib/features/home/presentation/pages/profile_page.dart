@@ -188,7 +188,7 @@ class ProfilePage extends StatelessWidget {
                       BlocBuilder<HomeBloc, HomeState>(
                         builder: (context, state) => state is HomeLoadSuccess
                             ? Text(
-                                'Username:\n${player.username}',
+                                'Username:\n${state.player.username}',
                                 textAlign: TextAlign.center,
                               )
                             : const Text(
@@ -272,6 +272,11 @@ class ProfilePage extends StatelessWidget {
                   'Email:\n${player.email}',
                   textAlign: TextAlign.center,
                 ),
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('Back'))
               ],
             ),
           ),
