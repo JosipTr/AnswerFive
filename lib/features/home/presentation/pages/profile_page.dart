@@ -63,14 +63,18 @@ class ProfilePage extends StatelessWidget {
                     child: const SizedBox(),
                   ),
                   BlocBuilder<HomeBloc, HomeState>(
-                    builder: (context, state) {
-                      return const CircleAvatar(
-                        radius: 100,
-                        child: FlutterLogo(
-                          size: 100,
-                        ),
-                      );
-                    },
+                    builder: (context, state) => state is HomeLoadSuccess
+                        ? CircleAvatar(
+                            backgroundImage:
+                                NetworkImage(state.player.photoUrl),
+                            radius: 100,
+                          )
+                        : const CircleAvatar(
+                            radius: 100,
+                            child: FlutterLogo(
+                              size: 100,
+                            ),
+                          ),
                   ),
                   Positioned(
                     bottom: -15,

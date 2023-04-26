@@ -120,10 +120,21 @@ class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
     if (await _networkInfo.isConnected) {
       try {
         final file = File(xFile.path);
-        await _firebaseStorage
+        final ref = _firebaseStorage
             .ref()
-            .child('images/${_firebaseAuth.currentUser!.uid}/${xFile.name}')
-            .putFile(file);
+            .child('images/${_firebaseAuth.currentUser!.uid}/${xFile.name}');
+
+        await ref.putFile(file);
+
+        final url = await ref.getDownloadURL();
+
+        print(url);
+        log(url.toString());
+
+        return await _firebaseDatabase
+            .ref()
+            .child("players/${_firebaseAuth.currentUser!.uid}/")
+            .update({'photoUrl': url.toString()});
       } catch (error, stackTrace) {
         log(error: error, stackTrace: stackTrace, error.toString());
         throw const ServerException();

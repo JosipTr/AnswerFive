@@ -6,6 +6,7 @@ class Player extends Equatable {
   final String name;
   final String email;
   final String lastActive;
+  final String photoUrl;
   final Statistic statistic;
 
   const Player({
@@ -13,6 +14,7 @@ class Player extends Equatable {
     required this.name,
     required this.email,
     required this.lastActive,
+    required this.photoUrl,
     required this.statistic,
   });
 
@@ -21,6 +23,7 @@ class Player extends Equatable {
     String? name,
     String? email,
     String? lastActive,
+    String? photoUrl,
     Statistic? statistic,
   }) {
     return Player(
@@ -28,10 +31,11 @@ class Player extends Equatable {
       name: name ?? this.name,
       email: email ?? this.email,
       lastActive: lastActive ?? this.lastActive,
+      photoUrl: photoUrl ?? this.photoUrl,
       statistic: statistic ?? this.statistic,
     );
   }
 
   @override
-  List<Object> get props => [id, name, email, lastActive, statistic];
+  List<Object> get props => [id, name, email, lastActive, photoUrl, statistic];
 }

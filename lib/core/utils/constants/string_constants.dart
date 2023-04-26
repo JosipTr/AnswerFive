@@ -13,4 +13,7 @@ class StringConstants {
 
   //Assets
   static const logo = "assets/images/answer_five_nobackground.png";
+
+  static const photoUrlDefault =
+      'https://firebasestorage.googleapis.com/v0/b/answerfive-15710.appspot.com/o/images%2FAOQqfKogNhgzw4SqKfBE7aBnmD43%2Feb0336c7-6af1-426e-8962-b961d463aea31919254776587853012.jpg?alt=media&token=f0978732-2453-4798-a1f6-472ed73e888b';
 }

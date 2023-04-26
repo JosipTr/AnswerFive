@@ -1,3 +1,4 @@
+import 'package:answer_five/core/utils/constants/string_constants.dart';
 import 'package:answer_five/features/statistic/data/models/statistic_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -9,6 +10,7 @@ class PlayerModel extends Player {
     required super.name,
     required super.email,
     required super.lastActive,
+    required super.photoUrl,
     required super.statistic,
   });
 
@@ -18,6 +20,7 @@ class PlayerModel extends Player {
         name: user.displayName ?? 'user#${user.uid.substring(0, 3)}',
         email: user.email ?? 'empty',
         lastActive: DateTime.now().toString(),
+        photoUrl: user.photoURL ?? StringConstants.photoUrlDefault,
         statistic: const StatisticModel());
   }
 
@@ -27,6 +30,7 @@ class PlayerModel extends Player {
       name: player.name,
       email: player.email,
       lastActive: player.lastActive,
+      photoUrl: player.photoUrl,
       statistic: player.statistic,
     );
   }
@@ -37,6 +41,7 @@ class PlayerModel extends Player {
       name: json['name'],
       email: json['email'],
       lastActive: json['lastActive'],
+      photoUrl: json['photoUrl'],
       statistic: StatisticModel.fromJson(json['statistic']),
     );
   }
@@ -47,6 +52,7 @@ class PlayerModel extends Player {
       name: name,
       email: email,
       lastActive: lastActive,
+      photoUrl: photoUrl,
       statistic: statistic,
     );
   }
@@ -57,6 +63,7 @@ class PlayerModel extends Player {
       'name': name,
       'email': email,
       'lastActive': lastActive,
+      'photoUrl': photoUrl,
       'statistic': (statistic as StatisticModel).toJson()
     };
   }
