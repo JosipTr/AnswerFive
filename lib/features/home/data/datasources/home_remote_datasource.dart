@@ -93,9 +93,9 @@ class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
             .once();
         final lastActive = event.snapshot.value as String;
         final lastActiveDate = DateTime.parse(lastActive);
-        if (lastActiveDate.day < date.day &&
-            lastActiveDate.month <= date.month &&
-            lastActiveDate.year <= date.year) {
+        if (lastActiveDate.day < date.day ||
+            lastActiveDate.month < date.month ||
+            lastActiveDate.year < date.year) {
           return await _firebaseDatabase
               .ref()
               .child("players/${_firebaseAuth.currentUser!.uid}/statistic/")
