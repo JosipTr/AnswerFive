@@ -156,6 +156,7 @@ class _RegistrationForm extends StatelessWidget {
               decoration: const InputDecoration(
                 label: Icon(Icons.lock_reset),
               ),
+              obscureText: true,
               controller: confirmPasswordController,
             ),
           ),

@@ -11,6 +11,7 @@ class TriviaWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("trivia");
     return WillPopScope(
       onWillPop: () async {
         context.read<TriviaBloc>().add(const TriviaBackButtonPressed());
