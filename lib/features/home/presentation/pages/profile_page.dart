@@ -181,91 +181,85 @@ class ProfilePage extends StatelessWidget {
                   'UserId:\n${player.id}',
                   textAlign: TextAlign.center,
                 ),
-                Container(
-                  child: Column(
-                    children: [
-                      BlocBuilder<HomeBloc, HomeState>(
-                        builder: (context, state) => state is HomeLoadSuccess
-                            ? Text(
-                                'Username:\n${state.player.username}',
-                                textAlign: TextAlign.center,
-                              )
-                            : const Text(
-                                'Username:\n empty}',
-                                textAlign: TextAlign.center,
-                              ),
-                      ),
-                      IconButton(
-                          onPressed: () {
-                            showDialog<ImageSource>(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                        content: const Text(
-                                          "Change username\nInput between 3 to 10 characters",
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        actions: [
-                                          Column(
-                                            children: [
-                                              TextFormField(
-                                                controller: usernameController,
-                                              ),
-                                              const SizedBox(
-                                                height: 15,
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceEvenly,
-                                                children: [
-                                                  ElevatedButton(
-                                                      child: const Text("Save"),
-                                                      onPressed: () {
-                                                        if (usernameController
-                                                                    .text
-                                                                    .length <
-                                                                3 ||
-                                                            usernameController
-                                                                .text.isEmpty ||
-                                                            usernameController
-                                                                    .text
-                                                                    .length >
-                                                                10) {
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                          ScaffoldMessenger.of(
-                                                              context)
-                                                            ..hideCurrentSnackBar()
-                                                            ..showSnackBar(
-                                                                const SnackBar(
-                                                                    content: Text(
-                                                                        "Input error")));
-                                                        } else {
-                                                          context
-                                                              .read<AuthBloc>()
-                                                              .add(AuthUsernameUpdated(
-                                                                  username:
-                                                                      usernameController
-                                                                          .text));
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                        }
-                                                      }),
-                                                  ElevatedButton(
-                                                      child: const Text("Exit"),
-                                                      onPressed: () {
+                Column(
+                  children: [
+                    BlocBuilder<HomeBloc, HomeState>(
+                      builder: (context, state) => state is HomeLoadSuccess
+                          ? Text(
+                              'Username:\n${state.player.username}',
+                              textAlign: TextAlign.center,
+                            )
+                          : const Text(
+                              'Username:\n empty}',
+                              textAlign: TextAlign.center,
+                            ),
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          showDialog<ImageSource>(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                      content: const Text(
+                                        "Change username\nInput between 3 to 10 characters",
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      actions: [
+                                        Column(
+                                          children: [
+                                            TextFormField(
+                                              controller: usernameController,
+                                            ),
+                                            const SizedBox(
+                                              height: 15,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                ElevatedButton(
+                                                    child: const Text("Save"),
+                                                    onPressed: () {
+                                                      if (usernameController
+                                                                  .text.length <
+                                                              3 ||
+                                                          usernameController
+                                                              .text.isEmpty ||
+                                                          usernameController
+                                                                  .text.length >
+                                                              10) {
                                                         Navigator.of(context)
                                                             .pop();
-                                                      }),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ]));
-                          },
-                          icon: const Icon(Icons.edit)),
-                    ],
-                  ),
+                                                        ScaffoldMessenger.of(
+                                                            context)
+                                                          ..hideCurrentSnackBar()
+                                                          ..showSnackBar(
+                                                              const SnackBar(
+                                                                  content: Text(
+                                                                      "Input error")));
+                                                      } else {
+                                                        context.read<AuthBloc>().add(
+                                                            AuthUsernameUpdated(
+                                                                username:
+                                                                    usernameController
+                                                                        .text));
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      }
+                                                    }),
+                                                ElevatedButton(
+                                                    child: const Text("Exit"),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    }),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ]));
+                        },
+                        icon: const Icon(Icons.edit)),
+                  ],
                 ),
                 Text(
                   'Email:\n${player.email}',

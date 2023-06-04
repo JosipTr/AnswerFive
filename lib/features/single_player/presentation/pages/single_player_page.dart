@@ -11,7 +11,6 @@ class SinglePlayerPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('trivia page');
     return Scaffold(
       body: SingleChildScrollView(
         child: GradientBackground(

@@ -7,7 +7,6 @@ import 'package:answer_five/features/statistic/presentation/bloc/stats_bloc.dart
 import 'package:get_it/get_it.dart';
 
 import 'domain/usecases/get_stats.dart';
-import 'domain/usecases/update_stats.dart';
 
 final statsInjector = GetIt.instance;
 
@@ -22,9 +21,7 @@ Future<void> initStatsDependencies() async {
 
   //Usecases
   statsInjector.registerLazySingleton(() => GetStats(statsInjector()));
-  statsInjector.registerLazySingleton(() => UpdateStats(statsInjector()));
 
   //Bloc
-  statsInjector
-      .registerFactory(() => StatsBloc(statsInjector(), statsInjector()));
+  statsInjector.registerFactory(() => StatsBloc(statsInjector()));
 }

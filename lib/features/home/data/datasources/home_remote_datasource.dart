@@ -6,7 +6,6 @@ import 'package:answer_five/core/utils/constants/string_constants.dart';
 import 'package:answer_five/features/statistic/data/models/statistic_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
 import '../../../authentication/data/models/player_model.dart';
 
@@ -24,10 +23,9 @@ class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
   final FirebaseAuth _firebaseAuth;
   final FirebaseDatabase _firebaseDatabase;
   final NetworkInfo _networkInfo;
-  final FirebaseStorage _firebaseStorage;
 
-  const HomeRemoteDatasourceImpl(this._firebaseAuth, this._firebaseDatabase,
-      this._networkInfo, this._firebaseStorage);
+  const HomeRemoteDatasourceImpl(
+      this._firebaseAuth, this._firebaseDatabase, this._networkInfo);
 
   @override
   Stream<PlayerModel> getPlayer() {

@@ -18,8 +18,7 @@ Future<void> initHomeDependencies() async {
 
   //Datasources
   homeInjector.registerLazySingleton<HomeRemoteDatasource>(() =>
-      HomeRemoteDatasourceImpl(
-          homeInjector(), homeInjector(), homeInjector(), homeInjector()));
+      HomeRemoteDatasourceImpl(homeInjector(), homeInjector(), homeInjector()));
 
   //Usecases
   homeInjector.registerLazySingleton(() => GetPlayer(homeInjector()));

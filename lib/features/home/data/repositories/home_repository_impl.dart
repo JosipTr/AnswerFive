@@ -7,7 +7,6 @@ import 'package:answer_five/features/home/domain/repositories/home_repository.da
 import 'package:answer_five/features/statistic/data/models/statistic_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:answer_five/features/statistic/domain/entities/statistic.dart';
-import 'package:image_picker/image_picker.dart';
 
 class HomeRepositoryImpl implements HomeRepository {
   final HomeRemoteDatasource _datasource;

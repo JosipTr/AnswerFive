@@ -28,7 +28,7 @@ class Player extends Equatable {
   }) {
     return Player(
       id: id ?? this.id,
-      username: name ?? this.username,
+      username: name ?? username,
       email: email ?? this.email,
       lastActive: lastActive ?? this.lastActive,
       photoUrl: photoUrl ?? this.photoUrl,
